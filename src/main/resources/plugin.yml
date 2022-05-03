@@ -1,0 +1,8 @@
+name: MiniMinigames
+version: '${project.version}'
+main: net.quickwrite.miniminigames.MiniMinigames
+api-version: 1.18
+authors: [ QuickWrite, Hasenzahn1 ]
+description: A plugin for mini minigames that players can play.
+
+depend: [ProtocolLib]
