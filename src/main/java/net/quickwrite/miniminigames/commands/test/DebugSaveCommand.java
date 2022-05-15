@@ -1,19 +1,23 @@
 package net.quickwrite.miniminigames.commands.test;
 
+import net.quickwrite.miniminigames.MiniMinigames;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
+import net.quickwrite.miniminigames.ships.ShipManager;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
-public class TestSubCommand extends SubCommand {
+public class DebugSaveCommand extends SubCommand {
 
-    public TestSubCommand(BaseCommand parent) {
-        super(parent, "subTest1", null);
+    public DebugSaveCommand(BaseCommand parent) {
+        super(parent, "saveShipConfig", null);
     }
 
     @Override
     public boolean performCommand(CommandSender sender, String[] args) {
+        sender.sendMessage(MiniMinigames.PREFIX + "§aSaved Config");
+        ShipManager.saveShips(MiniMinigames.getInstance().getShipConfig());
         return true;
     }
 

@@ -8,5 +8,5 @@ description: A plugin for mini minigames that players can play.
 depend: [ProtocolLib]
 
 commands:
-  test:
-    description: Test
+  mdebug:
+    description: Debug Command for testing only
