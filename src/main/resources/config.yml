@@ -1,0 +1,6 @@
+#############################################################################################
+# This is the default config for this plugin and only contains the most important settings. #
+# Other settings like ships, blocks and maps are stored in their respective configs.        #
+# ###########################################################################################
+
+prefix: "§3[§bMiniMinigames§3]§r "
