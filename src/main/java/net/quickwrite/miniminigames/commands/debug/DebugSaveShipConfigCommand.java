@@ -1,4 +1,4 @@
-package net.quickwrite.miniminigames.commands.test;
+package net.quickwrite.miniminigames.commands.debug;
 
 import net.quickwrite.miniminigames.MiniMinigames;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
@@ -8,9 +8,9 @@ import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
-public class DebugSaveCommand extends SubCommand {
+public class DebugSaveShipConfigCommand extends SubCommand {
 
-    public DebugSaveCommand(BaseCommand parent) {
+    public DebugSaveShipConfigCommand(BaseCommand parent) {
         super(parent, "saveShipConfig", null);
     }
 

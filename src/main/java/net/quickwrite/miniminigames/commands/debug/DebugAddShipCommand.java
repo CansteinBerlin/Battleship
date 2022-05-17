@@ -1,4 +1,4 @@
-package net.quickwrite.miniminigames.commands.test;
+package net.quickwrite.miniminigames.commands.debug;
 
 import net.quickwrite.miniminigames.MiniMinigames;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
