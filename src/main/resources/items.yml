@@ -2,3 +2,31 @@
 # This is the config for the items. Every items is defined by an id and an Itemstack #
 # In the Path replace . with a § (Is not needed when using the command)              #
 ######################################################################################
+default§ship§sunk:
+  ==: org.bukkit.inventory.ItemStack
+  v: 2730
+  type: LIME_WOOL
+default§ship§hit:
+  ==: org.bukkit.inventory.ItemStack
+  v: 2730
+  type: RED_WOOL
+default§ship§place:
+  ==: org.bukkit.inventory.ItemStack
+  v: 2730
+  type: BLACK_WOOL
+default§ship§display§small:
+  ==: org.bukkit.inventory.ItemStack
+  v: 2730
+  type: ANVIL
+  meta:
+    ==: ItemMeta
+    meta-type: UNSPECIFIC
+    display-name: '{"text":"Small Ship","italic":false}'
+    ItemFlags:
+      - HIDE_ENCHANTS
+      - HIDE_ATTRIBUTES
+      - HIDE_UNBREAKABLE
+      - HIDE_DESTROYS
+      - HIDE_PLACED_ON
+      - HIDE_POTION_EFFECTS
+      - HIDE_DYE

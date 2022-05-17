@@ -46,9 +46,6 @@ public final class MiniMinigames extends JavaPlugin {
     private void loadItemConfig() {
         itemConfig = new ItemConfig();
         BattleshipItems.load(itemConfig.getConfig());
-        for(Map.Entry<String, ItemStack> entry : BattleshipItems.items.entrySet()){
-            Bukkit.broadcastMessage(entry.getKey() + ": " + entry.getValue());
-        }
     }
 
     private void loadShipConfig() {
