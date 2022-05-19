@@ -1,5 +1,5 @@
 ######################################################################################
-# This is the config for the items. Every items is defined by an id and an Itemstack #
+# This is the config for the items. Every item is defined by an id and an Itemstack #
 # In the Path replace . with a § (Is not needed when using the command)              #
 ######################################################################################
 default§ship§sunk:

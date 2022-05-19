@@ -6,9 +6,9 @@ import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.items.BattleshipItems;
 import org.bukkit.command.CommandSender;
 
-public class DebugSaveItemConfig extends SubCommand {
+public class DebugSaveItemConfigCommand extends SubCommand {
 
-    public DebugSaveItemConfig(BaseCommand parent) {
+    public DebugSaveItemConfigCommand(BaseCommand parent) {
         super(parent, "saveItemConfig", null);
     }
 

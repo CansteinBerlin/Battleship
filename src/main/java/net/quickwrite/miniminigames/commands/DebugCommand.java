@@ -10,7 +10,9 @@ public class DebugCommand extends BaseCommand {
 
         addSubCommand(new DebugSaveShipConfigCommand(this));
         addSubCommand(new DebugAddShipCommand(this));
-        addSubCommand(new DebugSaveItemConfig(this));
+        addSubCommand(new DebugSaveItemConfigCommand(this));
         addSubCommand(new DebugAddItemCommand(this));
+        addSubCommand(new DebugAddBlockCommand(this));
+        addSubCommand(new DebugSaveBlockConfigCommand(this));
     }
 }

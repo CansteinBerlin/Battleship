@@ -1,0 +1,7 @@
+######################################################################################
+# This is the config for the blocks. Every block is defined by an id and a Material  #
+# In the Path replace . with a § (Is not needed when using the command)              #
+######################################################################################
+
+default§ship§place: BLACK_WOOL
+default§ship§hit: RED_WOOL

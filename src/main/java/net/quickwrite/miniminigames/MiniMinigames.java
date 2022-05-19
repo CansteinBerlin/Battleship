@@ -1,7 +1,9 @@
 package net.quickwrite.miniminigames;
 
+import net.quickwrite.miniminigames.blocks.BattleShipBlocks;
 import net.quickwrite.miniminigames.commands.DebugCommand;
 import net.quickwrite.miniminigames.commandsystem.CommandManager;
+import net.quickwrite.miniminigames.config.BlockConfig;
 import net.quickwrite.miniminigames.config.DefaultConfig;
 import net.quickwrite.miniminigames.config.ItemConfig;
 import net.quickwrite.miniminigames.config.ShipConfig;
@@ -15,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Map;
+import java.util.logging.Logger;
 
 public final class MiniMinigames extends JavaPlugin {
 
@@ -25,10 +28,14 @@ public final class MiniMinigames extends JavaPlugin {
     private DefaultConfig config;
     private ShipConfig shipConfig;
     private ItemConfig itemConfig;
+    private BlockConfig blockConfig;
+
+    public static Logger logger;
 
     @Override
     public void onEnable() {
         instance = this;
+        logger = getLogger();
         ConfigurationSerialization.registerClass(Ship.class);
 
         loadConfigs();
@@ -39,8 +46,15 @@ public final class MiniMinigames extends JavaPlugin {
 
     private void loadConfigs() {
         loadDefaultConfig();
-        loadShipConfig();
         loadItemConfig();
+        loadBlockConfig();
+        loadShipConfig();
+
+    }
+
+    private void loadBlockConfig() {
+        blockConfig = new BlockConfig();
+        BattleShipBlocks.load(blockConfig.getConfig());
     }
 
     private void loadItemConfig() {
@@ -81,5 +95,9 @@ public final class MiniMinigames extends JavaPlugin {
 
     public ItemConfig getItemConfig() {
         return itemConfig;
+    }
+
+    public BlockConfig getBlockConfig() {
+        return blockConfig;
     }
 }
