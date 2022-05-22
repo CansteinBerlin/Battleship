@@ -8,6 +8,7 @@ import net.quickwrite.miniminigames.config.DefaultConfig;
 import net.quickwrite.miniminigames.config.ItemConfig;
 import net.quickwrite.miniminigames.config.ShipConfig;
 import net.quickwrite.miniminigames.items.BattleshipItems;
+import net.quickwrite.miniminigames.listener.SelectionListener;
 import net.quickwrite.miniminigames.ships.Ship;
 import net.quickwrite.miniminigames.ships.ShipManager;
 import org.bukkit.Bukkit;
@@ -42,6 +43,8 @@ public final class MiniMinigames extends JavaPlugin {
 
         commandManager = new CommandManager(this);
         commandManager.addCommand(new DebugCommand());
+
+        Bukkit.getPluginManager().registerEvents(new SelectionListener(), this);
     }
 
     private void loadConfigs() {
