@@ -6,7 +6,6 @@ import net.quickwrite.miniminigames.items.BattleshipItems;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemStack;
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Map;
 import java.util.Objects;
@@ -46,7 +45,6 @@ public class Ship implements ConfigurationSerializable {
     }
 
     @Override
-    @NonNull
     public Map<String, Object> serialize() {
         return new ImmutableMap.Builder<String, Object>()
                 .put("size", size)
