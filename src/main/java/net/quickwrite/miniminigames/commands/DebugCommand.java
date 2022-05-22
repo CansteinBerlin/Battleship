@@ -14,5 +14,12 @@ public class DebugCommand extends BaseCommand {
         addSubCommand(new DebugAddItemCommand(this));
         addSubCommand(new DebugAddBlockCommand(this));
         addSubCommand(new DebugSaveBlockConfigCommand(this));
+        addSubCommand(new DebugEnableSelectionCommand(this));
+        addSubCommand(new DebugAddVerticalDisplayCommand(this));
+        addSubCommand(new DebugAddPlayerToDisplayCommand(this));
+        addSubCommand(new DebugRemovePlayerFromDisplayCommand(this));
+        addSubCommand(new DebugAddRandomBlockToDisplayCommand(this));
+        addSubCommand(new DebugClearDisplayCommand(this));
+        addSubCommand(new DebugAddHorizontalDisplayCommand(this));
     }
 }
