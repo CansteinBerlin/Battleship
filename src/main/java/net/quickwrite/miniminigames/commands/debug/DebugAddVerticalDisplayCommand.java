@@ -3,9 +3,9 @@ package net.quickwrite.miniminigames.commands.debug;
 import net.quickwrite.miniminigames.MiniMinigames;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
-import net.quickwrite.miniminigames.map.Display;
+import net.quickwrite.miniminigames.display.Display;
 import net.quickwrite.miniminigames.map.Selection;
-import net.quickwrite.miniminigames.map.VerticalDisplay;
+import net.quickwrite.miniminigames.display.VerticalDisplay;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

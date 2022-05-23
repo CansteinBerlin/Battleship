@@ -3,7 +3,7 @@ package net.quickwrite.miniminigames.commands.debug;
 import net.quickwrite.miniminigames.MiniMinigames;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
-import net.quickwrite.miniminigames.map.Display;
+import net.quickwrite.miniminigames.display.Display;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 

@@ -1,27 +1,17 @@
-package net.quickwrite.miniminigames.map;
+package net.quickwrite.miniminigames.display;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
 
-public class VerticalDisplay extends Display{
+public class HorizontalDisplay extends Display{
 
-    public VerticalDisplay(Location loc1, Location loc2){
-        super();
-
-        if(loc1.getBlockY() > loc2.getBlockY()){
-            setPos1(loc1);
-            setPos2(loc2);
-        }else{
-            setPos1(loc2);
-            setPos2(loc1);
-        }
-
-        int xDir = loc1.getBlockX() - loc2.getBlockX();
-        int zDir = loc1.getBlockZ() - loc2.getBlockZ();
-        if(xDir < 0 && zDir == 0) direction = Direction.NEG_Z_DIRECTION;
-        else if(xDir > 0 && zDir == 0) direction = Direction.POS_Z_DIRECTION;
-        else if(zDir < 0 && xDir == 0) direction = Direction.POS_X_DIRECTION;
-        else direction = Direction.NEG_X_DIRECTION;
+    public HorizontalDisplay(Location loc1, Location loc2){
+        setPos1(loc1);
+        setPos2(loc2);
+        if(pos1.getBlockX() < pos2.getBlockX() && pos1.getBlockZ() < pos2.getBlockZ()) direction = Direction.NEG_Z_DIRECTION;
+        else if(pos1.getBlockX() < pos2.getBlockX() && pos1.getBlockZ() > pos2.getBlockZ()) direction = Direction.POS_X_DIRECTION;
+        else if(pos1.getBlockX() > pos2.getBlockX() && pos1.getBlockZ() > pos2.getBlockZ()) direction = Direction.POS_Z_DIRECTION;
+        else  direction = Direction.NEG_X_DIRECTION;
 
         minX = Math.min(pos1.getBlockX(), pos2.getBlockX());
         minY = Math.min(pos1.getBlockY(), pos2.getBlockY());
@@ -31,6 +21,7 @@ public class VerticalDisplay extends Display{
         maxZ = Math.max(pos1.getBlockZ(), pos2.getBlockZ());
     }
 
+
     @Override
     public int getWidth() {
         return Math.abs((pos1.getBlockX() - pos2.getBlockX()) * direction.xMod) + Math.abs((pos1.getBlockZ() - pos2.getBlockZ()) * direction.zMod) + 1;
@@ -38,20 +29,20 @@ public class VerticalDisplay extends Display{
 
     @Override
     public int getHeight() {
-        return Math.abs(pos1.getBlockY() - pos2.getBlockY()) + 1;
+        return Math.abs((pos1.getBlockX() - pos2.getBlockX()) * direction.zMod) + Math.abs((pos1.getBlockZ() - pos2.getBlockZ()) * direction.xMod) + 1;
     }
 
     @Override
     public String getNamedPosition(Location loc) {
-        return "asdas";
+        return null;
     }
 
     @Override
-    public void setBlock(int x, int y, Material material) {
+    public void setBlock(int x, int z, Material material) {
         if(x < 0 || x >= getWidth()) return;
-        if(y < 0 || y >= getHeight()) return;
+        if(z < 0 || z >= getHeight()) return;
 
-        sendBlockChange(pos1.clone().subtract(x * direction.xMod, y, x * direction.zMod), material);
+        sendBlockChange(new Location(pos1.getWorld(), minX, minY, minZ).add(x, 0, z), material);
     }
 
     @Override
@@ -62,4 +53,6 @@ public class VerticalDisplay extends Display{
 
         sendBlockChange(loc, material);
     }
+
+
 }
