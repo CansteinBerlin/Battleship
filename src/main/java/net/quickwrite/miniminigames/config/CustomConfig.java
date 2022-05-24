@@ -5,10 +5,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class CustomConfig {
 
@@ -25,7 +22,14 @@ public class CustomConfig {
         configFile = new File(plugin.getDataFolder(), name);
         if(!configFile.exists()){
             configFile.getParentFile().mkdirs();
-            plugin.saveResource(name, false);
+            if(plugin.getResource(name) != null) plugin.saveResource(name, false);
+            else{
+                try {
+                    configFile.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         config = YamlConfiguration.loadConfiguration(configFile);

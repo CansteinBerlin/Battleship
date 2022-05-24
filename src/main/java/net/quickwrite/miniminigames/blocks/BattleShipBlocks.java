@@ -32,7 +32,7 @@ public class BattleShipBlocks {
                 blocks.replace(identifier, Material.valueOf(material));
             }
         }catch (IllegalArgumentException e){
-            MiniMinigames.logger.severe("Could not load Material with name: " + material);
+            MiniMinigames.LOGGER.severe("Could not load Material with name: " + material);
             blocks.remove(identifier);
         }
     }

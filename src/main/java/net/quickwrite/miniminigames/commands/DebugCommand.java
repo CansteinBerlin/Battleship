@@ -1,7 +1,6 @@
 package net.quickwrite.miniminigames.commands;
 
 import net.quickwrite.miniminigames.MiniMinigames;
-import net.quickwrite.miniminigames.commands.debug.*;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.util.ReflectionUtil;
@@ -17,7 +16,7 @@ public class DebugCommand extends BaseCommand {
             try {
                 addSubCommand(command.getConstructor(BaseCommand.class).newInstance(this));
             }catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
-                MiniMinigames.logger.severe("§cCould not register Subcommand for " + name);
+                MiniMinigames.LOGGER.severe("§cCould not register Subcommand for " + name);
             }
         }
     }

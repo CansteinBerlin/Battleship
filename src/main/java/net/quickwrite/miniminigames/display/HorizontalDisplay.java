@@ -1,9 +1,13 @@
 package net.quickwrite.miniminigames.display;
 
+import com.google.common.collect.ImmutableMap;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
-public class HorizontalDisplay extends Display{
+import java.util.Map;
+
+public class HorizontalDisplay extends Display implements ConfigurationSerializable {
 
     public HorizontalDisplay(Location loc1, Location loc2){
         setPos1(loc1);
@@ -12,6 +16,20 @@ public class HorizontalDisplay extends Display{
         else if(pos1.getBlockX() < pos2.getBlockX() && pos1.getBlockZ() > pos2.getBlockZ()) direction = Direction.POS_X_DIRECTION;
         else if(pos1.getBlockX() > pos2.getBlockX() && pos1.getBlockZ() > pos2.getBlockZ()) direction = Direction.POS_Z_DIRECTION;
         else  direction = Direction.NEG_X_DIRECTION;
+
+        minX = Math.min(pos1.getBlockX(), pos2.getBlockX());
+        minY = Math.min(pos1.getBlockY(), pos2.getBlockY());
+        minZ = Math.min(pos1.getBlockZ(), pos2.getBlockZ());
+        maxX = Math.max(pos1.getBlockX(), pos2.getBlockX());
+        maxY = Math.max(pos1.getBlockY(), pos2.getBlockY());
+        maxZ = Math.max(pos1.getBlockZ(), pos2.getBlockZ());
+    }
+
+    public HorizontalDisplay(Map<String, Object> data){
+        super();
+        pos1 = (Location) data.get("pos1");
+        pos2 = (Location) data.get("pos2");
+        direction = Direction.valueOf((String) data.get("direction"));
 
         minX = Math.min(pos1.getBlockX(), pos2.getBlockX());
         minY = Math.min(pos1.getBlockY(), pos2.getBlockY());
@@ -54,5 +72,12 @@ public class HorizontalDisplay extends Display{
         sendBlockChange(loc, material);
     }
 
-
+    @Override
+    public Map<String, Object> serialize() {
+        return new ImmutableMap.Builder<String, Object>()
+                .put("pos1", pos1)
+                .put("pos2", pos2)
+                .put("direction", direction.name())
+                .build();
+    }
 }

@@ -39,7 +39,6 @@ public class DebugEnableSelectionCommand extends SubCommand {
     }
 
     public static void modifySelection(Player p, Location loc, Action action){
-        p.sendMessage("Accepted Action at " + loc + " with key " + action.name());
         if(action.equals(Action.RIGHT_CLICK_BLOCK)){
             selections.get(p).setPos1(loc);
         }else{
