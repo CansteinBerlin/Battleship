@@ -10,5 +10,4 @@ public class ReflectionUtil{
         Reflections reflections = new Reflections(path);
         return reflections.getSubTypesOf(type);
     }
-
 }

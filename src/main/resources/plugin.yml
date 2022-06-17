@@ -10,3 +10,5 @@ depend: [ProtocolLib]
 commands:
   mdebug:
     description: Debug Command for testing only
+  battleship:
+    description: BattleShip Commands for this plugin

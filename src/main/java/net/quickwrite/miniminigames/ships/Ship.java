@@ -31,6 +31,7 @@ public class Ship implements ConfigurationSerializable {
         hitBlock = (String) data.get("hitBlock");
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
