@@ -49,19 +49,23 @@ public class BattleShipChallengeCommand extends SubCommand {
             return true;
         }
 
-        TextComponent acceptComponent = new TextComponent("[Accept]");
-        acceptComponent.setColor(ChatColor.GREEN);
-        acceptComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/battleship accept"));
+        MiniMinigames.getInstance().getGuiManager().createMapSelectionGui(attacker, game, (map) -> {
+            TextComponent acceptComponent = new TextComponent("[Accept]");
+            acceptComponent.setColor(ChatColor.GREEN);
+            acceptComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/battleship accept"));
 
-        TextComponent denyComponent = new TextComponent("[Deny]");
-        denyComponent.setColor(ChatColor.RED);
-        denyComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/battleship deny"));
+            TextComponent denyComponent = new TextComponent("[Deny]");
+            denyComponent.setColor(ChatColor.RED);
+            denyComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/battleship deny"));
 
-        TextComponent message = new TextComponent(MiniMinigames.PREFIX + "§aPlayer §6" + attacker.getDisplayName() + "§a invited you to a game of Battleship");
+            TextComponent message = new TextComponent(MiniMinigames.PREFIX + "§aPlayer §6" + attacker.getDisplayName() + "§a invited you to a game of Battleship on the map §6" + map.getName() + "\n");
 
-        defender.spigot().sendMessage(new ComponentBuilder(message).append(" ").append(acceptComponent).append(" ").append(denyComponent).create());
-        sender.sendMessage(MiniMinigames.PREFIX + "§aSended Challenge to Player");
+            defender.spigot().sendMessage(new ComponentBuilder(message).append(" ").append(acceptComponent).append(" ").append(denyComponent).create());
 
+            attacker.sendMessage(MiniMinigames.PREFIX + "§aSent challenge invite to §6" + defender.getDisplayName());
+        });
+
+        sender.sendMessage(MiniMinigames.PREFIX + "§aPlease select the map");
         return true;
     }
 

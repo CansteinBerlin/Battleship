@@ -33,6 +33,10 @@ public class GameManager {
         games.remove(game);
     }
 
+    public void invalidMapSelection(Game game){
+        games.remove(game);
+    }
+
     public boolean contains(Player player){
         return getGame(player) != null;
     }

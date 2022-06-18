@@ -2,12 +2,14 @@ package net.quickwrite.miniminigames.game;
 
 import net.quickwrite.miniminigames.MiniMinigames;
 import net.quickwrite.miniminigames.game.gamestate.GameStateManager;
+import net.quickwrite.miniminigames.map.Map;
 import org.bukkit.entity.Player;
 
 public class Game {
 
     private final Player defender, attacker;
     private final GameStateManager manager;
+    private Map map;
 
     public Game(Player defender, Player attacker) {
         this.defender = defender;
@@ -48,4 +50,7 @@ public class Game {
         return defender.equals(player) || attacker.equals(player);
     }
 
+    public void setMap(Map map){
+        this.map = map;
+    }
 }

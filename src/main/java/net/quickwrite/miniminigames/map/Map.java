@@ -3,6 +3,7 @@ package net.quickwrite.miniminigames.map;
 import com.google.common.collect.ImmutableMap;
 import net.quickwrite.miniminigames.display.HorizontalDisplay;
 import net.quickwrite.miniminigames.display.VerticalDisplay;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -32,6 +33,8 @@ public class Map implements ConfigurationSerializable {
         attacker = (MapSide) data.get("attacker");
         defender = (MapSide) data.get("defender");
         name = (String) data.get("name");
+        displayItem = (ItemStack) data.get("displayItem");
+        applyLore(displayItem);
     }
 
     public void addPlayer(Player player){
@@ -47,9 +50,10 @@ public class Map implements ConfigurationSerializable {
     private void applyLore(ItemStack stack){
         ItemMeta meta = stack.getItemMeta();
         assert meta != null;
+        meta.setDisplayName(ChatColor.stripColor(meta.getDisplayName()));
         List<String> lore = new ArrayList<>();
-        lore.add("§7Map: §6" + name);
-        lore.add("§7Size: §6" + attacker.getThisPlayerDisplay().getWidth() + "x" + attacker.getThisPlayerDisplay().getHeight());
+        lore.add("§r§7Map: §6" + name);
+        lore.add("§r§7Size: §6" + attacker.getThisPlayerDisplay().getWidth() + "x" + attacker.getThisPlayerDisplay().getHeight());
         meta.setLore(lore);
         stack.setItemMeta(meta);
     }
@@ -67,10 +71,12 @@ public class Map implements ConfigurationSerializable {
 
     @Override
     public java.util.Map<String, Object> serialize() {
+
         return new ImmutableMap.Builder<String, Object>()
                 .put("attacker", attacker)
                 .put("defender", defender)
                 .put("name", name)
+                .put("displayItem", displayItem)
                 .build();
     }
 

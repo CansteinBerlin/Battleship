@@ -1,13 +1,17 @@
 package net.quickwrite.miniminigames;
 
 import net.quickwrite.miniminigames.blocks.BattleShipBlocks;
+import net.quickwrite.miniminigames.commands.BattleShipCommand;
 import net.quickwrite.miniminigames.commands.DebugCommand;
 import net.quickwrite.miniminigames.commandsystem.CommandManager;
 import net.quickwrite.miniminigames.config.*;
-import net.quickwrite.miniminigames.display.Display;
 import net.quickwrite.miniminigames.display.HorizontalDisplay;
 import net.quickwrite.miniminigames.display.VerticalDisplay;
+import net.quickwrite.miniminigames.game.GameManager;
+import net.quickwrite.miniminigames.game.gamestate.GameStateManager;
+import net.quickwrite.miniminigames.gui.GuiManager;
 import net.quickwrite.miniminigames.items.BattleshipItems;
+import net.quickwrite.miniminigames.listener.GuiListener;
 import net.quickwrite.miniminigames.listener.SelectionListener;
 import net.quickwrite.miniminigames.map.Map;
 import net.quickwrite.miniminigames.map.MapManager;
@@ -20,6 +24,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public final class MiniMinigames extends JavaPlugin {
 
@@ -35,6 +40,8 @@ public final class MiniMinigames extends JavaPlugin {
     private MapsConfig mapsConfig;
 
     private MapManager mapManager;
+    private GameManager gameManager;
+    private GuiManager guiManager;
 
 
     @Override
@@ -51,8 +58,14 @@ public final class MiniMinigames extends JavaPlugin {
 
         commandManager = new CommandManager(this);
         commandManager.addCommand(new DebugCommand());
+        commandManager.addCommand(new BattleShipCommand());
+
+        gameManager = new GameManager();
+
+        guiManager = new GuiManager();
 
         Bukkit.getPluginManager().registerEvents(new SelectionListener(), this);
+        Bukkit.getPluginManager().registerEvents(new GuiListener(), this);
     }
 
     private void loadConfigs() {
@@ -124,5 +137,13 @@ public final class MiniMinigames extends JavaPlugin {
 
     public MapManager getMapManager() {
         return mapManager;
+    }
+
+    public GameManager getGameManager(){
+        return gameManager;
+    }
+
+    public GuiManager getGuiManager() {
+        return guiManager;
     }
 }
