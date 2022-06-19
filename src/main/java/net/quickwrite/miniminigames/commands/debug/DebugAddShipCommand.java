@@ -1,9 +1,11 @@
 package net.quickwrite.miniminigames.commands.debug;
 
 import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.builder.items.ItemBuilder;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.ships.Ship;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 
 public class DebugAddShipCommand extends SubCommand {
@@ -17,7 +19,7 @@ public class DebugAddShipCommand extends SubCommand {
         if (args.length == 1){
             try {
                 int size = Integer.parseInt(args[0]);
-                new Ship(size, "default.ship.display.small", "default.ship.place", "default.ship.hit");
+                new Ship(size, Material.GREEN_DYE, "default.ship.place", "default.ship.hit", "CustomShip:" + size);
                 sender.sendMessage(MiniMinigames.PREFIX + "§aAdded Ship with size " + size);
                 return true;
             }catch (NumberFormatException e){

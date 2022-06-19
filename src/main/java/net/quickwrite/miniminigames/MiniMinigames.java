@@ -19,6 +19,7 @@ import net.quickwrite.miniminigames.map.MapSide;
 import net.quickwrite.miniminigames.ships.Ship;
 import net.quickwrite.miniminigames.ships.ShipManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -94,10 +95,19 @@ public final class MiniMinigames extends JavaPlugin {
 
     private void loadShipConfig() {
         shipConfig = new ShipConfig();
+
         ShipManager.loadShips(shipConfig);
         for(Ship s : ShipManager.ships){
             Bukkit.broadcastMessage(s.toString());
         }
+
+        //Default ships
+        ShipManager.defaultShips.add(new Ship(2, Material.GREEN_DYE, "default.ship.place", "default.ship.hit", "Small Ship"));
+        ShipManager.defaultShips.add(new Ship(3, Material.RED_DYE, "default.ship.place", "default.ship.hit", "Medium Ship"));
+        ShipManager.defaultShips.add(new Ship(4, Material.BLUE_DYE, "default.ship.place", "default.ship.hit", "Large Ship"));
+        ShipManager.defaultShips.add(new Ship(5, Material.BLACK_DYE, "default.ship.place", "default.ship.hit", "Larger Ship"));
+        ShipManager.defaultShips.add(new Ship(6, Material.BROWN_DYE, "default.ship.place", "default.ship.hit", "Even larger Ship"));
+
     }
 
     private void loadDefaultConfig(){

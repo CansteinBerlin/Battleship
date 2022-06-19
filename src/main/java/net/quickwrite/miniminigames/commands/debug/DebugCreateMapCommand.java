@@ -1,5 +1,6 @@
 package net.quickwrite.miniminigames.commands.debug;
 
+import com.google.common.collect.ImmutableMap;
 import net.quickwrite.miniminigames.MiniMinigames;
 import net.quickwrite.miniminigames.builder.items.ItemBuilder;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
@@ -7,6 +8,8 @@ import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.display.HorizontalDisplay;
 import net.quickwrite.miniminigames.display.VerticalDisplay;
 import net.quickwrite.miniminigames.map.Map;
+import net.quickwrite.miniminigames.ships.Ship;
+import net.quickwrite.miniminigames.ships.ShipManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -43,7 +46,15 @@ public class DebugCreateMapCommand extends SubCommand {
             return true;
         }
         Map map = new Map(attackerVerticalDisplay, defenderVerticalDisplay, attackerHorizontalDisplay, defenderHorizontalDisplay,
-                new ItemBuilder(Material.STRUCTURE_BLOCK).setDisplayName("§6Dummy Item").build(), name, attackerSpawnLocation, defenderSpawnLocation);
+                Material.STRUCTURE_BLOCK, name, attackerSpawnLocation, defenderSpawnLocation,
+                new ImmutableMap.Builder<Ship, Integer>()
+                        .put(ShipManager.getShipWithSize(2), 1)
+                        .put(ShipManager.getShipWithSize(3), 1)
+                        .put(ShipManager.getShipWithSize(4), 1)
+                        .put(ShipManager.getShipWithSize(5), 1)
+                        .put(ShipManager.getShipWithSize(6), 1)
+                        .build()
+        );
 
         if(!MiniMinigames.getInstance().getMapManager().addNewMap(name, map)){
             sender.sendMessage(MiniMinigames.PREFIX + "§cThere is already a map with the specific name");

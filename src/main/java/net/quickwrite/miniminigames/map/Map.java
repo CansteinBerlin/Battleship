@@ -1,16 +1,21 @@
 package net.quickwrite.miniminigames.map;
 
 import com.google.common.collect.ImmutableMap;
+import net.quickwrite.miniminigames.builder.items.ItemBuilder;
 import net.quickwrite.miniminigames.display.HorizontalDisplay;
 import net.quickwrite.miniminigames.display.VerticalDisplay;
+import net.quickwrite.miniminigames.ships.Ship;
+import net.quickwrite.miniminigames.ships.ShipManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Map implements ConfigurationSerializable {
@@ -19,15 +24,18 @@ public class Map implements ConfigurationSerializable {
     private MapSide attacker, defender;
     private Player player1, player2;
     private String name;
+    private java.util.Map<Ship, Integer> ships;
 
 
     public Map(VerticalDisplay attackerVerticalDisplay, VerticalDisplay defenderVerticalDisplay, HorizontalDisplay attackerHorizontalDisplay,
-               HorizontalDisplay defenderHorizontalDisplay, ItemStack displayItem, String name, Location attackerSpawnLocation, Location defenderSpawnLocation){
+               HorizontalDisplay defenderHorizontalDisplay, Material displayItem, String name, Location attackerSpawnLocation, Location defenderSpawnLocation, java.util.Map<Ship, Integer> ships){
         this.attacker = new MapSide(attackerVerticalDisplay, attackerHorizontalDisplay, attackerSpawnLocation);
         this.defender = new MapSide(defenderVerticalDisplay, defenderHorizontalDisplay, defenderSpawnLocation);
-        this.displayItem = displayItem;
-        applyLore(displayItem);
+        this.displayItem = new ItemBuilder(displayItem).setDisplayName(name).build();
         this.name = name;
+        this.ships = ships;
+
+        applyLore(this.displayItem);
     }
 
     public Map(java.util.Map<String, Object> data){
@@ -35,6 +43,14 @@ public class Map implements ConfigurationSerializable {
         defender = (MapSide) data.get("defender");
         name = (String) data.get("name");
         displayItem = (ItemStack) data.get("displayItem");
+
+        HashMap<String, Integer> savedShips = (HashMap<String, Integer>) data.get("ships");
+        this.ships = new HashMap<>();
+        for(java.util.Map.Entry<String, Integer> entry : savedShips.entrySet()){
+            ships.put(ShipManager.getShipWithName(entry.getKey()), entry.getValue());
+        }
+
+
         applyLore(displayItem);
     }
 
@@ -60,6 +76,11 @@ public class Map implements ConfigurationSerializable {
         List<String> lore = new ArrayList<>();
         lore.add("§r§7Map: §6" + name);
         lore.add("§r§7Size: §6" + attacker.getThisPlayerDisplay().getWidth() + "x" + attacker.getThisPlayerDisplay().getHeight());
+        lore.add("§r§7Ships:");
+        for(java.util.Map.Entry<Ship, Integer> entry : ships.entrySet()){
+            lore.add("§r§6 - " + entry.getKey().getName() + "§6(" + entry.getKey().getSize() + ") x " + entry.getValue());
+        }
+
         meta.setLore(lore);
         stack.setItemMeta(meta);
     }
@@ -78,11 +99,17 @@ public class Map implements ConfigurationSerializable {
     @Override
     public java.util.Map<String, Object> serialize() {
 
+        HashMap<String, Integer> saveShips = new HashMap<>();
+        for(java.util.Map.Entry<Ship, Integer> entry : ships.entrySet()){
+            saveShips.put(entry.getKey().getName(), entry.getValue());
+        }
+
         return new ImmutableMap.Builder<String, Object>()
                 .put("attacker", attacker)
                 .put("defender", defender)
                 .put("name", name)
                 .put("displayItem", displayItem)
+                .put("ships", saveShips)
                 .build();
     }
 
