@@ -10,6 +10,7 @@ public class Game {
     private final Player defender, attacker;
     private final GameStateManager manager;
     private Map map;
+    private boolean started;
 
     public Game(Player defender, Player attacker) {
         this.defender = defender;
@@ -18,15 +19,29 @@ public class Game {
         manager = new GameStateManager(this);
     }
 
-    public void start(Player p){
+    public void accept(Player p){
         p.sendMessage(MiniMinigames.PREFIX + "§aThe Game has been started");
-        manager.setCurrentGameState(GameStateManager.GameState.GAME_INIT);
         if(p.equals(defender)){
             attacker.sendMessage(MiniMinigames.PREFIX + "§aThe Player §6" + p.getDisplayName() + "§a has accepted the invite");
         }else{
             defender.sendMessage(MiniMinigames.PREFIX + "§aThe Player §6" + p.getDisplayName() + "§a has accepted the invite");
         }
         System.out.println("Start the Game");
+        started = true;
+        initGame();
+    }
+
+    private void initGame(){
+        manager.setCurrentGameState(GameStateManager.GameState.GAME_INIT);
+        map.addPlayer(attacker);
+        map.addPlayer(defender);
+        map.teleportToSpawn();
+
+        startGame();
+    }
+
+    public void startGame(){
+        manager.setCurrentGameState(GameStateManager.GameState.PLACING_SHIPS);
     }
 
     public void deny(Player p){
@@ -52,5 +67,9 @@ public class Game {
 
     public void setMap(Map map){
         this.map = map;
+    }
+
+    public boolean isStarted() {
+        return started;
     }
 }

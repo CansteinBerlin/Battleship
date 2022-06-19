@@ -3,6 +3,8 @@ package net.quickwrite.miniminigames.map;
 import com.google.common.collect.ImmutableMap;
 import net.quickwrite.miniminigames.display.HorizontalDisplay;
 import net.quickwrite.miniminigames.display.VerticalDisplay;
+import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 
@@ -11,13 +13,15 @@ import java.util.Map;
 public class MapSide implements ConfigurationSerializable{
 
     private Player player;
-    private VerticalDisplay otherPlayerDisplay;
-    private HorizontalDisplay thisPlayerDisplay;
+    private final VerticalDisplay otherPlayerDisplay;
+    private final HorizontalDisplay thisPlayerDisplay;
     private boolean surrendered, finishedMove, finishedPlace;
+    private final Location spawnLocation;
 
-    public MapSide(VerticalDisplay otherPlayerDisplay, HorizontalDisplay thisPlayerDisplay){
+    public MapSide(VerticalDisplay otherPlayerDisplay, HorizontalDisplay thisPlayerDisplay, Location spawnLocation){
         this.otherPlayerDisplay = otherPlayerDisplay;
         this.thisPlayerDisplay = thisPlayerDisplay;
+        this.spawnLocation = spawnLocation;
 
         surrendered = false;
         finishedMove = false;
@@ -25,7 +29,7 @@ public class MapSide implements ConfigurationSerializable{
     }
 
     public MapSide(Map<String, Object> data){
-        this((VerticalDisplay) data.get("otherPlayerDisplay"), (HorizontalDisplay) data.get("thisPlayerDisplay"));
+        this((VerticalDisplay) data.get("otherPlayerDisplay"), (HorizontalDisplay) data.get("thisPlayerDisplay"), (Location) data.get("spawnLocation"));
     }
 
     public void addPlayingPlayer(Player player){
@@ -33,12 +37,16 @@ public class MapSide implements ConfigurationSerializable{
         addPlayerToDisplays(player);
     }
 
+    public void teleportToSpawn(){
+        player.teleport(spawnLocation);
+    }
+
     public void removePlayer(Player player){
         if(this.player.getUniqueId().equals(player.getUniqueId())){
             player = null;
             surrendered = true;
         }
-        removefromDisplay(player);
+        removeFromDisplay(player);
 
     }
 
@@ -46,7 +54,7 @@ public class MapSide implements ConfigurationSerializable{
         otherPlayerDisplay.addPlayer(player);
         thisPlayerDisplay.addPlayer(player);
     }
-    private void removefromDisplay(Player player){
+    private void removeFromDisplay(Player player){
         otherPlayerDisplay.removePlayer(player);
         thisPlayerDisplay.removePlayer(player);
     }
@@ -56,12 +64,15 @@ public class MapSide implements ConfigurationSerializable{
         return new ImmutableMap.Builder<String, Object>()
                 .put("otherPlayerDisplay", otherPlayerDisplay)
                 .put("thisPlayerDisplay", thisPlayerDisplay)
+                .put("spawnLocation", spawnLocation)
                 .build();
     }
 
     public void display(){
         thisPlayerDisplay.display();
         otherPlayerDisplay.display();
+
+        spawnLocation.getWorld().spawnParticle(Particle.END_ROD, spawnLocation.getX(), spawnLocation.getY(), spawnLocation.getZ(), 100, 0.5, 0.5, 0.5, 0D);
     }
 
     public boolean isSurrendered() {

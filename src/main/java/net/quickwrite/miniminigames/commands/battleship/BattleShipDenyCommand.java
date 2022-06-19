@@ -22,6 +22,10 @@ public class BattleShipDenyCommand extends SubCommand {
                 p.sendMessage(MiniMinigames.PREFIX + "§cThere is no game to deny");
                 return true;
             }
+            if(game.isStarted()){
+                p.sendMessage(MiniMinigames.PREFIX + "§cThe game has already been started");
+                return true;
+            }
             MiniMinigames.getInstance().getGameManager().removeGame(game, p);
         }
         return true;

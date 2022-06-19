@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import net.quickwrite.miniminigames.display.HorizontalDisplay;
 import net.quickwrite.miniminigames.display.VerticalDisplay;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -21,9 +22,9 @@ public class Map implements ConfigurationSerializable {
 
 
     public Map(VerticalDisplay attackerVerticalDisplay, VerticalDisplay defenderVerticalDisplay, HorizontalDisplay attackerHorizontalDisplay,
-               HorizontalDisplay defenderHorizontalDisplay, ItemStack displayItem, String name){
-        this.attacker = new MapSide(attackerVerticalDisplay, attackerHorizontalDisplay);
-        this.defender = new MapSide(defenderVerticalDisplay, defenderHorizontalDisplay);
+               HorizontalDisplay defenderHorizontalDisplay, ItemStack displayItem, String name, Location attackerSpawnLocation, Location defenderSpawnLocation){
+        this.attacker = new MapSide(attackerVerticalDisplay, attackerHorizontalDisplay, attackerSpawnLocation);
+        this.defender = new MapSide(defenderVerticalDisplay, defenderHorizontalDisplay, defenderSpawnLocation);
         this.displayItem = displayItem;
         applyLore(displayItem);
         this.name = name;
@@ -45,6 +46,11 @@ public class Map implements ConfigurationSerializable {
             player2 = player;
             defender.addPlayingPlayer(player);
         }
+    }
+
+    public void teleportToSpawn(){
+        attacker.teleportToSpawn();
+        defender.teleportToSpawn();
     }
 
     private void applyLore(ItemStack stack){

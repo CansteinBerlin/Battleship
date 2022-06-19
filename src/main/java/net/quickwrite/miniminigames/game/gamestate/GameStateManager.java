@@ -7,7 +7,7 @@ public class GameStateManager {
     public enum GameState{
         PLAYER_ACCEPTING,
         GAME_INIT,
-        PLACING_BOATS,
+        PLACING_SHIPS,
         ATTACKER_ATTACKING,
         DEFENDER_ATTACKING,
         GAME_FINISH

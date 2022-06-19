@@ -22,7 +22,7 @@ public class BattleShipAcceptCommand extends SubCommand {
                 p.sendMessage(MiniMinigames.PREFIX + "§cThere is no game to play");
                 return true;
             }
-            game.start(p);
+            game.accept(p);
         }
         return true;
     }
