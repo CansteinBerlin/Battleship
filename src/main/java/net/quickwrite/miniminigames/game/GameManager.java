@@ -33,6 +33,11 @@ public class GameManager {
         games.remove(game);
     }
 
+    public void removeGame(Game game){
+        game.stop();
+        games.remove(game);
+    }
+
     public void invalidMapSelection(Game game){
         games.remove(game);
     }

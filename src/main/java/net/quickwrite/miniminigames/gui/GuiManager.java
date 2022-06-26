@@ -18,6 +18,7 @@ public class GuiManager {
 
     public boolean onClick(Player p, int slot, InventoryAction action){
         if(!guis.containsKey(p)) return false;
+        if(slot == -999) return true;
         guis.get(p).onClick(slot, action);
         return true;
     }

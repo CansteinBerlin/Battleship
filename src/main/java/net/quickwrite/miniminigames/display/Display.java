@@ -2,8 +2,8 @@ package net.quickwrite.miniminigames.display;
 
 import com.comphenix.protocol.wrappers.BlockPosition;
 import com.comphenix.protocol.wrappers.WrappedBlockData;
-import net.quickwrite.miniminigames.packetwrapper.AbstractPacket;
-import net.quickwrite.miniminigames.packetwrapper.WrapperPlayServerBlockChange;
+import com.comphenix.protocol.wrappers.WrappedDataWatcher;
+import net.quickwrite.miniminigames.packetwrapper.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -17,6 +17,7 @@ import java.util.UUID;
 
 public abstract class Display {
 
+    //Debug Only
     public static Display currentTestDisplay;
 
     protected final ArrayList<UUID> displayPlayers;
@@ -26,9 +27,13 @@ public abstract class Display {
 
     protected int minX, minY, minZ, maxX, maxY, maxZ;
 
+    private ArrayList<Integer> markers;
+
     public Display() {
         displayPlayers = new ArrayList<>();
         changedBlocks = new HashMap<>();
+
+        markers = new ArrayList<>();
     }
 
     public abstract int getWidth();
@@ -53,7 +58,64 @@ public abstract class Display {
         }
     }
 
-    protected Location unifyLocation(Location loc){
+    public void markLocation(Location loc){
+        int ID = (int) (Math.random() * Integer.MAX_VALUE);
+        sendMarkerSpawnToAllPlayers(loc, ID);
+        markers.add(ID);
+    }
+
+    public void removeSpawnedMarkers(){
+        if(markers.size() > 0) sendPacketToPlayers(getMarkerDestroyPacket());
+        markers.clear();
+    }
+
+    public boolean isInBounds(Location loc){
+        return minX <= loc.getBlockX() && maxX >= loc.getBlockX()
+                && minY <= loc.getBlockY() && maxY >= loc.getBlockY()
+                && minZ <= loc.getBlockZ() && maxZ >= loc.getBlockZ();
+
+    }
+
+    private WrapperPlayServerEntityDestroy getMarkerDestroyPacket(){
+        WrapperPlayServerEntityDestroy destroyPacket = new WrapperPlayServerEntityDestroy();
+        destroyPacket.setEntityIds(markers);
+        return destroyPacket;
+    }
+
+    private WrapperPlayServerSpawnEntityLiving getMarkerSpawnPacket(Location loc, int entityId){
+        WrapperPlayServerSpawnEntityLiving spawnEntityPacket = new WrapperPlayServerSpawnEntityLiving();
+        spawnEntityPacket.setUniqueId(UUID.randomUUID());
+        spawnEntityPacket.setX(loc.getBlockX() + 0.5);
+        spawnEntityPacket.setY(loc.getBlockY());
+        spawnEntityPacket.setZ(loc.getBlockZ() + 0.5);
+        spawnEntityPacket.setType(WrapperPlayServerSpawnEntityLiving.ENTITY_TYPE.MAGMA_CUBE);
+        spawnEntityPacket.setEntityID(entityId);
+        return spawnEntityPacket;
+    }
+
+    private WrapperPlayServerEntityMetadata getModifyMarkerPacket(int entityId, boolean glowing){
+        WrapperPlayServerEntityMetadata entityMetadataPacket = new WrapperPlayServerEntityMetadata();
+        entityMetadataPacket.setEntityId(entityId);
+        WrappedDataWatcher watcher = new WrappedDataWatcher();
+        WrappedDataWatcher.Serializer byteSerializer = WrappedDataWatcher.Registry.get(Byte.class);
+        WrappedDataWatcher.Serializer intSerializer = WrappedDataWatcher.Registry.get(Integer.class);
+        watcher.setObject(0, byteSerializer, (byte)((glowing ? 0x40 : 0) | 0x20));
+        watcher.setObject(16, intSerializer, 2);
+        entityMetadataPacket.setEntityMetadata(watcher.getWatchableObjects());
+        return entityMetadataPacket;
+    }
+
+    private void sendMarkerSpawnToAllPlayers(Location loc, int entityId){
+        sendPacketToPlayers(getMarkerSpawnPacket(loc, entityId));
+        sendPacketToPlayers(getModifyMarkerPacket(entityId, true));
+    }
+
+    private void sendMarkerSpawnToPlayer(Player p, Location loc, int entityId){
+        getMarkerSpawnPacket(loc, entityId).sendPacket(p);
+        getModifyMarkerPacket(entityId, true).sendPacket(p);
+    }
+
+    public static Location unifyLocation(Location loc){
         return new Location(loc.getWorld(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), 0, 0);
     }
 
@@ -76,6 +138,7 @@ public abstract class Display {
         for(Location loc : changedBlocks.keySet()){
             getBlockChangePacket(loc, Material.AIR).sendPacket(p);
         }
+        getMarkerDestroyPacket().sendPacket(p);
     }
 
     public void clearDisplay(){
@@ -137,6 +200,30 @@ public abstract class Display {
                 }
             }
         }
+    }
+
+    public int getMinX() {
+        return minX;
+    }
+
+    public int getMinY() {
+        return minY;
+    }
+
+    public int getMinZ() {
+        return minZ;
+    }
+
+    public int getMaxX() {
+        return maxX;
+    }
+
+    public int getMaxY() {
+        return maxY;
+    }
+
+    public int getMaxZ() {
+        return maxZ;
     }
 }
 

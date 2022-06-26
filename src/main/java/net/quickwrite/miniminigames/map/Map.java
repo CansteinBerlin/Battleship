@@ -20,11 +20,11 @@ import java.util.List;
 
 public class Map implements ConfigurationSerializable {
 
-    private ItemStack displayItem;
-    private MapSide attacker, defender;
+    private final ItemStack displayItem;
+    private final MapSide attacker, defender;
     private Player player1, player2;
-    private String name;
-    private java.util.Map<Ship, Integer> ships;
+    private final String name;
+    private final java.util.Map<Ship, Integer> ships;
 
 
     public Map(VerticalDisplay attackerVerticalDisplay, VerticalDisplay defenderVerticalDisplay, HorizontalDisplay attackerHorizontalDisplay,
@@ -132,5 +132,17 @@ public class Map implements ConfigurationSerializable {
     public void displayAll() {
         attacker.display();
         defender.display();
+    }
+
+    public java.util.Map<Ship, Integer> getShips() {
+        return ships;
+    }
+
+    public MapSide getAttacker() {
+        return attacker;
+    }
+
+    public MapSide getDefender() {
+        return defender;
     }
 }

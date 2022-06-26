@@ -1,11 +1,15 @@
 package net.quickwrite.miniminigames.ships;
 
 import com.google.common.collect.ImmutableMap;
+import net.quickwrite.miniminigames.MiniMinigames;
 import net.quickwrite.miniminigames.blocks.BattleShipBlocks;
 import net.quickwrite.miniminigames.builder.items.ItemBuilder;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Collections;
 import java.util.Map;
@@ -13,9 +17,11 @@ import java.util.Objects;
 
 public class Ship implements ConfigurationSerializable {
 
+    public static NamespacedKey KEY = new NamespacedKey(MiniMinigames.getInstance(), "shipLevel");
+
     private final int size;
     private final String placeBlock, hitBlock;
-    public final ItemStack displayItem;
+    private final ItemStack displayItem;
     private final String name;
 
     public Ship(int size, Material displayItem, String placeBlock, String hitBlock, String name){
@@ -75,7 +81,11 @@ public class Ship implements ConfigurationSerializable {
     }
 
     public ItemStack getDisplayItem() {
-        return displayItem;
+        ItemMeta meta = displayItem.getItemMeta();
+        meta.getPersistentDataContainer().set(Ship.KEY, PersistentDataType.INTEGER, size);
+        ItemStack stack = displayItem.clone();
+        stack.setItemMeta(meta);
+        return stack;
     }
 
     public Material getPlaceBlock() {

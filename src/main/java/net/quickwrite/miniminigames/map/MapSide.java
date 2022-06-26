@@ -75,6 +75,10 @@ public class MapSide implements ConfigurationSerializable{
         spawnLocation.getWorld().spawnParticle(Particle.END_ROD, spawnLocation.getX(), spawnLocation.getY(), spawnLocation.getZ(), 100, 0.5, 0.5, 0.5, 0D);
     }
 
+    public boolean isInBounds(Location loc) {
+        return thisPlayerDisplay.isInBounds(loc);
+    }
+
     public boolean isSurrendered() {
         return surrendered;
     }
