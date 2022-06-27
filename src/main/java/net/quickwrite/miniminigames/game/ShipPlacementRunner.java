@@ -115,6 +115,7 @@ public class ShipPlacementRunner extends BukkitRunnable {
 
     public boolean placeShip(){
         int shipSize = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(Ship.KEY, PersistentDataType.INTEGER);
+        if(locations.size() != shipSize) return false;
         Ship ship = null;
         for(Ship s : shipsToPlace.keySet()){
             if(shipSize == s.getSize()){
