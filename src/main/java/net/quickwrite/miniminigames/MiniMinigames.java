@@ -3,7 +3,9 @@ package net.quickwrite.miniminigames;
 import net.quickwrite.miniminigames.blocks.BattleShipBlocks;
 import net.quickwrite.miniminigames.commands.BattleShipCommand;
 import net.quickwrite.miniminigames.commands.DebugCommand;
+import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.CommandManager;
+import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.config.*;
 import net.quickwrite.miniminigames.display.HorizontalDisplay;
 import net.quickwrite.miniminigames.display.VerticalDisplay;
@@ -18,12 +20,15 @@ import net.quickwrite.miniminigames.map.MapManager;
 import net.quickwrite.miniminigames.map.MapSide;
 import net.quickwrite.miniminigames.ships.Ship;
 import net.quickwrite.miniminigames.ships.ShipManager;
+import net.quickwrite.miniminigames.util.ReflectionUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -65,8 +70,13 @@ public final class MiniMinigames extends JavaPlugin {
 
         guiManager = new GuiManager();
 
-        Bukkit.getPluginManager().registerEvents(new SelectionListener(), this);
-        Bukkit.getPluginManager().registerEvents(new GuiListener(), this);
+        for(Class<? extends Listener > listener : ReflectionUtil.getAllClasses("net.quickwrite.miniminigames.listener", Listener.class)){
+            try {
+                Bukkit.getPluginManager().registerEvents(listener.getConstructor().newInstance(), this);
+            }catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
+                MiniMinigames.LOGGER.severe("§cCould not register Listener with name " + listener);
+            }
+        }
     }
 
     private void loadConfigs() {

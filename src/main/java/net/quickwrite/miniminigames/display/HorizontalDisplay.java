@@ -65,8 +65,8 @@ public class HorizontalDisplay extends Display implements ConfigurationSerializa
 
     @Override
     public void setBlock(Location loc, Material material) {
-        if(!(loc.getBlockX() >= minX && loc.getBlockY() <= maxX)) return;
-        if(!(loc.getBlockY() >= minY && loc.getBlockY() <= maxX)) return;
+        if(!(loc.getBlockX() >= minX && loc.getBlockX() <= maxX)) return;
+        if(!(loc.getBlockY() >= minY && loc.getBlockY() <= maxY)) return;
         if(!(loc.getBlockZ() >= minZ && loc.getBlockZ() <= maxZ)) return;
 
         sendBlockChange(loc, material);

@@ -4,9 +4,11 @@ import net.quickwrite.miniminigames.MiniMinigames;
 import net.quickwrite.miniminigames.game.gamestate.GameStateManager;
 import net.quickwrite.miniminigames.map.Map;
 import net.quickwrite.miniminigames.ships.Ship;
+import net.quickwrite.miniminigames.ships.ShipContainer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Game {
@@ -16,7 +18,8 @@ public class Game {
     private Map map;
     private boolean started;
     private PlayerSafe attackerSafe, defenderSafe;
-    private ShipPlacementRunner attackerRunner, defenderRunner;
+    private ShipPlacementRunner attackerShipPlacementRunner, defenderShipPlacementRunner;
+    private ArrayList<ShipContainer> attackerShips, defenderShips;
 
     public Game(Player defender, Player attacker) {
         this.defender = defender;
@@ -63,10 +66,37 @@ public class Game {
     public void startGame(){
         manager.setCurrentGameState(GameStateManager.GameState.PLACING_SHIPS);
 
-        attackerRunner = new ShipPlacementRunner(attacker, new HashMap<>(map.getShips()), map.getAttacker());
-        defenderRunner = new ShipPlacementRunner(defender, new HashMap<>(map.getShips()), map.getDefender());
-        attackerRunner.runTaskTimer(MiniMinigames.getInstance(), 0, 1);
-        defenderRunner.runTaskTimer(MiniMinigames.getInstance(), 0, 1);
+        attackerShipPlacementRunner = new ShipPlacementRunner(attacker, new HashMap<>(map.getShips()), map.getAttacker());
+        defenderShipPlacementRunner = new ShipPlacementRunner(defender, new HashMap<>(map.getShips()), map.getDefender());
+        attackerShipPlacementRunner.runTaskTimer(MiniMinigames.getInstance(), 0, 1);
+        defenderShipPlacementRunner.runTaskTimer(MiniMinigames.getInstance(), 0, 1);
+    }
+
+    public void toggleShipDirection(Player p){
+        if(defender.equals(p)) defenderShipPlacementRunner.toggleDirection();
+        else attackerShipPlacementRunner.toggleDirection();
+    }
+
+    public void placeShip(Player p){
+        boolean finished;
+        if(defender.equals(p)) finished = defenderShipPlacementRunner.placeShip();
+        else finished = attackerShipPlacementRunner.placeShip();
+
+        if(finished){
+            if(defender.equals(p)) {
+                defenderShips = defenderShipPlacementRunner.getPlacedShips();
+                defenderShipPlacementRunner = null;
+            }
+            else {
+                attackerShips = attackerShipPlacementRunner.getPlacedShips();
+                attackerShipPlacementRunner = null;
+            }
+
+            p.sendMessage(MiniMinigames.PREFIX + "§aYou finished placing the ships.");
+            if(attackerShips == null || defenderShips == null){
+                p.sendMessage(MiniMinigames.PREFIX + "§aNow waiting for your opponent");
+            }
+        }
     }
 
     public void deny(Player p){
@@ -79,8 +109,8 @@ public class Game {
     }
 
     public void stop(){
-        defenderRunner.cancel();
-        attackerRunner.cancel();
+        defenderShipPlacementRunner.cancel();
+        attackerShipPlacementRunner.cancel();
     }
 
     public GameStateManager.GameState getCurrentGameState(){

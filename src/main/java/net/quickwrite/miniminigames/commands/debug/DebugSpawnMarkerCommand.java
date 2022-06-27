@@ -7,6 +7,7 @@ import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.packetwrapper.WrapperPlayServerEntityMetadata;
 import net.quickwrite.miniminigames.packetwrapper.WrapperPlayServerSpawnEntityLiving;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -42,7 +43,7 @@ public class DebugSpawnMarkerCommand extends SubCommand {
         WrappedDataWatcher watcher = new WrappedDataWatcher();
         WrappedDataWatcher.Serializer byteSerializer = WrappedDataWatcher.Registry.get(Byte.class);
         WrappedDataWatcher.Serializer intSerializer = WrappedDataWatcher.Registry.get(Integer.class);
-        watcher.setObject(0, byteSerializer, (byte)(0x40 | 0x20));
+        watcher.setObject(0, byteSerializer, (byte)(0x40 | 0x20)); //
         watcher.setObject(16, intSerializer, 2);
         entityMetadata.setEntityMetadata(watcher.getWatchableObjects());
         entityMetadata.sendPacket(p);

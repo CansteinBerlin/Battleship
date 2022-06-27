@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import net.quickwrite.miniminigames.MiniMinigames;
 import net.quickwrite.miniminigames.blocks.BattleShipBlocks;
 import net.quickwrite.miniminigames.builder.items.ItemBuilder;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -11,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
@@ -23,6 +25,9 @@ public class Ship implements ConfigurationSerializable {
     private final String placeBlock, hitBlock;
     private final ItemStack displayItem;
     private final String name;
+
+    //Placement
+
 
     public Ship(int size, Material displayItem, String placeBlock, String hitBlock, String name){
         this.size = size;

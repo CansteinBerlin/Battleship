@@ -1,11 +1,14 @@
 package net.quickwrite.miniminigames.game;
 
+import net.quickwrite.miniminigames.commands.DebugCommand;
 import net.quickwrite.miniminigames.display.Direction;
 import net.quickwrite.miniminigames.display.Display;
 import net.quickwrite.miniminigames.map.MapSide;
 import net.quickwrite.miniminigames.ships.Ship;
+import net.quickwrite.miniminigames.ships.ShipContainer;
+import net.quickwrite.miniminigames.util.DebugMessage;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -18,6 +21,7 @@ public class ShipPlacementRunner extends BukkitRunnable {
 
     private final Player p;
     private final Map<Ship, Integer> shipsToPlace;
+    private final ArrayList<ShipContainer> placedShips;
     private final MapSide displaySide;
 
     private final int minX, maxX, minZ, maxZ;
@@ -27,6 +31,7 @@ public class ShipPlacementRunner extends BukkitRunnable {
     private Location lastLocation;
     private boolean lastDirection;
     private int lastShipSize;
+    private final ArrayList<Location> locations;
 
     public ShipPlacementRunner(Player p, Map<Ship, Integer> shipsToPlace, MapSide displaySide) {
         this.p = p;
@@ -41,6 +46,9 @@ public class ShipPlacementRunner extends BukkitRunnable {
 
         horizontal = false;
         this.dirMult = displaySide.getOtherPlayerDisplay().getDirection();
+
+        placedShips = new ArrayList<>();
+        locations = new ArrayList<>();
     }
 
     @Override
@@ -77,8 +85,7 @@ public class ShipPlacementRunner extends BukkitRunnable {
         lastLocation = loc.clone();
         lastShipSize = shipSize;
 
-
-        ArrayList<Location> locations = new ArrayList<>();
+        locations.clear();
         locations.add(loc.clone());
 
         //Calculate Locations
@@ -90,18 +97,61 @@ public class ShipPlacementRunner extends BukkitRunnable {
             ).clone());
         }
 
-        if(!allLocationsValid(locations)) return;
-
         displaySide.getThisPlayerDisplay().removeSpawnedMarkers();
+
+        if(!allLocationsValid(locations)) {
+            locations.clear();
+            return;
+        }
+
         for(Location l : locations){
             displaySide.getThisPlayerDisplay().markLocation(l);
         }
     }
 
+    public void toggleDirection(){
+        horizontal = !horizontal;
+    }
+
+    public boolean placeShip(){
+        int shipSize = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(Ship.KEY, PersistentDataType.INTEGER);
+        Ship ship = null;
+        for(Ship s : shipsToPlace.keySet()){
+            if(shipSize == s.getSize()){
+                ship = s;
+                break;
+            }
+        }
+        if(ship == null) return false;
+        ShipContainer container = new ShipContainer(ship, locations);
+        for(Location loc : locations){
+            displaySide.getThisPlayerDisplay().setBlock(loc, container.getPlaceBlock());
+        }
+
+        placedShips.add(container);
+        shipsToPlace.replace(ship, shipsToPlace.get(ship) - 1);
+        if(shipsToPlace.get(ship) == 0) shipsToPlace.remove(ship);
+        p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount() - 1);
+
+        if(shipsToPlace.isEmpty()){
+            displaySide.getThisPlayerDisplay().removeSpawnedMarkers();
+            cancel();
+            return true;
+        }
+        return false;
+    }
+
     public boolean allLocationsValid(ArrayList<Location> locs){
         for(Location loc : locs){
             if(!displaySide.isInBounds(loc)) return false;
+            for(ShipContainer ship : placedShips){
+                if(ship.containsLocation(loc)) return false;
+            }
         }
         return true;
+    }
+
+    public ArrayList<ShipContainer> getPlacedShips() {
+        return placedShips;
     }
 }
