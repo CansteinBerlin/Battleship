@@ -3,8 +3,11 @@ package net.quickwrite.miniminigames.game;
 import net.quickwrite.miniminigames.MiniMinigames;
 import net.quickwrite.miniminigames.game.gamestate.GameStateManager;
 import net.quickwrite.miniminigames.map.Map;
+import net.quickwrite.miniminigames.map.MapSide;
 import net.quickwrite.miniminigames.ships.Ship;
 import net.quickwrite.miniminigames.ships.ShipContainer;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -84,10 +87,12 @@ public class Game {
 
         if(finished){
             if(defender.equals(p)) {
+                processContainers(defenderShipPlacementRunner.getPlacedShips(), map.getDefender());
                 defenderShips = defenderShipPlacementRunner.getPlacedShips();
                 defenderShipPlacementRunner = null;
             }
             else {
+                processContainers(attackerShipPlacementRunner.getPlacedShips(), map.getAttacker());
                 attackerShips = attackerShipPlacementRunner.getPlacedShips();
                 attackerShipPlacementRunner = null;
             }
@@ -97,6 +102,17 @@ public class Game {
                 p.sendMessage(MiniMinigames.PREFIX + "§aNow waiting for your opponent");
             }
         }
+    }
+
+    public void processContainers(ArrayList<ShipContainer> containers, MapSide side){
+        for(ShipContainer container : containers){
+            container.convertLocations(side.getThisPlayerDisplay());
+
+            for(Location loc : container.getPlacedLocations()){
+                side.getOtherPlayerDisplay().setBlock(loc.getBlockX(), loc.getBlockZ(), Material.GREEN_CONCRETE);
+            }
+        }
+
     }
 
     public void deny(Player p){

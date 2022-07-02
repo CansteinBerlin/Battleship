@@ -7,6 +7,7 @@ import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.packetwrapper.WrapperPlayServerEntityMetadata;
 import net.quickwrite.miniminigames.packetwrapper.WrapperPlayServerSpawnEntityLiving;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
