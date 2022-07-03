@@ -74,6 +74,7 @@ public class MapSelectionGUI implements IGUI{
     }
 
     public void onClick(int slot, InventoryAction inventoryAction){
+        if(inv.getItem(slot) == null) return;
         if(inv.getItem(slot).getType().equals(Material.AIR) && slot >= 0) return;
 
         clicked = true;

@@ -1,13 +1,10 @@
 package net.quickwrite.miniminigames.game;
 
-import net.quickwrite.miniminigames.commands.DebugCommand;
 import net.quickwrite.miniminigames.display.Direction;
 import net.quickwrite.miniminigames.display.Display;
 import net.quickwrite.miniminigames.map.MapSide;
 import net.quickwrite.miniminigames.ships.Ship;
 import net.quickwrite.miniminigames.ships.ShipContainer;
-import net.quickwrite.miniminigames.util.DebugMessage;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;

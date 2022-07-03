@@ -1,6 +1,7 @@
 package net.quickwrite.miniminigames.display;
 
 import com.google.common.collect.ImmutableMap;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -29,6 +30,8 @@ public class HorizontalDisplay extends Display implements ConfigurationSerializa
         super();
         pos1 = (Location) data.get("pos1");
         pos2 = (Location) data.get("pos2");
+        pos1.getBlock().setType(Material.GOLD_BLOCK);
+        pos2.getBlock().setType(Material.DIAMOND_BLOCK);
         direction = Direction.valueOf((String) data.get("direction"));
 
         minX = Math.min(pos1.getBlockX(), pos2.getBlockX());
@@ -60,7 +63,24 @@ public class HorizontalDisplay extends Display implements ConfigurationSerializa
         if(x < 0 || x >= getWidth()) return;
         if(z < 0 || z >= getHeight()) return;
 
-        sendBlockChange(new Location(pos1.getWorld(), minX, minY, minZ).add(x, 0, z), material);
+        Location loc;
+        Bukkit.broadcastMessage(x + " | " + z);
+        switch (direction){
+            case NEG_Z_DIRECTION:
+                loc = pos1.clone().add(x, 0, z);
+                break;
+            case POS_Z_DIRECTION:
+                loc = pos1.clone().subtract(x, 0, z);
+                break;
+            case POS_X_DIRECTION:
+                loc = pos1.clone().add(z, 0, -x);
+                break;
+            default:
+                loc = pos1.clone().add(-z, 0, x);
+
+        }
+
+        sendBlockChange(loc, material);
     }
 
     @Override
@@ -70,6 +90,21 @@ public class HorizontalDisplay extends Display implements ConfigurationSerializa
         if(!(loc.getBlockZ() >= minZ && loc.getBlockZ() <= maxZ)) return;
 
         sendBlockChange(loc, material);
+    }
+
+    @Override
+    public Location convertWorldToLocalCoordinate(Location loc) {
+        Location res = pos1.clone().subtract(Display.unifyLocation(loc));
+        res.setX(Math.abs(res.getBlockX()));
+        res.setY(Math.abs(res.getBlockY()));
+        res.setZ(Math.abs(res.getBlockZ()));
+
+        if (direction == Direction.NEG_X_DIRECTION || direction == Direction.POS_X_DIRECTION) {
+            int x = res.getBlockX();
+            res.setX(res.getBlockZ());
+            res.setZ(x);
+        }
+        return res;
     }
 
     @Override

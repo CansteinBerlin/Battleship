@@ -6,6 +6,8 @@ import net.quickwrite.miniminigames.map.Map;
 import net.quickwrite.miniminigames.map.MapSide;
 import net.quickwrite.miniminigames.ships.Ship;
 import net.quickwrite.miniminigames.ships.ShipContainer;
+import net.quickwrite.miniminigames.util.DebugMessage;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -22,7 +24,9 @@ public class Game {
     private boolean started;
     private PlayerSafe attackerSafe, defenderSafe;
     private ShipPlacementRunner attackerShipPlacementRunner, defenderShipPlacementRunner;
+    private AttackShipRunner attackerShipRunner, defenderShipRunner;
     private ArrayList<ShipContainer> attackerShips, defenderShips;
+    private boolean attackerAttacking;
 
     public Game(Player defender, Player attacker) {
         this.defender = defender;
@@ -63,16 +67,84 @@ public class Game {
             defender.getInventory().addItem(stack);
         }
 
-        startGame();
+        startShipPlacement();
     }
 
-    public void startGame(){
+    public void startShipPlacement(){
         manager.setCurrentGameState(GameStateManager.GameState.PLACING_SHIPS);
 
         attackerShipPlacementRunner = new ShipPlacementRunner(attacker, new HashMap<>(map.getShips()), map.getAttacker());
         defenderShipPlacementRunner = new ShipPlacementRunner(defender, new HashMap<>(map.getShips()), map.getDefender());
         attackerShipPlacementRunner.runTaskTimer(MiniMinigames.getInstance(), 0, 1);
         defenderShipPlacementRunner.runTaskTimer(MiniMinigames.getInstance(), 0, 1);
+    }
+
+    public void startAttacking(){
+        setCurrentGameState(GameStateManager.GameState.ATTACKING);
+
+        attackerShipPlacementRunner = null;
+        defenderShipPlacementRunner = null;
+        attackerShipRunner = new AttackShipRunner(attacker, map.getAttacker());
+        defenderShipRunner = new AttackShipRunner(defender, map.getDefender());
+        attackerShipRunner.runTaskTimer(MiniMinigames.getInstance(), 0, 1);
+        defenderShipRunner.runTaskTimer(MiniMinigames.getInstance(), 0, 1);
+        defenderShipRunner.setRunning(false);
+        attackerAttacking = true;
+        attacker.sendMessage(MiniMinigames.PREFIX + "§aYou can now attack your opponent");
+    }
+
+    public void attack(){
+        if(attackerAttacking){
+            if(attackerShipRunner.getLastLocation() == null) return;
+            Location displayLoc = map.getAttacker().getOtherPlayerDisplay().convertWorldToLocalCoordinate(attackerShipRunner.getLastLocation());
+            ShipContainer sc = shipAtPosition(displayLoc, defenderShips);
+            if(sc != null){
+                map.getAttacker().getOtherPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), sc.getHitBlock());
+                map.getDefender().getThisPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), sc.getHitBlock());
+                sc.hitLocation(displayLoc);
+                if(sc.isSunk()){
+                    attackerShips.remove(sc);
+                    attacker.sendTitle("§aSunk", "", 0, 20 * 3, 0);
+                }else {
+                    attacker.sendTitle("§aHit", "", 0, 20 * 3, 0);
+                }
+            }else{
+                map.getAttacker().getOtherPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
+                map.getDefender().getThisPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
+                attacker.sendTitle("§cMiss", "", 0, 20*3, 0);
+            }
+            map.getAttacker().getOtherPlayerDisplay().removeSpawnedMarkers();
+            attackerShipRunner.setRunning(false);
+            defenderShipRunner.setRunning(true);
+        }else{
+            if(defenderShipRunner.getLastLocation() == null) return;
+            Location displayLoc = map.getDefender().getOtherPlayerDisplay().convertWorldToLocalCoordinate(defenderShipRunner.getLastLocation());
+            ShipContainer sc = shipAtPosition(displayLoc, attackerShips);
+            if(sc != null){
+                map.getDefender().getOtherPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), sc.getHitBlock());
+                map.getAttacker().getThisPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), sc.getHitBlock());
+                defender.sendTitle("§aHit", "", 0, 20*3, 0);
+            }else{
+                map.getDefender().getOtherPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
+                map.getAttacker().getThisPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
+                defender.sendTitle("§cMiss", "", 0, 20*3, 0);
+            }
+            map.getDefender().getOtherPlayerDisplay().removeSpawnedMarkers();
+            defenderShipRunner.setRunning(false);
+            attackerShipRunner.setRunning(true);
+        }
+        attackerAttacking = !attackerAttacking;
+    }
+
+    private ShipContainer shipAtPosition(Location displayLoc, ArrayList<ShipContainer> container) {
+        for(ShipContainer sc : container){
+            if(sc.containsLocation(displayLoc)) return sc;
+        }
+        return null;
+    }
+
+    public boolean isAttacking(Player player){
+        return (player == attacker && attackerAttacking) || (player == defender && !attackerAttacking) ;
     }
 
     public void toggleShipDirection(Player p){
@@ -100,6 +172,8 @@ public class Game {
             p.sendMessage(MiniMinigames.PREFIX + "§aYou finished placing the ships.");
             if(attackerShips == null || defenderShips == null){
                 p.sendMessage(MiniMinigames.PREFIX + "§aNow waiting for your opponent");
+            }else{
+                startAttacking();
             }
         }
     }
@@ -107,12 +181,7 @@ public class Game {
     public void processContainers(ArrayList<ShipContainer> containers, MapSide side){
         for(ShipContainer container : containers){
             container.convertLocations(side.getThisPlayerDisplay());
-
-            for(Location loc : container.getPlacedLocations()){
-                side.getOtherPlayerDisplay().setBlock(loc.getBlockX(), loc.getBlockZ(), Material.GREEN_CONCRETE);
-            }
         }
-
     }
 
     public void deny(Player p){

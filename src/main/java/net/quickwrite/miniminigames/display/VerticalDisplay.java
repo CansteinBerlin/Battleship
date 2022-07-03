@@ -39,6 +39,9 @@ public class VerticalDisplay extends Display implements ConfigurationSerializabl
         super();
         pos1 = (Location) data.get("pos1");
         pos2 = (Location) data.get("pos2");
+        pos1.getBlock().setType(Material.GOLD_BLOCK);
+        pos2.getBlock().setType(Material.DIAMOND_BLOCK);
+
         direction = Direction.valueOf((String) data.get("direction"));
 
         minX = Math.min(pos1.getBlockX(), pos2.getBlockX());
@@ -79,6 +82,16 @@ public class VerticalDisplay extends Display implements ConfigurationSerializabl
         if(!(loc.getBlockZ() >= minZ && loc.getBlockZ() <= maxZ)) return;
 
         sendBlockChange(loc, material);
+    }
+
+    @Override
+    public Location convertWorldToLocalCoordinate(Location loc) {
+        Location res = pos1.clone().subtract(Display.unifyLocation(loc));
+        res.setX(Math.abs(res.getBlockX()));
+        res.setY(Math.abs(res.getBlockY()));
+        res.setZ(Math.abs(res.getBlockZ()));
+
+        return new Location(null, Math.abs(res.getBlockX() * direction.getxMod() + res.getBlockZ() * direction.getzMod()), 0, res.getBlockY(), 0, 0);
     }
 
     @Override

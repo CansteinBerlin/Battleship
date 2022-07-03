@@ -202,6 +202,12 @@ public abstract class Display {
         }
     }
 
+    public boolean isAttacked(Location loc){
+        return changedBlocks.containsKey(unifyLocation(loc));
+    }
+
+    public abstract Location convertWorldToLocalCoordinate(Location loc);
+
     public int getMinX() {
         return minX;
     }

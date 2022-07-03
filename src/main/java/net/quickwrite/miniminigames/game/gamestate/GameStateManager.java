@@ -8,8 +8,7 @@ public class GameStateManager {
         PLAYER_ACCEPTING,
         GAME_INIT,
         PLACING_SHIPS,
-        ATTACKER_ATTACKING,
-        DEFENDER_ATTACKING,
+        ATTACKING,
         GAME_FINISH
     }
 
@@ -19,10 +18,6 @@ public class GameStateManager {
     public GameStateManager(Game game){
         currentGameState = GameState.PLAYER_ACCEPTING;
         this.game = game;
-    }
-
-    public void changeBoardSide(){
-        currentGameState = (currentGameState == GameState.ATTACKER_ATTACKING) ? GameState.DEFENDER_ATTACKING : GameState.ATTACKER_ATTACKING;
     }
 
     public void setCurrentGameState(GameState currentGameState) {
