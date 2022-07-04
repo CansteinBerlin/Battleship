@@ -19,9 +19,10 @@ public class BattleShipAcceptCommand extends SubCommand {
             Player p = (Player) sender;
             Game game = MiniMinigames.getInstance().getGameManager().getGame(p);
             if(game == null){
-                p.sendMessage(MiniMinigames.PREFIX + "§cThere is no game to play");
+                p.sendMessage(MiniMinigames.PREFIX + "§cThere is no game to accept");
                 return true;
             }
+            MiniMinigames.getInstance().getGameManager().stopCountdown(game);
             game.accept(p);
         }
         return true;

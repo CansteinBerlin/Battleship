@@ -261,7 +261,6 @@ public class Game {
     }
 
     public void deny(Player p){
-        p.sendMessage(MiniMinigames.PREFIX + "§aYou denied the invite");
         if(p.equals(defender)){
             attacker.sendMessage(MiniMinigames.PREFIX + "§cYour opponent §6" + p.getDisplayName() + "§c has denied the invite");
         }else{
@@ -308,5 +307,18 @@ public class Game {
             attackerShipRunner.cancel();
             defenderShipRunner.cancel();
         }
+    }
+
+    public Player getDefender() {
+        return defender;
+    }
+
+    public Player getAttacker() {
+        return attacker;
+    }
+
+    public Player getOpponent(Player p) {
+        if(p == attacker) return defender;
+        return attacker;
     }
 }

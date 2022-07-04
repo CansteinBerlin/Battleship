@@ -58,11 +58,13 @@ public class BattleShipChallengeCommand extends SubCommand {
             denyComponent.setColor(ChatColor.RED);
             denyComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/battleship deny"));
 
-            TextComponent message = new TextComponent(MiniMinigames.PREFIX + "§aPlayer §6" + attacker.getDisplayName() + "§a invited you to a game of Battleship on the map §6" + map.getName() + "\n");
+            TextComponent message = new TextComponent(MiniMinigames.PREFIX + "§aPlayer §6" + attacker.getDisplayName() + "§a invited you to a game of Battleship on the map §6" + map.getName() + "\n§aYou have §660 §aseconds to accept\n");
 
             defender.spigot().sendMessage(new ComponentBuilder(message).append(" ").append(acceptComponent).append(" ").append(denyComponent).create());
 
             attacker.sendMessage(MiniMinigames.PREFIX + "§aSent challenge invite to §6" + defender.getDisplayName());
+
+            MiniMinigames.getInstance().getGameManager().startCountdown(game, attacker);
         });
 
         sender.sendMessage(MiniMinigames.PREFIX + "§aPlease select the map");

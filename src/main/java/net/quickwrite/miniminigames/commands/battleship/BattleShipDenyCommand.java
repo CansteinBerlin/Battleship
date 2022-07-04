@@ -27,6 +27,7 @@ public class BattleShipDenyCommand extends SubCommand {
                 return true;
             }
             MiniMinigames.getInstance().getGameManager().removeGameBecauseOfDeny(game, p);
+            p.sendMessage(MiniMinigames.PREFIX + "§aYou denied the invite");
         }
         return true;
     }
