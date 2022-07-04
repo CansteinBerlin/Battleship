@@ -25,7 +25,7 @@ public class DebugStopGameCommand extends SubCommand {
             sender.sendMessage(MiniMinigames.PREFIX + "§cYou don't have a game running");
             return true;
         }
-        game.stop();
+        game.playerLeft(p);
         p.sendMessage(MiniMinigames.PREFIX + "§aThe Tasks have been stopped");
         return true;
     }

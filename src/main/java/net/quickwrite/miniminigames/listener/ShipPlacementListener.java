@@ -26,16 +26,20 @@ public class ShipPlacementListener implements Listener {
     }
 
     @EventHandler
-    public void onInteract(PlayerInteractEvent event){
+    public void onPlayerInteract(PlayerInteractEvent event){
         if(event.getItem() == null) return;
         if(event.getItem().getType().equals(Material.AIR)) return;
         if(event.getItem().getItemMeta() == null) return;
         if(!event.getItem().getItemMeta().getPersistentDataContainer().has(Ship.KEY, PersistentDataType.INTEGER)) return;
 
-        Game game = MiniMinigames.getInstance().getGameManager().getGame(event.getPlayer());
+        placeShip(event.getPlayer());
+    }
+
+    public void placeShip(Player player){
+        Game game = MiniMinigames.getInstance().getGameManager().getGame(player);
         if(game == null) return;
         if(!game.getCurrentGameState().equals(GameStateManager.GameState.PLACING_SHIPS)) return;
-        game.placeShip(event.getPlayer());
+        game.placeShip(player);
     }
 
 

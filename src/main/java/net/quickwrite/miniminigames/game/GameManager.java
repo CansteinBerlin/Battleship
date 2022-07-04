@@ -29,13 +29,13 @@ public class GameManager {
         return null;
     }
 
-    public void removeGame(Game game, Player player){
+    public void removeGameBecauseOfDeny(Game game, Player player){
         game.deny(player);
         games.remove(game);
     }
 
-    public void removeGame(Game game){
-        game.stop();
+    public void removeGameBecauseOfPlayerLeft(Game game, Player player){
+        game.playerLeft(player);
         games.remove(game);
     }
 

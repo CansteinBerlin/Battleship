@@ -269,11 +269,6 @@ public class Game {
         }
     }
 
-    public void stop(){
-        defenderShipPlacementRunner.cancel();
-        attackerShipPlacementRunner.cancel();
-    }
-
     public GameStateManager.GameState getCurrentGameState(){
         return manager.getCurrentGameState();
     }
@@ -295,4 +290,23 @@ public class Game {
     }
 
 
+    public void playerLeft(Player p) {
+        attackerSafe.setToPlayer();
+        defenderSafe.setToPlayer();
+        map.getDefender().removeAll();
+        map.getAttacker().removeAll();
+        if(attacker == p){
+            defender.sendTitle("§aYou won!", "§6Your opponent left the game");
+        }else{
+            attacker.sendTitle("§aYou won!", "§6Your opponent left the game");
+        }
+        if(attackerShipPlacementRunner != null){
+            attackerShipPlacementRunner.cancel();
+            defenderShipPlacementRunner.cancel();
+        }
+        if(attackerShipRunner != null){
+            attackerShipRunner.cancel();
+            defenderShipRunner.cancel();
+        }
+    }
 }
