@@ -64,7 +64,6 @@ public class HorizontalDisplay extends Display implements ConfigurationSerializa
         if(z < 0 || z >= getHeight()) return;
 
         Location loc;
-        Bukkit.broadcastMessage(x + " | " + z);
         switch (direction){
             case NEG_Z_DIRECTION:
                 loc = pos1.clone().add(x, 0, z);

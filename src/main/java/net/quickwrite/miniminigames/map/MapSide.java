@@ -3,12 +3,15 @@ package net.quickwrite.miniminigames.map;
 import com.google.common.collect.ImmutableMap;
 import net.quickwrite.miniminigames.display.HorizontalDisplay;
 import net.quickwrite.miniminigames.display.VerticalDisplay;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.UUID;
 
 public class MapSide implements ConfigurationSerializable{
 
@@ -47,7 +50,6 @@ public class MapSide implements ConfigurationSerializable{
             surrendered = true;
         }
         removeFromDisplay(player);
-
     }
 
     public void addPlayerToDisplays(Player player){
@@ -101,5 +103,14 @@ public class MapSide implements ConfigurationSerializable{
 
     public HorizontalDisplay getThisPlayerDisplay() {
         return thisPlayerDisplay;
+    }
+
+    public void removeAll() {
+        for(UUID uuid : new ArrayList<>(thisPlayerDisplay.getDisplayPlayers())){
+            Player p = Bukkit.getPlayer(uuid);
+            if(p != null){
+                removeFromDisplay(p);
+            }
+        }
     }
 }

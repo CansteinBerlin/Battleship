@@ -1,6 +1,7 @@
 package net.quickwrite.miniminigames.game;
 
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
@@ -46,4 +47,7 @@ public class GameManager {
         return getGame(player) != null;
     }
 
+    public void finishGame(Game game) {
+        games.remove(game);
+    }
 }

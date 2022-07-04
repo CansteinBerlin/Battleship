@@ -6,15 +6,21 @@ import net.quickwrite.miniminigames.map.Map;
 import net.quickwrite.miniminigames.map.MapSide;
 import net.quickwrite.miniminigames.ships.Ship;
 import net.quickwrite.miniminigames.ships.ShipContainer;
-import net.quickwrite.miniminigames.util.DebugMessage;
-import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class Game {
 
@@ -93,6 +99,62 @@ public class Game {
         attacker.sendMessage(MiniMinigames.PREFIX + "§aYou can now attack your opponent");
     }
 
+    public void finishGame(){
+        attackerShipRunner.cancel();
+        defenderShipRunner.cancel();
+
+        Player lost = attackerShips.isEmpty() ? attacker : defender;
+        Player finished = attackerShips.isEmpty() ? defender : attacker;
+
+        lost.sendTitle("§cYou Lost", "", 0, 70, 0);
+        finished.sendTitle("§aYou Won", "", 0, 70, 0);
+
+        //Rockets
+        Random random = new Random();
+        Location spawnLoc = finished.getLocation();
+
+        //Display Your Board to opponent
+        if (lost == attacker) displayToOpponent(defenderShips, map.getAttacker());
+        else displayToOpponent(attackerShips, map.getDefender());
+
+        BukkitTask rocketTask = new BukkitRunnable(){
+
+            @Override
+            public void run() {
+                for (int i = 0; i < 20; i++) {
+                    Firework firework = (Firework) spawnLoc.getWorld().spawnEntity(spawnLoc.clone().add(random.nextInt(10) - 5, 0, random.nextInt(10) - 5), EntityType.FIREWORK);
+                    FireworkMeta meta = firework.getFireworkMeta();
+                    meta.clearEffects();
+                    meta.setPower(2);
+                    meta.addEffect(FireworkEffect.builder().with(FireworkEffect.Type.BURST).withColor(Color.GREEN, Color.GREEN, Color.GREEN, Color.RED, Color.ORANGE).build());
+                    firework.setFireworkMeta(meta);
+                }
+            }
+        }.runTaskTimer(MiniMinigames.getInstance(), 0, 20*2);
+
+        Game game = this;
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                map.getAttacker().removeAll();
+                map.getDefender().removeAll();
+                attackerSafe.setToPlayer();
+                defenderSafe.setToPlayer();
+                MiniMinigames.getInstance().getGameManager().finishGame(game);
+                rocketTask.cancel();
+            }
+        }.runTaskLater(MiniMinigames.getInstance(), 20*10);
+    }
+
+    private void displayToOpponent(ArrayList<ShipContainer> ships, MapSide displaySide) {
+        for(ShipContainer container : ships){
+            for(Location loc : container.getPlacedLocations()){
+                displaySide.getOtherPlayerDisplay().setBlock(loc.getBlockX(), loc.getBlockZ(), Material.REDSTONE_BLOCK);
+            }
+        }
+    }
+
     public void attack(){
         if(attackerAttacking){
             if(attackerShipRunner.getLastLocation() == null) return;
@@ -103,8 +165,10 @@ public class Game {
                 map.getDefender().getThisPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), sc.getHitBlock());
                 sc.hitLocation(displayLoc);
                 if(sc.isSunk()){
-                    attackerShips.remove(sc);
+                    defenderShips.remove(sc);
                     attacker.sendTitle("§aSunk", "", 0, 20 * 3, 0);
+                    sc.markSunk(map.getDefender().getThisPlayerDisplay());
+                    sc.markSunk(map.getAttacker().getOtherPlayerDisplay());
                 }else {
                     attacker.sendTitle("§aHit", "", 0, 20 * 3, 0);
                 }
@@ -123,7 +187,15 @@ public class Game {
             if(sc != null){
                 map.getDefender().getOtherPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), sc.getHitBlock());
                 map.getAttacker().getThisPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), sc.getHitBlock());
-                defender.sendTitle("§aHit", "", 0, 20*3, 0);
+                sc.hitLocation(displayLoc);
+                if(sc.isSunk()){
+                    attackerShips.remove(sc);
+                    defender.sendTitle("§aSunk", "", 0, 20 * 3, 0);
+                    sc.markSunk(map.getAttacker().getThisPlayerDisplay());
+                    sc.markSunk(map.getDefender().getOtherPlayerDisplay());
+                }else {
+                    defender.sendTitle("§aHit", "", 0, 20 * 3, 0);
+                }
             }else{
                 map.getDefender().getOtherPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
                 map.getAttacker().getThisPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
@@ -134,6 +206,10 @@ public class Game {
             attackerShipRunner.setRunning(true);
         }
         attackerAttacking = !attackerAttacking;
+
+        if(defenderShips.isEmpty() || attackerShips.isEmpty()){
+            finishGame();
+        }
     }
 
     private ShipContainer shipAtPosition(Location displayLoc, ArrayList<ShipContainer> container) {

@@ -1,6 +1,7 @@
 package net.quickwrite.miniminigames.ships;
 
 import net.quickwrite.miniminigames.display.Display;
+import net.quickwrite.miniminigames.display.HorizontalDisplay;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -68,5 +69,11 @@ public class ShipContainer {
         placedLocations.addAll(newLocs);
 
 
+    }
+
+    public void markSunk(Display display) {
+        for(Location loc : hitLocations){
+            display.setBlock(loc.getBlockX(), loc.getBlockZ(), Material.GREEN_CONCRETE);
+        }
     }
 }
