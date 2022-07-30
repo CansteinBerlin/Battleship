@@ -22,6 +22,10 @@ public class BattleShipAcceptCommand extends SubCommand {
                 p.sendMessage(MiniMinigames.PREFIX + "§cThere is no game to accept");
                 return true;
             }
+            if(!game.isMissingPlayer(p)){
+                p.sendMessage(MiniMinigames.PREFIX + "§cYou can't accept you own game");
+                return true;
+            }
             MiniMinigames.getInstance().getGameManager().stopCountdown(game);
             game.accept(p);
         }

@@ -43,7 +43,6 @@ public class MapSelectionGUI implements IGUI{
         int i = 0;
         for(ItemStack display : MiniMinigames.getInstance().getMapManager().getDisplayItemStacks()){
             ItemMeta meta = display.getItemMeta();
-            System.out.println(meta);
             assert meta != null;
             List<String> lore = meta.getLore();
             if(MiniMinigames.getInstance().getMapManager().isCurrentlyPlaying(MiniMinigames.getInstance().getMapManager().getMaps().get(i))){
