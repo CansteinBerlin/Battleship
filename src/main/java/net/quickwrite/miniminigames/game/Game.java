@@ -6,10 +6,7 @@ import net.quickwrite.miniminigames.map.Map;
 import net.quickwrite.miniminigames.map.MapSide;
 import net.quickwrite.miniminigames.ships.Ship;
 import net.quickwrite.miniminigames.ships.ShipContainer;
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
@@ -23,6 +20,9 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Game {
+
+    public static final Sound HIT_SOUND = Sound.BLOCK_ANVIL_PLACE,
+                              MISS_SOUND = Sound.ENTITY_BOAT_PADDLE_WATER;
 
     private final Player defender, attacker;
     private final GameStateManager manager;
@@ -161,6 +161,7 @@ public class Game {
             Location displayLoc = map.getAttacker().getOtherPlayerDisplay().convertWorldToLocalCoordinate(attackerShipRunner.getLastLocation());
             ShipContainer sc = shipAtPosition(displayLoc, defenderShips);
             if(sc != null){
+                //Hit Ship
                 map.getAttacker().getOtherPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), sc.getHitBlock());
                 map.getDefender().getThisPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), sc.getHitBlock());
                 sc.hitLocation(displayLoc);
@@ -172,7 +173,10 @@ public class Game {
                 }else {
                     attacker.sendTitle("§aHit", "", 0, 20 * 3, 0);
                 }
+                attacker.playSound(attacker.getLocation(), HIT_SOUND, SoundCategory.MASTER, 1, 0);
             }else{
+                //Not hit ship
+                attacker.playSound(attacker.getLocation(), MISS_SOUND, SoundCategory.MASTER, 1, 0);
                 map.getAttacker().getOtherPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
                 map.getDefender().getThisPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
                 attacker.sendTitle("§cMiss", "", 0, 20*3, 0);
@@ -185,6 +189,7 @@ public class Game {
             Location displayLoc = map.getDefender().getOtherPlayerDisplay().convertWorldToLocalCoordinate(defenderShipRunner.getLastLocation());
             ShipContainer sc = shipAtPosition(displayLoc, attackerShips);
             if(sc != null){
+                //Hit Ship
                 map.getDefender().getOtherPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), sc.getHitBlock());
                 map.getAttacker().getThisPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), sc.getHitBlock());
                 sc.hitLocation(displayLoc);
@@ -196,7 +201,10 @@ public class Game {
                 }else {
                     defender.sendTitle("§aHit", "", 0, 20 * 3, 0);
                 }
+                defender.playSound(defender.getLocation(), HIT_SOUND, SoundCategory.MASTER, 1, 0);
             }else{
+                //Not Hit Ship
+                defender.playSound(defender.getLocation(), MISS_SOUND, SoundCategory.MASTER, 1, 0);
                 map.getDefender().getOtherPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
                 map.getAttacker().getThisPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
                 defender.sendTitle("§cMiss", "", 0, 20*3, 0);
@@ -320,5 +328,13 @@ public class Game {
     public Player getOpponent(Player p) {
         if(p == attacker) return defender;
         return attacker;
+    }
+
+    public boolean isMissingPlayer(Player p) {
+        return p == attacker;
+    }
+
+    public Map getMap() {
+        return map;
     }
 }

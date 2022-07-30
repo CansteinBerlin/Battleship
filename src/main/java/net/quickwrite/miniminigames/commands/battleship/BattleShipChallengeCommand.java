@@ -65,6 +65,7 @@ public class BattleShipChallengeCommand extends SubCommand {
             attacker.sendMessage(MiniMinigames.PREFIX + "§aSent challenge invite to §6" + defender.getDisplayName());
 
             MiniMinigames.getInstance().getGameManager().startCountdown(game, attacker);
+            MiniMinigames.getInstance().getMapManager().markCurrentlyPlaying(map, true);
         });
 
         sender.sendMessage(MiniMinigames.PREFIX + "§aPlease select the map");

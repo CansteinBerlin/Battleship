@@ -1,7 +1,6 @@
 package net.quickwrite.miniminigames.game;
 
 import net.quickwrite.miniminigames.MiniMinigames;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -37,6 +36,7 @@ public class GameManager {
 
     public void removeGameBecauseOfDeny(Game game, Player player){
         game.deny(player);
+        MiniMinigames.getInstance().getMapManager().markCurrentlyPlaying(game.getMap(), false);
         games.remove(game);
     }
 
@@ -47,6 +47,7 @@ public class GameManager {
         }
         game.playerLeft(player);
         games.remove(game);
+        MiniMinigames.getInstance().getMapManager().markCurrentlyPlaying(game.getMap(), false);
     }
 
     public void invalidMapSelection(Game game){
