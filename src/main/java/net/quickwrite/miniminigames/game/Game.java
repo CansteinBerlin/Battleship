@@ -76,6 +76,11 @@ public class Game {
         startShipPlacement();
     }
 
+    public void addSpectator(Player p){
+        map.getAttacker().addPlayerToDisplays(p);
+        map.getDefender().addPlayerToDisplays(p);
+    }
+
     public void startShipPlacement(){
         manager.setCurrentGameState(GameStateManager.GameState.PLACING_SHIPS);
 

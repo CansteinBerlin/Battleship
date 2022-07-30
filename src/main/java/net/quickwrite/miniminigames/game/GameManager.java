@@ -63,6 +63,7 @@ public class GameManager {
 
     public void finishGame(Game game) {
         games.remove(game);
+        MiniMinigames.getInstance().getMapManager().markCurrentlyPlaying(game.getMap(), false);
     }
 
     public void startCountdown(Game game, Player p) {
