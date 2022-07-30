@@ -28,7 +28,6 @@ public class MapManager {
             return null;
         }
         MapConfig cfg = new MapConfig(getFileName(name));
-        System.out.println(cfg.getConfig());
         if(cfg.getConfig().contains("map"))
             return cfg.getConfig().getObject("map", Map.class);
         return null;

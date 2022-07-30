@@ -30,8 +30,6 @@ public class HorizontalDisplay extends Display implements ConfigurationSerializa
         super();
         pos1 = (Location) data.get("pos1");
         pos2 = (Location) data.get("pos2");
-        pos1.getBlock().setType(Material.GOLD_BLOCK);
-        pos2.getBlock().setType(Material.DIAMOND_BLOCK);
         direction = Direction.valueOf((String) data.get("direction"));
 
         minX = Math.min(pos1.getBlockX(), pos2.getBlockX());

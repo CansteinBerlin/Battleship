@@ -39,8 +39,6 @@ public class VerticalDisplay extends Display implements ConfigurationSerializabl
         super();
         pos1 = (Location) data.get("pos1");
         pos2 = (Location) data.get("pos2");
-        pos1.getBlock().setType(Material.GOLD_BLOCK);
-        pos2.getBlock().setType(Material.DIAMOND_BLOCK);
 
         direction = Direction.valueOf((String) data.get("direction"));
 

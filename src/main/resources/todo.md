@@ -6,5 +6,5 @@
   - [ ] All players that used the command /battleship spectate can see all players placements
 - [X] MapCanBePlayedOn fix on maps that are currently played on
 - [ ] Rewrite Vertical Display so that all players see this
-- [ ] Fix Invite not getting removed when either canceled or accepted
-- [ ] Remove Corner placement for displays
+- [X] Fix Invite not getting removed when either canceled or accepted
+- [X] Remove Corner placement for displays
