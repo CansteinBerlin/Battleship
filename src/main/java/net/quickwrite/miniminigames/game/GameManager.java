@@ -40,6 +40,7 @@ public class GameManager {
         game.deny(player);
         MiniMinigames.getInstance().getMapManager().markCurrentlyPlaying(game.getMap(), false);
         games.remove(game);
+        stopCountdown(game);
     }
 
     public void removeGameBecauseOfPlayerLeft(Game game, Player player){
