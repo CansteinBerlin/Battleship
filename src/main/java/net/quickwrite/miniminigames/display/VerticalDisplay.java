@@ -1,11 +1,15 @@
 package net.quickwrite.miniminigames.display;
 
 import com.google.common.collect.ImmutableMap;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.UUID;
 
 public class VerticalDisplay extends Display implements ConfigurationSerializable {
 
@@ -48,6 +52,23 @@ public class VerticalDisplay extends Display implements ConfigurationSerializabl
         maxX = Math.max(pos1.getBlockX(), pos2.getBlockX());
         maxY = Math.max(pos1.getBlockY(), pos2.getBlockY());
         maxZ = Math.max(pos1.getBlockZ(), pos2.getBlockZ());
+    }
+
+    //CONVERT DISPLAY BLOCKS TO REAL WORLD BLOCKS
+
+
+    @Override
+    protected void sendBlockChange(Location loc, Material material) {
+        loc = unifyLocation(loc);
+        changedBlocks.put(loc, material);
+        loc.getBlock().setType(material);
+    }
+
+    @Override
+    public void clearForPlayer(Player p) {
+        for(Location loc : changedBlocks.keySet()){
+            loc.getBlock().setType(Material.AIR);
+        }
     }
 
     @Override
