@@ -53,6 +53,18 @@ public class GameManager {
         MiniMinigames.getInstance().getMapManager().markCurrentlyPlaying(game.getMap(), false);
     }
 
+    public void spectateAllGames(Player p){
+        for(Game game : games){
+            game.addSpectator(p);
+        }
+    }
+
+    public void removeSpectateAllGames(Player p){
+        for(Game game : games){
+            game.removeSpectator(p);
+        }
+    }
+
     public void invalidMapSelection(Game game){
         games.remove(game);
     }

@@ -1,6 +1,7 @@
 package net.quickwrite.miniminigames.listener;
 
 import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.commands.battleship.BattleShipSpectateAllGamesCommand;
 import net.quickwrite.miniminigames.game.Game;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,6 +12,8 @@ public class PlayerGameListener implements Listener {
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event){
+        BattleShipSpectateAllGamesCommand.SPECTATE_ALL_GAMES_PLAYERS.remove(event.getPlayer());
+
         Player p = event.getPlayer();
         Game game = MiniMinigames.getInstance().getGameManager().getGame(p);
         if(game == null) return;

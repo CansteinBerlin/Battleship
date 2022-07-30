@@ -1,6 +1,7 @@
 package net.quickwrite.miniminigames.game;
 
 import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.commands.battleship.BattleShipSpectateAllGamesCommand;
 import net.quickwrite.miniminigames.game.gamestate.GameStateManager;
 import net.quickwrite.miniminigames.map.Map;
 import net.quickwrite.miniminigames.map.MapSide;
@@ -73,12 +74,21 @@ public class Game {
             defender.getInventory().addItem(stack);
         }
 
+        for(Player p : BattleShipSpectateAllGamesCommand.SPECTATE_ALL_GAMES_PLAYERS){
+            addSpectator(p);
+        }
+
         startShipPlacement();
     }
 
     public void addSpectator(Player p){
         map.getAttacker().addPlayerToDisplays(p);
         map.getDefender().addPlayerToDisplays(p);
+    }
+
+    public void removeSpectator(Player p){
+        map.getAttacker().removePlayer(p);
+        map.getDefender().removePlayer(p);
     }
 
     public void startShipPlacement(){
