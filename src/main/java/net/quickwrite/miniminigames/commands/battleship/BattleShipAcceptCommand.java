@@ -4,6 +4,7 @@ import net.quickwrite.miniminigames.MiniMinigames;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.game.Game;
+import net.quickwrite.miniminigames.util.DebugMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

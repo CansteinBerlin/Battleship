@@ -76,11 +76,16 @@ public class MapSelectionGUI implements IGUI{
         if(inv.getItem(slot) == null) return;
         if(inv.getItem(slot).getType().equals(Material.AIR) && slot >= 0) return;
 
-        clicked = true;
-        close();
 
         Map map = MiniMinigames.getInstance().getMapManager().loadMap(MiniMinigames.getInstance().getMapManager().getMaps().get(slot));
         if(map == null) return;
+        if(MiniMinigames.getInstance().getMapManager().isCurrentlyPlaying(map)){
+            player.sendMessage(MiniMinigames.PREFIX + "§cYou can't play on this map.");
+            return;
+        }
+
+        clicked = true;
+        close();
         game.setMap(map);
 
         runnable.accept(map);

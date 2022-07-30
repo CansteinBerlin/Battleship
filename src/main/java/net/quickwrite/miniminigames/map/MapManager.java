@@ -2,6 +2,7 @@ package net.quickwrite.miniminigames.map;
 
 import net.quickwrite.miniminigames.MiniMinigames;
 import net.quickwrite.miniminigames.config.MapConfig;
+import net.quickwrite.miniminigames.util.DebugMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -83,7 +84,11 @@ public class MapManager {
     }
 
     public boolean isCurrentlyPlaying(String name){
-        return currentlyPlayingMaps.containsKey(name);
+        return currentlyPlayingMaps.containsKey(name.toLowerCase(Locale.ROOT));
+    }
+
+    public boolean isCurrentlyPlaying(Map map){
+        return currentlyPlayingMaps.containsKey(map.getName().toLowerCase(Locale.ROOT));
     }
 
     public ArrayList<String> getMaps() {
