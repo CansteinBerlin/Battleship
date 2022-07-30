@@ -237,8 +237,8 @@ public class Game {
     }
 
     public void toggleShipDirection(Player p){
-        if(defender.equals(p)) defenderShipPlacementRunner.toggleDirection();
-        else attackerShipPlacementRunner.toggleDirection();
+        if(defender.equals(p) && defenderShipPlacementRunner != null) defenderShipPlacementRunner.toggleDirection();
+        else if(attackerShipPlacementRunner != null) attackerShipPlacementRunner.toggleDirection();
     }
 
     public void placeShip(Player p){
