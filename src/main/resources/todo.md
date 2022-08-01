@@ -11,4 +11,4 @@
 - [X] Default Ships 1x5 2x4 3x3 4x2 (Amount x Shipsize)
 - [ ] Translate to german
 - [X] Command to queue all players
-- [ ] Easier system to set up maps
+- [X] Easier system to set up maps (Copy / Paste)

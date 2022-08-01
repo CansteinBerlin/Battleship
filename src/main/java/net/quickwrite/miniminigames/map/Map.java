@@ -145,4 +145,24 @@ public class Map implements ConfigurationSerializable {
     public MapSide getDefender() {
         return defender;
     }
+
+    public MapDefinition createMapDefinition(Location location) {
+        MapDefinition mapDefinition = new MapDefinition();
+        mapDefinition.setAttackerP1(attacker.getThisPlayerDisplay().getPos1().subtract(location));
+        mapDefinition.setAttackerP2(attacker.getThisPlayerDisplay().getPos2().subtract(location));
+        mapDefinition.setAttackerP3(attacker.getOtherPlayerDisplay().getPos1().subtract(location));
+        mapDefinition.setAttackerP4(attacker.getOtherPlayerDisplay().getPos2().subtract(location));
+
+        mapDefinition.setDefenderP1(defender.getThisPlayerDisplay().getPos1().subtract(location));
+        mapDefinition.setDefenderP2(defender.getThisPlayerDisplay().getPos2().subtract(location));
+        mapDefinition.setDefenderP3(defender.getOtherPlayerDisplay().getPos1().subtract(location));
+        mapDefinition.setDefenderP4(defender.getOtherPlayerDisplay().getPos2().subtract(location));
+
+        mapDefinition.setAttackerSpawn(attacker.getSpawnLocation().subtract(location));
+        mapDefinition.setDefenderSpawn(defender.getSpawnLocation().subtract(location));
+
+        mapDefinition.setShips(new HashMap<>(ships));
+
+        return mapDefinition;
+    }
 }

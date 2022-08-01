@@ -113,4 +113,8 @@ public class MapSide implements ConfigurationSerializable{
             }
         }
     }
+
+    public Location getSpawnLocation() {
+        return spawnLocation;
+    }
 }
