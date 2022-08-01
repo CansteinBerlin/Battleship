@@ -48,11 +48,10 @@ public class DebugCreateMapCommand extends SubCommand {
         Map map = new Map(attackerVerticalDisplay, defenderVerticalDisplay, attackerHorizontalDisplay, defenderHorizontalDisplay,
                 Material.STRUCTURE_BLOCK, name, attackerSpawnLocation, defenderSpawnLocation,
                 new ImmutableMap.Builder<Ship, Integer>()
-                        .put(ShipManager.getShipWithSize(2), 1)
-                        .put(ShipManager.getShipWithSize(3), 1)
-                        .put(ShipManager.getShipWithSize(4), 1)
+                        .put(ShipManager.getShipWithSize(2), 4)
+                        .put(ShipManager.getShipWithSize(3), 3)
+                        .put(ShipManager.getShipWithSize(4), 2)
                         .put(ShipManager.getShipWithSize(5), 1)
-                        .put(ShipManager.getShipWithSize(6), 1)
                         .build()
         );
 
