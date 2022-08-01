@@ -49,12 +49,11 @@ public class Game {
         }else{
             defender.sendMessage(MiniMinigames.PREFIX + "§aThe Player §6" + p.getDisplayName() + "§a has accepted the invite");
         }
-        System.out.println("Start the Game");
-        started = true;
         initGame();
     }
 
-    private void initGame(){
+    public void initGame(){
+        started = true;
         manager.setCurrentGameState(GameStateManager.GameState.GAME_INIT);
 
         attackerSafe = new PlayerSafe(attacker);
@@ -112,6 +111,17 @@ public class Game {
         defenderShipRunner.setRunning(false);
         attackerAttacking = true;
         attacker.sendMessage(MiniMinigames.PREFIX + "§aYou can now attack your opponent");
+    }
+
+    public void forceQuit(){
+        attacker.sendMessage("§cThe game has been forcefully stopped");
+        defender.sendMessage("§cThe game has been forcefully stopped");
+
+        map.getAttacker().removeAll();
+        map.getDefender().removeAll();
+        attackerSafe.setToPlayer();
+        defenderSafe.setToPlayer();
+        MiniMinigames.getInstance().getGameManager().finishGame(this);
     }
 
     public void finishGame(){
