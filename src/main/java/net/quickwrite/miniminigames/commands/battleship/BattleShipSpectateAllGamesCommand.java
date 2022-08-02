@@ -19,17 +19,17 @@ public class BattleShipSpectateAllGamesCommand extends SubCommand {
     @Override
     public boolean performCommand(CommandSender sender, String[] args) {
         if(!(sender instanceof Player)){
-            sender.sendMessage(MiniMinigames.PREFIX + "§cYou have to be a player to use this command");
+            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.noPlayer"));
             return true;
         }
         Player p = ((Player) sender);
         if(SPECTATE_ALL_GAMES_PLAYERS.contains(p)){
-            sender.sendMessage(MiniMinigames.PREFIX + "§aYou are no longer spectating all games");
+            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.spectateAllGames.stop"));
             SPECTATE_ALL_GAMES_PLAYERS.remove(p);
             MiniMinigames.getInstance().getGameManager().removeSpectateAllGames(p);
             return true;
         }
-        sender.sendMessage(MiniMinigames.PREFIX + "§aYou are now spectating all games");
+        sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.spectateAllGames.start"));
         SPECTATE_ALL_GAMES_PLAYERS.add(p);
         MiniMinigames.getInstance().getGameManager().spectateAllGames(p);
         return true;

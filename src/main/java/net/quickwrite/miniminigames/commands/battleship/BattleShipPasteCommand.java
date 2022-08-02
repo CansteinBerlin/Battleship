@@ -25,19 +25,19 @@ public class BattleShipPasteCommand extends SubCommand {
     @Override
     public boolean performCommand(CommandSender sender, String[] args) {
         if(!(sender instanceof Player)){
-            sender.sendMessage(MiniMinigames.PREFIX + "§cYou have to be a player to use this command");
+            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.noPlayer"));
             return true;
         }
 
         Player p = ((Player) sender);
 
         if(!BattleShipCopyMapDefinitionCommand.MAP_DEFINITION_HASH_MAP.containsKey(p)){
-            p.sendMessage(MiniMinigames.PREFIX + "§cYou did not copy a map. Use §6/battleship copyMapDefinition");
+            p.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.paste.noMap"));
             return true;
         }
 
         if(args.length != 1){
-            p.sendMessage(MiniMinigames.PREFIX + "§cPlease use §6/" + getCommandHistory() + " <newMapName>");
+            p.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.paste.invalidCommand", "command", getCommandHistory()));
             return true;
         }
 
@@ -51,18 +51,16 @@ public class BattleShipPasteCommand extends SubCommand {
         VerticalDisplay defenderVertical = new VerticalDisplay(definition.getDefenderP3().add(loc), definition.getDefenderP4().add(loc));
 
         Map map = new Map(attackerVertical, defenderVertical, attackerHorizontal, defenderHorizontal,
-                Material.STRUCTURE_BLOCK, args[0], definition.getAttackerSpawn(), definition.getDefenderSpawn(), definition.getShips());
+                Material.STRUCTURE_BLOCK, args[0], definition.getAttackerSpawn().add(loc), definition.getDefenderSpawn().add(loc), definition.getShips());
 
-        Bukkit.broadcastMessage("display");
         map.displayAll();
-        Bukkit.broadcastMessage(new DebugMessage(attackerHorizontal, defenderHorizontal, attackerVertical, defenderVertical) + "");
 
         if(!MiniMinigames.getInstance().getMapManager().addNewMap(args[0], map)){
-            sender.sendMessage(MiniMinigames.PREFIX + "§cThere is already a map with the specific name");
+            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.paste.alreadyMap", "map", args[0]));
             return true;
         }
 
-        sender.sendMessage(MiniMinigames.PREFIX + "§aCreated new Map");
+        sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.paste.createdMap", "map", args[0]));
         return true;
     }
 }

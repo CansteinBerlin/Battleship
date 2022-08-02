@@ -17,26 +17,26 @@ public class BattleShipSpectateGameCommand extends SubCommand {
     @Override
     public boolean performCommand(CommandSender sender, String[] args) {
         if(!(sender instanceof Player)) {
-            sender.sendMessage(MiniMinigames.PREFIX + "§cYou have to be a player to use this command");
+            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.noPlayer"));
             return true;
         }
         Player spectator = ((Player) sender);
         if(args.length != 1){
-            sender.sendMessage(MiniMinigames.PREFIX + "§cPlease use §6/" + getCommandHistory() + " <player>");
+            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.spectateGame.invalidCommand", "command", getCommandHistory()));
             return true;
         }
         Player p = Bukkit.getPlayer(args[0]);
         if(p == null){
-            sender.sendMessage(MiniMinigames.PREFIX + "§cUnknown Player §6" + args[0]);
+            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.unknownPlayer"));
             return true;
         }
         Game game = MiniMinigames.getInstance().getGameManager().getGame(p);
         if(game == null){
-            sender.sendMessage(MiniMinigames.PREFIX + "§cThis Player has currently no game running");
+            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.spectateGame.noGameRunning"));
             return true;
         }
         game.addSpectator(spectator);
-        sender.sendMessage(MiniMinigames.PREFIX + "§aAdded To game");
+        sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.spectateGame.start"));
 
         return true;
     }

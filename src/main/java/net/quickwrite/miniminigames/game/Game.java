@@ -19,6 +19,7 @@ import org.bukkit.scheduler.BukkitTask;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.TreeMap;
 
 public class Game {
 
@@ -43,11 +44,11 @@ public class Game {
     }
 
     public void accept(Player p){
-        p.sendMessage(MiniMinigames.PREFIX + "§aThe Game has been started");
+        p.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.game.gameStarted"));
         if(p.equals(defender)){
-            attacker.sendMessage(MiniMinigames.PREFIX + "§aThe Player §6" + p.getDisplayName() + "§a has accepted the invite");
+            attacker.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.game.gameAccepted", "player", p.getDisplayName()));
         }else{
-            defender.sendMessage(MiniMinigames.PREFIX + "§aThe Player §6" + p.getDisplayName() + "§a has accepted the invite");
+            defender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.game.gameAccepted", "player", p.getDisplayName()));
         }
         initGame();
     }
@@ -58,6 +59,11 @@ public class Game {
 
         attackerSafe = new PlayerSafe(attacker);
         defenderSafe = new PlayerSafe(defender);
+        attacker.setGameMode(GameMode.ADVENTURE);
+        defender.setGameMode(GameMode.ADVENTURE);
+
+        attacker.setAllowFlight(true);
+        defender.setAllowFlight(true);
 
         map.addPlayer(attacker);
         map.addPlayer(defender);
@@ -66,9 +72,11 @@ public class Game {
         attacker.getInventory().clear();
         defender.getInventory().clear();
 
-        for(Ship ship : map.getShips().keySet()){
-            ItemStack stack = ship.getDisplayItem().clone();
-            stack.setAmount(map.getShips().get(ship));
+        TreeMap<Ship, Integer> sortedShips = new TreeMap<>(map.getShips());
+
+        for(java.util.Map.Entry<Ship, Integer> entry : sortedShips.entrySet()){
+            ItemStack stack = entry.getKey().getDisplayItem().clone();
+            stack.setAmount(entry.getValue());
             attacker.getInventory().addItem(stack);
             defender.getInventory().addItem(stack);
         }
@@ -110,12 +118,12 @@ public class Game {
         defenderShipRunner.runTaskTimer(MiniMinigames.getInstance(), 0, 1);
         defenderShipRunner.setRunning(false);
         attackerAttacking = true;
-        attacker.sendMessage(MiniMinigames.PREFIX + "§aYou can now attack your opponent");
+        attacker.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.game.canAttack"));
     }
 
     public void forceQuit(){
-        attacker.sendMessage("§cThe game has been forcefully stopped");
-        defender.sendMessage("§cThe game has been forcefully stopped");
+        attacker.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.game.forcefullyStopped"));
+        defender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.game.forcefullyStopped"));
 
         map.getAttacker().removeAll();
         map.getDefender().removeAll();
@@ -131,8 +139,8 @@ public class Game {
         Player lost = attackerShips.isEmpty() ? attacker : defender;
         Player finished = attackerShips.isEmpty() ? defender : attacker;
 
-        lost.sendTitle("§cYou Lost", "", 0, 70, 0);
-        finished.sendTitle("§aYou Won", "", 0, 70, 0);
+        lost.sendTitle(MiniMinigames.getLang("display.game.lost"), "", 0, 70, 0);
+        finished.sendTitle(MiniMinigames.getLang("display.game.won"), "", 0, 70, 0);
 
         //Rockets
         Random random = new Random();
@@ -151,7 +159,7 @@ public class Game {
                     FireworkMeta meta = firework.getFireworkMeta();
                     meta.clearEffects();
                     meta.setPower(2);
-                    meta.addEffect(FireworkEffect.builder().with(FireworkEffect.Type.BURST).withColor(Color.GREEN, Color.GREEN, Color.GREEN, Color.RED, Color.ORANGE).build());
+                    meta.addEffect(FireworkEffect.builder().with(FireworkEffect.Type.BURST).withColor(Color.GREEN, Color.GREEN, Color.RED, Color.ORANGE).build());
                     firework.setFireworkMeta(meta);
                 }
             }
@@ -192,11 +200,11 @@ public class Game {
                 sc.hitLocation(displayLoc);
                 if(sc.isSunk()){
                     defenderShips.remove(sc);
-                    attacker.sendTitle("§aSunk", "", 0, 20 * 3, 0);
+                    attacker.sendTitle(MiniMinigames.getLang("display.game.sunk"), "", 0, 20 * 3, 0);
                     sc.markSunk(map.getDefender().getThisPlayerDisplay());
                     sc.markSunk(map.getAttacker().getOtherPlayerDisplay());
                 }else {
-                    attacker.sendTitle("§aHit", "", 0, 20 * 3, 0);
+                    attacker.sendTitle(MiniMinigames.getLang("display.game.hit"), "", 0, 20 * 3, 0);
                 }
                 attacker.playSound(attacker.getLocation(), HIT_SOUND, SoundCategory.MASTER, 1, 0);
             }else{
@@ -204,7 +212,7 @@ public class Game {
                 attacker.playSound(attacker.getLocation(), MISS_SOUND, SoundCategory.MASTER, 1, 0);
                 map.getAttacker().getOtherPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
                 map.getDefender().getThisPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
-                attacker.sendTitle("§cMiss", "", 0, 20*3, 0);
+                attacker.sendTitle(MiniMinigames.getLang("display.game.miss"), "", 0, 20*3, 0);
             }
             map.getAttacker().getOtherPlayerDisplay().removeSpawnedMarkers();
             attackerShipRunner.setRunning(false);
@@ -220,11 +228,11 @@ public class Game {
                 sc.hitLocation(displayLoc);
                 if(sc.isSunk()){
                     attackerShips.remove(sc);
-                    defender.sendTitle("§aSunk", "", 0, 20 * 3, 0);
+                    defender.sendTitle(MiniMinigames.getLang("display.game.sunk"), "", 0, 20 * 3, 0);
                     sc.markSunk(map.getAttacker().getThisPlayerDisplay());
                     sc.markSunk(map.getDefender().getOtherPlayerDisplay());
                 }else {
-                    defender.sendTitle("§aHit", "", 0, 20 * 3, 0);
+                    defender.sendTitle(MiniMinigames.getLang("display.game.hit"), "", 0, 20 * 3, 0);
                 }
                 defender.playSound(defender.getLocation(), HIT_SOUND, SoundCategory.MASTER, 1, 0);
             }else{
@@ -232,7 +240,7 @@ public class Game {
                 defender.playSound(defender.getLocation(), MISS_SOUND, SoundCategory.MASTER, 1, 0);
                 map.getDefender().getOtherPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
                 map.getAttacker().getThisPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
-                defender.sendTitle("§cMiss", "", 0, 20*3, 0);
+                defender.sendTitle(MiniMinigames.getLang("display.game.miss"), "", 0, 20*3, 0);
             }
             map.getDefender().getOtherPlayerDisplay().removeSpawnedMarkers();
             defenderShipRunner.setRunning(false);
@@ -278,9 +286,9 @@ public class Game {
                 attackerShipPlacementRunner = null;
             }
 
-            p.sendMessage(MiniMinigames.PREFIX + "§aYou finished placing the ships.");
+            p.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.game.finishedPlacing"));
             if(attackerShips == null || defenderShips == null){
-                p.sendMessage(MiniMinigames.PREFIX + "§aNow waiting for your opponent");
+                p.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.game.waitingForOpponent"));
             }else{
                 startAttacking();
             }
@@ -295,9 +303,9 @@ public class Game {
 
     public void deny(Player p){
         if(p.equals(defender)){
-            attacker.sendMessage(MiniMinigames.PREFIX + "§cYour opponent §6" + p.getDisplayName() + "§c has denied the invite");
+            attacker.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.opponentDenied", "player", defender.getDisplayName()));
         }else{
-            defender.sendMessage(MiniMinigames.PREFIX + "§cYour opponent §6" + p.getDisplayName() + "§c has denied the invite");
+            defender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.opponentDenied", "player", attacker.getDisplayName()));
         }
     }
 
@@ -328,9 +336,9 @@ public class Game {
         map.getDefender().removeAll();
         map.getAttacker().removeAll();
         if(attacker == p){
-            defender.sendTitle("§aYou won!", "§6Your opponent left the game");
+            defender.sendTitle(MiniMinigames.getLang("display.game.won"), MiniMinigames.getLang("display.game.leftGame"));
         }else{
-            attacker.sendTitle("§aYou won!", "§6Your opponent left the game");
+            attacker.sendTitle(MiniMinigames.getLang("display.game.won"), MiniMinigames.getLang("display.game.leftGame"));
         }
         if(attackerShipPlacementRunner != null){
             attackerShipPlacementRunner.cancel();

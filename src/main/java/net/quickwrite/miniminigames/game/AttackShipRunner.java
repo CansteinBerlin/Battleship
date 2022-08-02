@@ -2,6 +2,7 @@ package net.quickwrite.miniminigames.game;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.quickwrite.miniminigames.MiniMinigames;
 import net.quickwrite.miniminigames.display.Direction;
 import net.quickwrite.miniminigames.display.Display;
 import net.quickwrite.miniminigames.map.MapSide;
@@ -12,6 +13,9 @@ import org.bukkit.util.RayTraceResult;
 
 public class AttackShipRunner extends BukkitRunnable {
 
+    public static String attackingString = "";
+    public static String waitingString = "";
+
     private final Player p;
     private final MapSide displaySide;
     private Location lastLocation;
@@ -21,12 +25,17 @@ public class AttackShipRunner extends BukkitRunnable {
         this.p = p;
         this.displaySide = displaySide;
         running = true;
+        attackingString = MiniMinigames.getLang("display.attackShipRunner.attackingActionBar");
+        waitingString = MiniMinigames.getLang("display.attackShipRunner.waitingForOpponentAttack");
     }
 
     @Override
     public void run() {
-        if(!running) return;
-        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§aYou are attacking"));
+        if(!running) {
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(waitingString));
+            return;
+        }
+        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(attackingString));
         RayTraceResult result = p.getWorld().rayTraceBlocks(p.getEyeLocation(), p.getLocation().getDirection(), 50);
         if(result == null){
             lastLocation = null;

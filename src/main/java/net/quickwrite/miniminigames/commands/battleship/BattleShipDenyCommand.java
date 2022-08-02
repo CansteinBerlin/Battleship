@@ -19,15 +19,15 @@ public class BattleShipDenyCommand extends SubCommand {
             Player p = (Player) sender;
             Game game = MiniMinigames.getInstance().getGameManager().getGame(p);
             if(game == null){
-                p.sendMessage(MiniMinigames.PREFIX + "§cThere is no game to deny");
+                p.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.deny.noGame"));
                 return true;
             }
             if(game.isStarted()){
-                p.sendMessage(MiniMinigames.PREFIX + "§cThe game has already been started");
+                p.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.deny.isStarted"));
                 return true;
             }
             MiniMinigames.getInstance().getGameManager().removeGameBecauseOfDeny(game, p);
-            p.sendMessage(MiniMinigames.PREFIX + "§aYou denied the invite");
+            p.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.deny.denied"));
         }
         return true;
     }

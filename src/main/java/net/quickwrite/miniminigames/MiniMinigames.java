@@ -22,6 +22,7 @@ import net.quickwrite.miniminigames.ships.Ship;
 import net.quickwrite.miniminigames.ships.ShipManager;
 import net.quickwrite.miniminigames.util.ReflectionUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -44,6 +45,7 @@ public final class MiniMinigames extends JavaPlugin {
     private ItemConfig itemConfig;
     private BlockConfig blockConfig;
     private MapsConfig mapsConfig;
+    private LanguageConfig languageConfig;
 
     private MapManager mapManager;
     private GameManager gameManager;
@@ -80,11 +82,29 @@ public final class MiniMinigames extends JavaPlugin {
     }
 
     private void loadConfigs() {
+        loadLanguageConfig();
         loadDefaultConfig();
         loadItemConfig();
         loadBlockConfig();
         loadShipConfig();
         loadMapsConfig();
+    }
+
+    public static String getLang(String key, String... args) {
+        String lang = MiniMinigames.getInstance().languageConfig.getConfig().getString("messages." + key, "&cUnknown language key &6" + key);
+        for (int i = 0; i + 1 < args.length; i += 2) {
+            lang = lang.replace("%" + args[i] + "%", args[i + 1]);
+        }
+        return ChatColor.translateAlternateColorCodes('&', lang);
+    }
+
+    public static net.md_5.bungee.api.ChatColor getChatColor(String key){
+        String color = MiniMinigames.getInstance().languageConfig.getConfig().getString("messages." + key, "MAGIC");
+        return net.md_5.bungee.api.ChatColor.of(color);
+    }
+
+    private void loadLanguageConfig(){
+        languageConfig = new LanguageConfig(this);
     }
 
     private void loadMapsConfig() {

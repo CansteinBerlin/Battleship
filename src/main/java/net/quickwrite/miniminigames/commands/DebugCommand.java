@@ -10,7 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 public class DebugCommand extends BaseCommand {
 
     public DebugCommand() {
-        super("mdebug", null);
+        super("mdebug", "battleship.debug");
 
         for(Class<? extends SubCommand> command : ReflectionUtil.getAllClasses("net.quickwrite.miniminigames.commands.debug", SubCommand.class)){
             try {

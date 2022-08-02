@@ -17,6 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 public class Map implements ConfigurationSerializable {
 
@@ -77,7 +78,10 @@ public class Map implements ConfigurationSerializable {
         lore.add("§r§7Map: §6" + name);
         lore.add("§r§7Size: §6" + attacker.getThisPlayerDisplay().getWidth() + "x" + attacker.getThisPlayerDisplay().getHeight());
         lore.add("§r§7Ships:");
-        for(java.util.Map.Entry<Ship, Integer> entry : ships.entrySet()){
+
+        TreeMap<Ship, Integer> sortedShips = new TreeMap<>(ships);
+
+        for(java.util.Map.Entry<Ship, Integer> entry : sortedShips.entrySet()){
             lore.add("§r§6 - " + entry.getKey().getName() + "§6(" + entry.getKey().getSize() + ") x " + entry.getValue());
         }
 
@@ -148,18 +152,18 @@ public class Map implements ConfigurationSerializable {
 
     public MapDefinition createMapDefinition(Location location) {
         MapDefinition mapDefinition = new MapDefinition();
-        mapDefinition.setAttackerP1(attacker.getThisPlayerDisplay().getPos1().subtract(location));
-        mapDefinition.setAttackerP2(attacker.getThisPlayerDisplay().getPos2().subtract(location));
-        mapDefinition.setAttackerP3(attacker.getOtherPlayerDisplay().getPos1().subtract(location));
-        mapDefinition.setAttackerP4(attacker.getOtherPlayerDisplay().getPos2().subtract(location));
+        mapDefinition.setAttackerP1(attacker.getThisPlayerDisplay().getPos1().clone().subtract(location));
+        mapDefinition.setAttackerP2(attacker.getThisPlayerDisplay().getPos2().clone().subtract(location));
+        mapDefinition.setAttackerP3(attacker.getOtherPlayerDisplay().getPos1().clone().subtract(location));
+        mapDefinition.setAttackerP4(attacker.getOtherPlayerDisplay().getPos2().clone().subtract(location));
 
-        mapDefinition.setDefenderP1(defender.getThisPlayerDisplay().getPos1().subtract(location));
-        mapDefinition.setDefenderP2(defender.getThisPlayerDisplay().getPos2().subtract(location));
-        mapDefinition.setDefenderP3(defender.getOtherPlayerDisplay().getPos1().subtract(location));
-        mapDefinition.setDefenderP4(defender.getOtherPlayerDisplay().getPos2().subtract(location));
+        mapDefinition.setDefenderP1(defender.getThisPlayerDisplay().getPos1().clone().subtract(location));
+        mapDefinition.setDefenderP2(defender.getThisPlayerDisplay().getPos2().clone().subtract(location));
+        mapDefinition.setDefenderP3(defender.getOtherPlayerDisplay().getPos1().clone().subtract(location));
+        mapDefinition.setDefenderP4(defender.getOtherPlayerDisplay().getPos2().clone().subtract(location));
 
-        mapDefinition.setAttackerSpawn(attacker.getSpawnLocation().subtract(location));
-        mapDefinition.setDefenderSpawn(defender.getSpawnLocation().subtract(location));
+        mapDefinition.setAttackerSpawn(attacker.getSpawnLocation().clone().subtract(location));
+        mapDefinition.setDefenderSpawn(defender.getSpawnLocation().clone().subtract(location));
 
         mapDefinition.setShips(new HashMap<>(ships));
 

@@ -82,8 +82,8 @@ public class GameManager {
         BukkitTask task = new BukkitRunnable(){
             @Override
             public void run() {
-                game.getAttacker().sendMessage(MiniMinigames.PREFIX + "§cThe invite from §6" + p.getDisplayName() + "§c has been removed");
-                game.getDefender().sendMessage(MiniMinigames.PREFIX + "§cYour opponent §6" + game.getAttacker().getDisplayName() + "§c has not responded");
+                game.getAttacker().sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.invite.inviteRemoved", "player", p.getDisplayName()));
+                game.getDefender().sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.invite.notResponded", "player", game.getAttacker().getDisplayName()));
                 games.remove(game);
                 tasks.remove(game);
             }

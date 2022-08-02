@@ -1,0 +1,73 @@
+messages:
+  command:
+    noPlayer: "&cYou have to be a player to use this command"
+    unknownPlayer: "&cUnknown Player with name: %player%"
+    inGame: "&cYou are currently in a game"
+    unknownMap: "&cUnknown Map with name: &6%map%"
+    accept:
+      noGame: "&cThere is no game to accept"
+      noAcceptOwnGame: "&cYou can't accept you own game"
+    challenge:
+      invalidCommand: "&cPlease use &6/%command% <player>"
+      noChallengeSelf: "&cYou can't challenge yourself"
+      opponentInGame: "&cYou're opponent is currently in a game"
+      sentChallengeInvite: "&aSent challenge invite to &6%player%"
+      selectMap: "&aPlease select the map"
+      noMapSelected: "&cYou did not select a map"
+    copyMapDefinition:
+      invalidCommand: "&cPlease use &6/%command% <map>"
+      copied: "&aCopied Map Definition"
+    deny:
+      noGame: "&cThere is no game to deny"
+      isStarted: "&cThe game has already been started"
+      denied: "&aYou denied the invite"
+    paste:
+      noMap: "&cYou did not copy a map use &6/battleship copyMapDefinition"
+      invalidCommand: "&cPlease use &6/%command% <newMapName>"
+      alreadyMap: "&cThere is already a map with the name %map%"
+      createdMap: "&aCreated new Map with name %map%"
+    queueAllPlayers:
+      noMaps: "&cNot enough maps. Missing &6%amount%"
+      started: "&aSuccessfully started all games"
+    spectateAllGames:
+      stop: "&aYou are now longer spectating &6ALL &agames"
+      start: "&aYou are now spectating &6ALL&agames"
+    spectateGame:
+      invalidCommand: "&cPlease use &6/%command% <player>"
+      noGameRunning: "&cThis player has currently no game running"
+      start: "&aYou are now spectating the game of &6%player%"
+
+
+  display:
+    accept: "[Accept]"
+    acceptColor: GREEN
+    deny: "[Deny]"
+    denyColor: RED
+    challengeMessage: "&aPlayer &6%player% &ainvited you to a game of Battleship on the map &6%map%\n§aYou have &660 &aseconds to accept\n"
+    opponentDenied: "&cYour opponent &6%player% &chas denied the invite"
+    attackShipRunner:
+      attackingActionBar: "&aYou are attacking"
+      waitingForOpponentAttack: "&6Waiting for your opponent to attack"
+    game:
+      gameStarted: "&aThe game has been started"
+      gameAccepted: "&aThe Player &6%player% &ahas accepted the invite"
+      canAttack: "&aYou can now attack your opponent"
+      forcefullyStopped: "&cThe game has been forcefully stopped"
+      lost: "&cYou lost"
+      won: "&aYou won"
+      sunk: "&aSunk"
+      hit: "&aHit"
+      miss: "&cMiss"
+      finishedPlacing: "&aYou finished playing the ships"
+      waitingForOpponent: "&aNow waiting for your opponent"
+      leftGame: "&6Your opponent left the game"
+    invite:
+      inviteRemoved: "&cThe invite from &6%player% &chas been removed"
+      notResponded: "§cYour opponent &6%player% &chas not responded"
+    shipPlacementRunner:
+      rotateShip: "&6Drop the item to rotate the ship"
+
+  gui:
+    mapInUse: "&cMap currently in use"
+    mapCanBePlayed: "&aMap can be played"
+    noPlayOnMap: "&cYou can't play on this map"

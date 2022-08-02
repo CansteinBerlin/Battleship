@@ -25,27 +25,26 @@ public class BattleShipCopyMapDefinitionCommand extends SubCommand {
     public boolean performCommand(CommandSender sender, String[] args) {
 
         if(!(sender instanceof Player)){
-            sender.sendMessage(MiniMinigames.PREFIX + "§cYou have to be a player to use this command");
+            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.noPlayer"));
             return true;
         }
         Player p = ((Player) sender);
 
         if(args.length != 1){
-            p.sendMessage(MiniMinigames.PREFIX + "§cPlease use §6/copyMapDefinition <map>");
+            p.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.copyMapDefinition.invalidCommand", "command", getCommandHistory()));
             return true;
         }
 
         Map copy = MiniMinigames.getInstance().getMapManager().loadMap(args[0]);
 
         if(copy == null){
-            p.sendMessage(MiniMinigames.PREFIX + "§cUnknown map with name: " + args[0]);
+            p.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.unknownMap", "map", args[0]));
             return true;
         }
 
         MapDefinition mapDefinition = copy.createMapDefinition(Display.unifyLocation(p.getLocation()));
-        Bukkit.broadcastMessage(mapDefinition.toString());
         MAP_DEFINITION_HASH_MAP.put(p, mapDefinition);
-        p.sendMessage(MiniMinigames.PREFIX + "§aCopied Map Definition");
+        p.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.copyMapDefinition.copied"));
 
         return true;
     }

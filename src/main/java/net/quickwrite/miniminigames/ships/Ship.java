@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 
-public class Ship implements ConfigurationSerializable {
+public class Ship implements ConfigurationSerializable, Comparable<Ship> {
 
     public static NamespacedKey KEY = new NamespacedKey(MiniMinigames.getInstance(), "shipLevel");
 
@@ -103,5 +103,10 @@ public class Ship implements ConfigurationSerializable {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public int compareTo(Ship o) {
+        return size - o.size;
     }
 }

@@ -1,5 +1,8 @@
 package net.quickwrite.miniminigames.game;
 
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.quickwrite.miniminigames.MiniMinigames;
 import net.quickwrite.miniminigames.display.Direction;
 import net.quickwrite.miniminigames.display.Display;
 import net.quickwrite.miniminigames.map.MapSide;
@@ -15,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class ShipPlacementRunner extends BukkitRunnable {
+
+    public static String rotateShipMessage;
 
     private final Player p;
     private final Map<Ship, Integer> shipsToPlace;
@@ -46,10 +51,14 @@ public class ShipPlacementRunner extends BukkitRunnable {
 
         placedShips = new ArrayList<>();
         locations = new ArrayList<>();
+
+        rotateShipMessage = MiniMinigames.getLang("display.shipPlacementRunner.rotateShip");
     }
 
     @Override
     public void run() {
+        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(rotateShipMessage));
+
         if(p.getInventory().getItemInMainHand().getItemMeta() == null) {
             if(lastLocation != null) displaySide.getThisPlayerDisplay().removeSpawnedMarkers();
             lastLocation = null;
@@ -60,7 +69,7 @@ public class ShipPlacementRunner extends BukkitRunnable {
             lastLocation = null;
             return;
         }
-        RayTraceResult result = p.getWorld().rayTraceBlocks(p.getEyeLocation(), p.getLocation().getDirection(), 50); //TODO: CONFIGURE
+        RayTraceResult result = p.getWorld().rayTraceBlocks(p.getEyeLocation(), p.getLocation().getDirection(), 50);
         if(result == null) return;
         Location loc = Display.unifyLocation(result.getHitPosition().toLocation(p.getWorld()));
         int shipSize = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(Ship.KEY, PersistentDataType.INTEGER);

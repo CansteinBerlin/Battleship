@@ -47,10 +47,10 @@ public class MapSelectionGUI implements IGUI{
             List<String> lore = meta.getLore();
             if(MiniMinigames.getInstance().getMapManager().isCurrentlyPlaying(MiniMinigames.getInstance().getMapManager().getMaps().get(i))){
                 meta.setDisplayName("§c" + meta.getDisplayName());
-                lore.add("§r§cMap Currently In Use");
+                lore.add("§r" + MiniMinigames.getLang("gui.mapInUse"));
             }else{
                 meta.setDisplayName("§a" + meta.getDisplayName());
-                lore.add("§r§aMap can be played");
+                lore.add("§r" + MiniMinigames.getLang("gui.mapCanBePlayed"));
             }
             meta.setLore(lore);
             display.setItemMeta(meta);
@@ -63,7 +63,7 @@ public class MapSelectionGUI implements IGUI{
     public boolean onClose(Player p) {
         if(!clicked) {
             MiniMinigames.getInstance().getGameManager().invalidMapSelection(game);
-            p.sendMessage(MiniMinigames.PREFIX + "§cYou did not select a map");
+            p.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.challenge.noMapSelected"));
         }
         return true;
     }
@@ -80,7 +80,7 @@ public class MapSelectionGUI implements IGUI{
         Map map = MiniMinigames.getInstance().getMapManager().loadMap(MiniMinigames.getInstance().getMapManager().getMaps().get(slot));
         if(map == null) return;
         if(MiniMinigames.getInstance().getMapManager().isCurrentlyPlaying(map)){
-            player.sendMessage(MiniMinigames.PREFIX + "§cYou can't play on this map.");
+            player.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("gui.noPlayOnMap"));
             return;
         }
 
