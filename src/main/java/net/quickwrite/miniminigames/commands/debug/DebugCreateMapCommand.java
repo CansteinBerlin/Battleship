@@ -60,6 +60,13 @@ public class DebugCreateMapCommand extends SubCommand {
             return true;
         }
 
+        attackerVerticalDisplay = null;
+        defenderVerticalDisplay = null;
+        attackerHorizontalDisplay = null;
+        defenderHorizontalDisplay = null;
+        attackerSpawnLocation = null;
+        defenderSpawnLocation = null;
+
         sender.sendMessage(MiniMinigames.PREFIX + "§aCreated new Map");
         return true;
     }
