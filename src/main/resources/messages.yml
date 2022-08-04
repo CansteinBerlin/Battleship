@@ -36,6 +36,9 @@ messages:
       invalidCommand: "&cPlease use &6/%command% <player>"
       noGameRunning: "&cThis player has currently no game running"
       start: "&aYou are now spectating the game of &6%player%"
+    reloadConfigs:
+      invalidCommand: "&cPlease use &6/%command% <messages/maps/ships/blocks/items>"
+      success: "&aSuccessfully reloaded config: &6%config%"
 
 
   display:

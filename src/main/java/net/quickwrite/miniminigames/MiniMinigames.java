@@ -91,10 +91,16 @@ public final class MiniMinigames extends JavaPlugin {
     }
 
     public static String getLang(String key, String... args) {
-        String lang = MiniMinigames.getInstance().languageConfig.getConfig().getString("messages." + key, "&cUnknown language key &6" + key);
+        String lang = MiniMinigames.getInstance().languageConfig.getConfig().getString("messages." + key, "&cUnknown or empty language key please check the config &6" + key);
         for (int i = 0; i + 1 < args.length; i += 2) {
             lang = lang.replace("%" + args[i] + "%", args[i + 1]);
         }
+
+        if(!MiniMinigames.getInstance().languageConfig.getConfig().contains("messages." + key)){
+            MiniMinigames.getInstance().languageConfig.getConfig().set("messages." + key, "MISSING LANGUAGE KEY");
+            MiniMinigames.getInstance().languageConfig.saveConfig();
+        }
+
         return ChatColor.translateAlternateColorCodes('&', lang);
     }
 
@@ -123,7 +129,7 @@ public final class MiniMinigames extends JavaPlugin {
         BattleshipItems.load(itemConfig.getConfig());
     }
 
-    private void loadShipConfig() {
+    public void loadShipConfig() {
         shipConfig = new ShipConfig();
 
         ShipManager.loadShips(shipConfig);
@@ -185,5 +191,9 @@ public final class MiniMinigames extends JavaPlugin {
 
     public GuiManager getGuiManager() {
         return guiManager;
+    }
+
+    public LanguageConfig getLanguageConfig() {
+        return languageConfig;
     }
 }
