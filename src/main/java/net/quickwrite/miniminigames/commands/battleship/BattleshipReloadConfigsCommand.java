@@ -8,7 +8,12 @@ import net.quickwrite.miniminigames.items.BattleshipItems;
 import net.quickwrite.miniminigames.map.MapManager;
 import org.bukkit.command.CommandSender;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class BattleshipReloadConfigsCommand extends SubCommand {
 
@@ -51,5 +56,15 @@ public class BattleshipReloadConfigsCommand extends SubCommand {
         sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.reloadconfigs.success", "config", args[0].toLowerCase(Locale.ROOT)));
 
         return true;
+    }
+
+    @Override
+    public List<String> tabComplete(CommandSender sender, String[] args) {
+        if(args.length > 1) return new ArrayList<>();
+
+        return Stream.of("messages", "blocks", "items", "maps", "ships")
+                .filter(config -> config.startsWith(args[0].toLowerCase(Locale.ROOT)))
+                .sorted()
+                .collect(Collectors.toList());
     }
 }

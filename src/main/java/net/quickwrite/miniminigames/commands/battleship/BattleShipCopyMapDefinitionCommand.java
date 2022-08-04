@@ -10,7 +10,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class BattleShipCopyMapDefinitionCommand extends SubCommand {
 
@@ -47,5 +51,15 @@ public class BattleShipCopyMapDefinitionCommand extends SubCommand {
         p.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.copyMapDefinition.copied"));
 
         return true;
+    }
+
+    @Override
+    public List<String> tabComplete(CommandSender sender, String[] args) {
+        if(args.length > 1) return new ArrayList<>();
+
+        return MiniMinigames.getInstance().getMapManager().getMaps().stream()
+                .filter(map -> map.startsWith(args[0].toLowerCase(Locale.ROOT)))
+                .sorted()
+                .collect(Collectors.toList());
     }
 }
