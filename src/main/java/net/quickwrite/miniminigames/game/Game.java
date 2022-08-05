@@ -125,8 +125,19 @@ public class Game {
         attacker.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.game.forcefullyStopped"));
         defender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.game.forcefullyStopped"));
 
+        map.getAttacker().getThisPlayerDisplay().removeSpawnedMarkers();
+        map.getAttacker().getOtherPlayerDisplay().removeSpawnedMarkers();
+        map.getDefender().getThisPlayerDisplay().removeSpawnedMarkers();
+        map.getDefender().getOtherPlayerDisplay().removeSpawnedMarkers();
+
         map.getAttacker().removeAll();
         map.getDefender().removeAll();
+
+        if(attackerShipPlacementRunner != null) attackerShipPlacementRunner.cancel();
+        if(defenderShipPlacementRunner != null) defenderShipPlacementRunner.cancel();
+        if(attackerShipRunner != null) attackerShipRunner.cancel();
+        if(defenderShipRunner != null) defenderShipRunner.cancel();
+
         attackerSafe.setToPlayer();
         defenderSafe.setToPlayer();
         MiniMinigames.getInstance().getGameManager().finishGame(this);
@@ -323,6 +334,7 @@ public class Game {
 
     public void setMap(Map map){
         this.map = map;
+        MiniMinigames.getInstance().getMapManager().markCurrentlyPlaying(map, true);
     }
 
     public boolean isStarted() {
