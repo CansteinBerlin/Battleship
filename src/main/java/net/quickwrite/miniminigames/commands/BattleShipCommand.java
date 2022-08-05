@@ -11,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 public class BattleShipCommand extends BaseCommand {
 
     public BattleShipCommand() {
-        super("battleship", null);
+        super("battleship", "battleship.command.battleship");
 
         for(Class<? extends SubCommand> command : ReflectionUtil.getAllClasses("net.quickwrite.miniminigames.commands.battleship", SubCommand.class)){
             try {
