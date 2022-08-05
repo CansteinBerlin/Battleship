@@ -40,6 +40,19 @@ messages:
       invalidCommand: "&cPlease use &6/%command% <messages/maps/ships/blocks/items>"
       success: "&aSuccessfully reloaded config: &6%config%"
 
+  ship:
+    small: "Small Ship"
+    medium: "Medium ship"
+    large: "Large Ship"
+    larger Ship: "Larger ship"
+    even_larger: "Even larger ship"
+
+  instructions:
+    amount: 4
+    inst_0: "text1"
+    inst_1: "text2"
+    inst_2: "text3"
+    inst_3: "text4"
 
   display:
     accept: "[Accept]"

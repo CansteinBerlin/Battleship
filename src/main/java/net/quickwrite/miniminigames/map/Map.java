@@ -79,6 +79,8 @@ public class Map implements ConfigurationSerializable {
         lore.add("§r§7Size: §6" + attacker.getThisPlayerDisplay().getWidth() + "x" + attacker.getThisPlayerDisplay().getHeight());
         lore.add("§r§7Ships:");
 
+        ships.remove(null);
+        System.out.println(ships);
         TreeMap<Ship, Integer> sortedShips = new TreeMap<>(ships);
 
         for(java.util.Map.Entry<Ship, Integer> entry : sortedShips.entrySet()){

@@ -138,11 +138,11 @@ public final class MiniMinigames extends JavaPlugin {
         }
 
         //Default ships
-        ShipManager.defaultShips.add(new Ship(2, Material.GREEN_DYE, "default.ship.place", "default.ship.hit", "Small Ship"));
-        ShipManager.defaultShips.add(new Ship(3, Material.RED_DYE, "default.ship.place", "default.ship.hit", "Medium Ship"));
-        ShipManager.defaultShips.add(new Ship(4, Material.BLUE_DYE, "default.ship.place", "default.ship.hit", "Large Ship"));
-        ShipManager.defaultShips.add(new Ship(5, Material.BLACK_DYE, "default.ship.place", "default.ship.hit", "Larger Ship"));
-        ShipManager.defaultShips.add(new Ship(6, Material.BROWN_DYE, "default.ship.place", "default.ship.hit", "Even larger Ship"));
+        ShipManager.defaultShips.add(new Ship(2, Material.GREEN_DYE, "default.ship.place", "default.ship.hit", getLang("ship.small")));
+        ShipManager.defaultShips.add(new Ship(3, Material.RED_DYE, "default.ship.place", "default.ship.hit", getLang("ship.medium")));
+        ShipManager.defaultShips.add(new Ship(4, Material.BLUE_DYE, "default.ship.place", "default.ship.hit", getLang("ship.large")));
+        ShipManager.defaultShips.add(new Ship(5, Material.BLACK_DYE, "default.ship.place", "default.ship.hit", getLang("ship.larger")));
+        ShipManager.defaultShips.add(new Ship(6, Material.BROWN_DYE, "default.ship.place", "default.ship.hit", getLang("ship.even_larger")));
 
     }
 

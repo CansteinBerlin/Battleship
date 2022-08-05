@@ -35,7 +35,6 @@ public class MapManager {
 
     public void loadMaps(List<String> names){
         maps.addAll(names);
-        Bukkit.broadcastMessage(maps + "");
     }
 
     public boolean addNewMap(String name, Map map){

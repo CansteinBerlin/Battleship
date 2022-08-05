@@ -6,9 +6,11 @@ import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.game.Game;
 import net.quickwrite.miniminigames.game.GameManager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +42,6 @@ public class BattleShipQueueAllPlayersCommand extends SubCommand {
             return true;
         }
 
-        System.out.println(manager.getGames());
         for(int i = manager.getGames().size() - 1; i >= 0; i--){
             manager.getGames().get(i).forceQuit();
         }
@@ -51,6 +52,32 @@ public class BattleShipQueueAllPlayersCommand extends SubCommand {
             g.initGame();
         }
         sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.queueAllPlayers.started"));
+
+        int number = MiniMinigames.getInstance().getLanguageConfig().getConfig().getInt("messages.instructions.amount", -1);
+        List<String> texts = new ArrayList<>();
+        for(int i = 0; i < number; i++){
+            texts.add(MiniMinigames.getLang("instructions.inst_" + i));
+        }
+        int[] amount = {0};
+        new BukkitRunnable(){
+
+            @Override
+            public void run() {
+
+                if(amount[0] >= texts.size()){
+                    cancel();
+                    return;
+                }
+                for(Player p : playingPlayers){
+                    String[] parts = ChatColor.translateAlternateColorCodes('&', texts.get(amount[0])).split("\\n");
+                    if(parts.length == 2) p.sendTitle(parts[0], parts[1], 0, 20*2, 0);
+                    else p.sendTitle(texts.get(amount[0]), "", 0, 20*2, 0);
+                }
+                amount[0] += 1;
+
+            }
+        }.runTaskTimer(MiniMinigames.getInstance(), 0, 20*2);
+
         return true;
     }
 }
