@@ -24,17 +24,18 @@ public class Ship implements ConfigurationSerializable, Comparable<Ship> {
     private final int size;
     private final String placeBlock, hitBlock;
     private final ItemStack displayItem;
-    private final String name;
+    private final String name, id;
 
     //Placement
 
 
-    public Ship(int size, Material displayItem, String placeBlock, String hitBlock, String name){
+    public Ship(int size, Material displayItem, String placeBlock, String hitBlock, String name, String id){
         this.size = size;
         this.placeBlock = placeBlock;
         this.hitBlock = hitBlock;
         this.displayItem = new ItemBuilder(displayItem).setDisplayName("§6" + name).setLore(Collections.singletonList("§r§7Size: §6" + size)).build();
         this.name = name;
+        this.id = id;
 
         ShipManager.ships.add(this);
     }
@@ -44,6 +45,7 @@ public class Ship implements ConfigurationSerializable, Comparable<Ship> {
         displayItem = (ItemStack) data.get("displayItem");
         placeBlock = (String) data.get("placeBlock");
         hitBlock = (String) data.get("hitBlock");
+        id = (String) data.get("id");
         name = displayItem.getItemMeta().getDisplayName().substring(2);
     }
 
@@ -68,6 +70,7 @@ public class Ship implements ConfigurationSerializable, Comparable<Ship> {
                 .put("displayItem", displayItem)
                 .put("hitBlock", hitBlock)
                 .put("placeBlock", placeBlock)
+                .put("id", id)
                 .build();
     }
 
@@ -75,9 +78,11 @@ public class Ship implements ConfigurationSerializable, Comparable<Ship> {
     public String toString() {
         return "Ship{" +
                 "size=" + size +
-                ", displayItem='" + displayItem.getType() + '\'' +
                 ", placeBlock='" + placeBlock + '\'' +
                 ", hitBlock='" + hitBlock + '\'' +
+                ", displayItem=" + displayItem +
+                ", name='" + name + '\'' +
+                ", id='" + id + '\'' +
                 '}';
     }
 
@@ -108,5 +113,9 @@ public class Ship implements ConfigurationSerializable, Comparable<Ship> {
     @Override
     public int compareTo(Ship o) {
         return size - o.size;
+    }
+
+    public String getId() {
+        return id;
     }
 }

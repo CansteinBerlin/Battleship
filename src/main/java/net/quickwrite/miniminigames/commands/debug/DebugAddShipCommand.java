@@ -19,7 +19,7 @@ public class DebugAddShipCommand extends SubCommand {
         if (args.length == 1){
             try {
                 int size = Integer.parseInt(args[0]);
-                new Ship(size, Material.GREEN_DYE, "default.ship.place", "default.ship.hit", "CustomShip:" + size);
+                new Ship(size, Material.GREEN_DYE, "default.ship.place", "default.ship.hit", "CustomShip:" + size, "size_" + args[0]);
                 sender.sendMessage(MiniMinigames.PREFIX + "§aAdded Ship with size " + size);
                 return true;
             }catch (NumberFormatException e){

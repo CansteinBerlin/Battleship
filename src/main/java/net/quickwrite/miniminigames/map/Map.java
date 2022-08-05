@@ -48,7 +48,8 @@ public class Map implements ConfigurationSerializable {
         HashMap<String, Integer> savedShips = (HashMap<String, Integer>) data.get("ships");
         this.ships = new HashMap<>();
         for(java.util.Map.Entry<String, Integer> entry : savedShips.entrySet()){
-            ships.put(ShipManager.getShipWithName(entry.getKey()), entry.getValue());
+            Ship ship = ShipManager.getShipWithName(entry.getKey());
+            if(ship != null) ships.put(ship, entry.getValue());
         }
 
 
@@ -79,7 +80,6 @@ public class Map implements ConfigurationSerializable {
         lore.add("§r§7Size: §6" + attacker.getThisPlayerDisplay().getWidth() + "x" + attacker.getThisPlayerDisplay().getHeight());
         lore.add("§r§7Ships:");
 
-        ships.remove(null);
         TreeMap<Ship, Integer> sortedShips = new TreeMap<>(ships);
 
         for(java.util.Map.Entry<Ship, Integer> entry : sortedShips.entrySet()){
@@ -106,7 +106,7 @@ public class Map implements ConfigurationSerializable {
 
         HashMap<String, Integer> saveShips = new HashMap<>();
         for(java.util.Map.Entry<Ship, Integer> entry : ships.entrySet()){
-            saveShips.put(entry.getKey().getName(), entry.getValue());
+            saveShips.put(entry.getKey().getId(), entry.getValue());
         }
 
         return new ImmutableMap.Builder<String, Object>()

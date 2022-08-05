@@ -34,9 +34,9 @@ public class ShipManager {
         }
         return null;
     }
-    public static Ship getShipWithName(String name){
+    public static Ship getShipWithName(String id){
         for(Ship ship : ships){
-            if(ChatColor.stripColor(ship.getName()).equalsIgnoreCase(ChatColor.stripColor(name))){
+            if(ChatColor.stripColor(ship.getId()).equalsIgnoreCase(ChatColor.stripColor(id))){
                 return ship;
             }
         }
