@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class BattleShipChallengeCommand extends SubCommand {
 
     public BattleShipChallengeCommand(BaseCommand parent) {
-        super(parent, "challenge", null);
+        super(parent, "challenge", "battleship.challenge");
     }
 
     @Override

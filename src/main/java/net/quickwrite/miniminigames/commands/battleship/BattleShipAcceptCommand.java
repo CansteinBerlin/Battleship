@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 public class BattleShipAcceptCommand extends SubCommand {
 
     public BattleShipAcceptCommand(BaseCommand parent) {
-        super(parent, "accept", null);
+        super(parent, "accept", "battleship.accept");
     }
 
     @Override

@@ -31,13 +31,10 @@ public class BattleShipQueueAllPlayersCommand extends SubCommand {
             return true;
         }
         Player playerSender = ((Player) sender);
-
         List<Player> playingPlayers = Bukkit.getOnlinePlayers().stream().filter(p -> !p.getGameMode().equals(GameMode.SPECTATOR)).filter(p -> p.getWorld().equals(playerSender.getWorld())).collect(Collectors.toList());
-        List<Player> spectators = Bukkit.getOnlinePlayers().stream().filter(p -> p.getGameMode().equals(GameMode.SPECTATOR)).collect(Collectors.toList());
         Collections.shuffle(playingPlayers);
-        Collections.shuffle(spectators);
         if(playingPlayers.size() % 2 != 0){
-            playingPlayers.add(spectators.get(0));
+            playingPlayers.remove(0);
         }
 
         GameManager manager = MiniMinigames.getInstance().getGameManager();

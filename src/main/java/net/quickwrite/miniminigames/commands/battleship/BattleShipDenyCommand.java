@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 public class BattleShipDenyCommand extends SubCommand {
 
     public BattleShipDenyCommand(BaseCommand parent) {
-        super(parent, "deny", null);
+        super(parent, "deny", "battleship.accept");
     }
 
     @Override
