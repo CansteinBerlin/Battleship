@@ -76,7 +76,7 @@ messages:
       sunk: "&aSunk"
       hit: "&aHit"
       miss: "&cMiss"
-      finishedPlacing: "&aYou finished playing the ships"
+      finishedPlacing: "&aYou finished placing the ships"
       waitingForOpponent: "&aNow waiting for your opponent"
       leftGame: "&6Your opponent left the game"
     invite:

@@ -84,10 +84,10 @@ public class GameManager {
             public void run() {
                 game.getAttacker().sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.invite.inviteRemoved", "player", p.getDisplayName()));
                 game.getDefender().sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.invite.notResponded", "player", game.getAttacker().getDisplayName()));
-                games.remove(game);
+                finishGame(game);
                 tasks.remove(game);
             }
-        }.runTaskLater(MiniMinigames.getInstance(), 20*60);
+        }.runTaskLater(MiniMinigames.getInstance(), 20*10);
         tasks.put(game, task);
     }
 

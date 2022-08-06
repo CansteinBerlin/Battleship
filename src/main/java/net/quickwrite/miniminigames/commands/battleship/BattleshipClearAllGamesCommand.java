@@ -20,7 +20,7 @@ public class BattleshipClearAllGamesCommand extends SubCommand {
             manager.getGames().get(i).forceQuit();
         }
 
-        sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("commands.clearGames.success"));
+        sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.clearGames.success"));
 
         return true;
     }

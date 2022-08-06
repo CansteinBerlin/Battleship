@@ -37,7 +37,7 @@ public class BattleShipQueueAllPlayersCommand extends SubCommand {
 
         int mapAmount = playingPlayers.size() / 2;
         ArrayList<String> maps = MiniMinigames.getInstance().getMapManager().getMaps();
-        if(maps.size() <= mapAmount){
+        if(maps.size() < mapAmount){
             sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.queueAllPlayers.noMaps", "amount", String.valueOf((mapAmount - maps.size()))));
             return true;
         }

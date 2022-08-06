@@ -77,6 +77,7 @@ public class MapManager {
         if(currentlyPlaying){
             currentlyPlayingMaps.put(map.getName().toLowerCase(Locale.ROOT), map);
         }else{
+            //System.out.println(map.getName().toLowerCase(Locale.ROOT));
             currentlyPlayingMaps.remove(map.getName().toLowerCase(Locale.ROOT));
         }
     }

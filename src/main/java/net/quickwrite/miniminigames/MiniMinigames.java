@@ -133,9 +133,6 @@ public final class MiniMinigames extends JavaPlugin {
         shipConfig = new ShipConfig();
 
         ShipManager.loadShips(shipConfig);
-        for(Ship s : ShipManager.ships){
-            Bukkit.broadcastMessage(s.toString());
-        }
 
         //Default ships
         ShipManager.defaultShips.add(new Ship(2, Material.GREEN_DYE, "default.ship.place", "default.ship.hit", getLang("ship.small"), "small"));

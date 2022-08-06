@@ -25,7 +25,7 @@ public class BattleshipReloadConfigsCommand extends SubCommand {
     public boolean performCommand(CommandSender sender, String[] args) {
 
         if(args.length == 0){
-            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.reloadconfigs.invalidCommand", "command", getCommandHistory()));
+            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.reloadConfigs.invalidCommand", "command", getCommandHistory()));
             return true;
         }
 
@@ -49,11 +49,11 @@ public class BattleshipReloadConfigsCommand extends SubCommand {
                 break;
 
             default:
-                sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.reloadconfigs.invalidCommand", "command", getCommandHistory()));
+                sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.reloadConfigs.invalidCommand", "command", getCommandHistory()));
                 return true;
 
         }
-        sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.reloadconfigs.success", "config", args[0].toLowerCase(Locale.ROOT)));
+        sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.reloadConfigs.success", "config", args[0].toLowerCase(Locale.ROOT)));
 
         return true;
     }

@@ -55,6 +55,7 @@ public class MapSelectionGUI implements IGUI{
             meta.setLore(lore);
             display.setItemMeta(meta);
             inv.addItem(display);
+            i++;
         }
         open();
     }
