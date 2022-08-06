@@ -87,7 +87,7 @@ public class GameManager {
                 finishGame(game);
                 tasks.remove(game);
             }
-        }.runTaskLater(MiniMinigames.getInstance(), 20*10);
+        }.runTaskLater(MiniMinigames.getInstance(), 20*60);
         tasks.put(game, task);
     }
 
