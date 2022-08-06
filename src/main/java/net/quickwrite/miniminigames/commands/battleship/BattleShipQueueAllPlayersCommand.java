@@ -25,8 +25,15 @@ public class BattleShipQueueAllPlayersCommand extends SubCommand {
 
     @Override
     public boolean performCommand(CommandSender sender, String[] args) {
-        List<Player> playingPlayers = Bukkit.getOnlinePlayers().stream().filter((p) -> !p.getGameMode().equals(GameMode.SPECTATOR)).collect(Collectors.toList());
-        List<Player> spectators = Bukkit.getOnlinePlayers().stream().filter(player -> player.getGameMode().equals(GameMode.SPECTATOR)).collect(Collectors.toList());
+
+        if(!(sender instanceof Player)){
+            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.noPlayer"));
+            return true;
+        }
+        Player playerSender = ((Player) sender);
+
+        List<Player> playingPlayers = Bukkit.getOnlinePlayers().stream().filter(p -> !p.getGameMode().equals(GameMode.SPECTATOR)).filter(p -> p.getWorld().equals(playerSender.getWorld())).collect(Collectors.toList());
+        List<Player> spectators = Bukkit.getOnlinePlayers().stream().filter(p -> p.getGameMode().equals(GameMode.SPECTATOR)).collect(Collectors.toList());
         Collections.shuffle(playingPlayers);
         Collections.shuffle(spectators);
         if(playingPlayers.size() % 2 != 0){
