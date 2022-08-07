@@ -30,7 +30,7 @@ public class AttackListener implements Listener {
         }
 
         delays.add(event.getPlayer());
-        Bukkit.broadcastMessage("delay");
+        //Bukkit.broadcastMessage("delay");
         new BukkitRunnable(){
             @Override
             public void run() {
