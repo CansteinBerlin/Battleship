@@ -101,7 +101,7 @@ public final class MiniMinigames extends JavaPlugin {
             MiniMinigames.getInstance().languageConfig.saveConfig();
         }
 
-        return ChatColor.translateAlternateColorCodes('&', lang);
+        return ChatColor.translateAlternateColorCodes('&', lang).replace("\\n", "\n");
     }
 
     public static net.md_5.bungee.api.ChatColor getChatColor(String key){
