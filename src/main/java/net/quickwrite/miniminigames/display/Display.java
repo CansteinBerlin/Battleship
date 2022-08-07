@@ -202,6 +202,12 @@ public abstract class Display {
         }
     }
 
+    public void checkAndResendBlock(Location loc){
+        if(changedBlocks.containsKey(loc)){
+            sendBlockChange(loc,  changedBlocks.get(loc));
+        }
+    }
+
     public boolean isAttacked(Location loc){
         return changedBlocks.containsKey(unifyLocation(loc));
     }
@@ -231,5 +237,7 @@ public abstract class Display {
     public int getMaxZ() {
         return maxZ;
     }
+
+
 }
 

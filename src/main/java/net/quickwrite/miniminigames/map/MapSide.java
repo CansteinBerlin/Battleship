@@ -1,6 +1,7 @@
 package net.quickwrite.miniminigames.map;
 
 import com.google.common.collect.ImmutableMap;
+import net.quickwrite.miniminigames.display.Display;
 import net.quickwrite.miniminigames.display.HorizontalDisplay;
 import net.quickwrite.miniminigames.display.VerticalDisplay;
 import org.bukkit.Bukkit;
@@ -116,5 +117,10 @@ public class MapSide implements ConfigurationSerializable{
 
     public Location getSpawnLocation() {
         return spawnLocation;
+    }
+
+    public void checkAndResendBlock(Location loc){
+        thisPlayerDisplay.checkAndResendBlock(loc);
+
     }
 }

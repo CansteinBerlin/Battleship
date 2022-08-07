@@ -11,7 +11,6 @@ public class PlayerSafe {
     private Location loc;
     private GameMode gameMode;
     private Player p;
-    private boolean allowFlight;
 
     public PlayerSafe(Player player){
         setFromPlayer(player);
@@ -22,13 +21,11 @@ public class PlayerSafe {
         items = p.getInventory().getContents();
         loc = p.getLocation();
         gameMode = p.getGameMode();
-        allowFlight = p.getAllowFlight();
     }
 
     public void setToPlayer(){
         p.getInventory().setContents(items);
         p.teleport(loc);
         p.setGameMode(gameMode);
-        p.setAllowFlight(allowFlight);
     }
 }

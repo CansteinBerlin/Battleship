@@ -2,6 +2,7 @@ package net.quickwrite.miniminigames.game;
 
 import net.quickwrite.miniminigames.MiniMinigames;
 import net.quickwrite.miniminigames.commands.battleship.BattleShipSpectateAllGamesCommand;
+import net.quickwrite.miniminigames.display.Display;
 import net.quickwrite.miniminigames.game.gamestate.GameStateManager;
 import net.quickwrite.miniminigames.map.Map;
 import net.quickwrite.miniminigames.map.MapSide;
@@ -59,11 +60,8 @@ public class Game {
 
         attackerSafe = new PlayerSafe(attacker);
         defenderSafe = new PlayerSafe(defender);
-        attacker.setGameMode(GameMode.ADVENTURE);
-        defender.setGameMode(GameMode.ADVENTURE);
-
-        attacker.setAllowFlight(true);
-        defender.setAllowFlight(true);
+        attacker.setGameMode(GameMode.CREATIVE);
+        defender.setGameMode(GameMode.CREATIVE);
 
         map.addPlayer(attacker);
         map.addPlayer(defender);
@@ -381,5 +379,13 @@ public class Game {
 
     public Map getMap() {
         return map;
+    }
+
+    public void brokeBlock(Location location) {
+        location = Display.unifyLocation(location);
+        location.subtract(0, 1, 0);
+        map.getAttacker().checkAndResendBlock(location);
+        map.getDefender().checkAndResendBlock(location);
+
     }
 }

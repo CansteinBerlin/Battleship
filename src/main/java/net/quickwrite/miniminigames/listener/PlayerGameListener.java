@@ -5,8 +5,11 @@ import net.quickwrite.miniminigames.commands.battleship.BattleShipSpectateAllGam
 import net.quickwrite.miniminigames.game.Game;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerGameListener implements Listener {
 
@@ -20,4 +23,20 @@ public class PlayerGameListener implements Listener {
         MiniMinigames.getInstance().getGameManager().removeGameBecauseOfPlayerLeft(game, p);
     }
 
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlayerBreakBlock(BlockBreakEvent event){
+        Player p = event.getPlayer();
+        Game game = MiniMinigames.getInstance().getGameManager().getGame(p);
+        if(game == null) return;
+
+        new BukkitRunnable(){
+
+            @Override
+            public void run() {
+                game.brokeBlock(event.getBlock().getLocation());
+            }
+        }.runTaskLater(MiniMinigames.getInstance(), 1);
+
+        event.setCancelled(true);
+    }
 }
