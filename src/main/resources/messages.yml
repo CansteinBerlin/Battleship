@@ -79,6 +79,7 @@ messages:
       finishedPlacing: "&aYou finished placing the ships"
       waitingForOpponent: "&aNow waiting for your opponent"
       leftGame: "&6Your opponent left the game"
+      underDelay: "&cWhoa slow down please"
     invite:
       inviteRemoved: "&cThe invite from &6%player% &chas been removed"
       notResponded: "§cYour opponent &6%player% &chas not responded"

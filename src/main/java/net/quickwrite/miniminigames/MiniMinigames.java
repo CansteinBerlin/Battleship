@@ -36,6 +36,8 @@ import java.util.stream.Collectors;
 public final class MiniMinigames extends JavaPlugin {
 
     public static String PREFIX = "§3[§bMiniMinigames§3]§r ";
+    public static int ATTACK_DELAY = 10;
+
     private static MiniMinigames instance;
     public static Logger LOGGER;
 
@@ -82,8 +84,8 @@ public final class MiniMinigames extends JavaPlugin {
     }
 
     private void loadConfigs() {
-        loadLanguageConfig();
         loadDefaultConfig();
+        loadLanguageConfig();
         loadItemConfig();
         loadBlockConfig();
         loadShipConfig();
@@ -143,10 +145,11 @@ public final class MiniMinigames extends JavaPlugin {
 
     }
 
-    private void loadDefaultConfig(){
+    public void loadDefaultConfig(){
         config = new DefaultConfig();
         FileConfiguration conf = config.getConfig();
         PREFIX = conf.getString("prefix", PREFIX);
+        ATTACK_DELAY = conf.getInt("delay", 10);
     }
 
     @Override

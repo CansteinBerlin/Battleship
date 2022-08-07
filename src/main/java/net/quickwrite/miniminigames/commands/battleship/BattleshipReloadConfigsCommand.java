@@ -5,11 +5,9 @@ import net.quickwrite.miniminigames.blocks.BattleShipBlocks;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.items.BattleshipItems;
-import net.quickwrite.miniminigames.map.MapManager;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -47,6 +45,9 @@ public class BattleshipReloadConfigsCommand extends SubCommand {
             case "ships":
                 MiniMinigames.getInstance().loadShipConfig();
                 break;
+            case "config":
+                MiniMinigames.getInstance().loadDefaultConfig();
+                break;
 
             default:
                 sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.reloadConfigs.invalidCommand", "command", getCommandHistory()));
@@ -62,7 +63,7 @@ public class BattleshipReloadConfigsCommand extends SubCommand {
     public List<String> tabComplete(CommandSender sender, String[] args) {
         if(args.length > 1) return new ArrayList<>();
 
-        return Stream.of("messages", "blocks", "items", "maps", "ships")
+        return Stream.of("messages", "blocks", "items", "maps", "ships", "config")
                 .filter(config -> config.startsWith(args[0].toLowerCase(Locale.ROOT)))
                 .sorted()
                 .collect(Collectors.toList());
