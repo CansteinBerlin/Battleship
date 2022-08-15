@@ -1,6 +1,6 @@
 package net.quickwrite.miniminigames.commands.battleship;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.game.Game;
@@ -23,26 +23,26 @@ public class BattleShipSpectateGameCommand extends SubCommand {
     @Override
     public boolean performCommand(CommandSender sender, String[] args) {
         if(!(sender instanceof Player)) {
-            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.noPlayer"));
+            sender.sendMessage(Battleship.PREFIX + Battleship.getLang("command.noPlayer"));
             return true;
         }
         Player spectator = ((Player) sender);
         if(args.length != 1){
-            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.spectateGame.invalidCommand", "command", getCommandHistory()));
+            sender.sendMessage(Battleship.PREFIX + Battleship.getLang("command.spectateGame.invalidCommand", "command", getCommandHistory()));
             return true;
         }
         Player p = Bukkit.getPlayer(args[0]);
         if(p == null){
-            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.unknownPlayer"));
+            sender.sendMessage(Battleship.PREFIX + Battleship.getLang("command.unknownPlayer"));
             return true;
         }
-        Game game = MiniMinigames.getInstance().getGameManager().getGame(p);
+        Game game = Battleship.getInstance().getGameManager().getGame(p);
         if(game == null){
-            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.spectateGame.noGameRunning"));
+            sender.sendMessage(Battleship.PREFIX + Battleship.getLang("command.spectateGame.noGameRunning"));
             return true;
         }
         game.addSpectator(spectator);
-        sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.spectateGame.start"));
+        sender.sendMessage(Battleship.PREFIX + Battleship.getLang("command.spectateGame.start"));
 
         return true;
     }

@@ -1,6 +1,6 @@
 package net.quickwrite.miniminigames.commands.debug;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import org.bukkit.command.CommandSender;
@@ -17,7 +17,7 @@ public class DebugTestGuiCommand extends SubCommand {
         if(!(sender instanceof Player)) return true;
         Player p = (Player) sender;
         //MiniMinigames.getInstance().getGuiManager().createMapSelectionGui(p, null);
-        p.sendMessage(MiniMinigames.PREFIX + "§cOpened Gui");
+        p.sendMessage(Battleship.PREFIX + "§cOpened Gui");
         return true;
     }
 }

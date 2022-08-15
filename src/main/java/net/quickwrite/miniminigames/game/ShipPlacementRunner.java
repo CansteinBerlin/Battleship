@@ -2,7 +2,7 @@ package net.quickwrite.miniminigames.game;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.display.Direction;
 import net.quickwrite.miniminigames.display.Display;
 import net.quickwrite.miniminigames.map.MapSide;
@@ -52,7 +52,7 @@ public class ShipPlacementRunner extends BukkitRunnable {
         placedShips = new ArrayList<>();
         locations = new ArrayList<>();
 
-        rotateShipMessage = MiniMinigames.getLang("display.shipPlacementRunner.rotateShip");
+        rotateShipMessage = Battleship.getLang("display.shipPlacementRunner.rotateShip");
     }
 
     @Override

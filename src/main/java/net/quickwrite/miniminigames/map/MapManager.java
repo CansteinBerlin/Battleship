@@ -1,9 +1,7 @@
 package net.quickwrite.miniminigames.map;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.config.MapConfig;
-import net.quickwrite.miniminigames.util.DebugMessage;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 
@@ -49,8 +47,8 @@ public class MapManager {
         cfg.saveConfig();
 
         maps.add(name);
-        MiniMinigames.getInstance().getMapsConfig().getConfig().set("maps", maps);
-        MiniMinigames.getInstance().getMapsConfig().saveConfig();
+        Battleship.getInstance().getMapsConfig().getConfig().set("maps", maps);
+        Battleship.getInstance().getMapsConfig().saveConfig();
 
         return true;
     }

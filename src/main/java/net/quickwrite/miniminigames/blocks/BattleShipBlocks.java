@@ -1,6 +1,6 @@
 package net.quickwrite.miniminigames.blocks;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.config.BlockConfig;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -32,7 +32,7 @@ public class BattleShipBlocks {
                 blocks.replace(identifier, Material.valueOf(material));
             }
         }catch (IllegalArgumentException e){
-            MiniMinigames.LOGGER.severe("Could not load Material with name: " + material);
+            Battleship.LOGGER.severe("Could not load Material with name: " + material);
             blocks.remove(identifier);
         }
     }

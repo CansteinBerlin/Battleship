@@ -1,6 +1,6 @@
 package net.quickwrite.miniminigames.commandsystem;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import org.bukkit.command.CommandSender;
 
 import java.util.Arrays;
@@ -32,7 +32,7 @@ public class SubCommand extends BaseCommand {
                 }
             }
         }
-        sender.sendMessage(MiniMinigames.PREFIX + "§cPlease use /" + getCommandHistory() + " <" + getValidCommands() + "> ");
+        sender.sendMessage(Battleship.PREFIX + "§cPlease use /" + getCommandHistory() + " <" + getValidCommands() + "> ");
         return true;
     }
 

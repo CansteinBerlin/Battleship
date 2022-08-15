@@ -1,6 +1,6 @@
 package net.quickwrite.miniminigames.commands.debug;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.items.BattleshipItems;
@@ -14,8 +14,8 @@ public class DebugSaveItemConfigCommand extends SubCommand {
 
     @Override
     public boolean performCommand(CommandSender sender, String[] args) {
-        sender.sendMessage(MiniMinigames.PREFIX + "§aSaved Config");
-        BattleshipItems.saveItems(MiniMinigames.getInstance().getItemConfig());
+        sender.sendMessage(Battleship.PREFIX + "§aSaved Config");
+        BattleshipItems.saveItems(Battleship.getInstance().getItemConfig());
         return true;
     }
 }

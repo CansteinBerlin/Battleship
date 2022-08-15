@@ -1,6 +1,6 @@
 package net.quickwrite.miniminigames.commands.debug;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.map.Selection;
@@ -28,11 +28,11 @@ public class DebugEnableSelectionCommand extends SubCommand {
             Player p = (Player) sender;
             selections.put(p, new Selection());
             selectingPlayers.add(p);
-            sender.sendMessage(MiniMinigames.PREFIX + "§aYou created a new Selection");
-            sender.sendMessage(MiniMinigames.PREFIX + "§aRightClick for first Location");
-            sender.sendMessage(MiniMinigames.PREFIX + "§aLeftClick for second Location");
+            sender.sendMessage(Battleship.PREFIX + "§aYou created a new Selection");
+            sender.sendMessage(Battleship.PREFIX + "§aRightClick for first Location");
+            sender.sendMessage(Battleship.PREFIX + "§aLeftClick for second Location");
         }else{
-            sender.sendMessage(MiniMinigames.PREFIX + "§cYou have to be a player to use this command");
+            sender.sendMessage(Battleship.PREFIX + "§cYou have to be a player to use this command");
         }
 
         return true;

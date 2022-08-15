@@ -1,6 +1,6 @@
 package net.quickwrite.miniminigames.commands.battleship;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.display.Display;
@@ -8,8 +8,6 @@ import net.quickwrite.miniminigames.display.HorizontalDisplay;
 import net.quickwrite.miniminigames.display.VerticalDisplay;
 import net.quickwrite.miniminigames.map.Map;
 import net.quickwrite.miniminigames.map.MapDefinition;
-import net.quickwrite.miniminigames.util.DebugMessage;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -25,19 +23,19 @@ public class BattleShipPasteCommand extends SubCommand {
     @Override
     public boolean performCommand(CommandSender sender, String[] args) {
         if(!(sender instanceof Player)){
-            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.noPlayer"));
+            sender.sendMessage(Battleship.PREFIX + Battleship.getLang("command.noPlayer"));
             return true;
         }
 
         Player p = ((Player) sender);
 
         if(!BattleShipCopyMapDefinitionCommand.MAP_DEFINITION_HASH_MAP.containsKey(p)){
-            p.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.paste.noMap"));
+            p.sendMessage(Battleship.PREFIX + Battleship.getLang("command.paste.noMap"));
             return true;
         }
 
         if(args.length != 1){
-            p.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.paste.invalidCommand", "command", getCommandHistory()));
+            p.sendMessage(Battleship.PREFIX + Battleship.getLang("command.paste.invalidCommand", "command", getCommandHistory()));
             return true;
         }
 
@@ -55,12 +53,12 @@ public class BattleShipPasteCommand extends SubCommand {
 
         map.displayAll();
 
-        if(!MiniMinigames.getInstance().getMapManager().addNewMap(args[0], map)){
-            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.paste.alreadyMap", "map", args[0]));
+        if(!Battleship.getInstance().getMapManager().addNewMap(args[0], map)){
+            sender.sendMessage(Battleship.PREFIX + Battleship.getLang("command.paste.alreadyMap", "map", args[0]));
             return true;
         }
 
-        sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.paste.createdMap", "map", args[0]));
+        sender.sendMessage(Battleship.PREFIX + Battleship.getLang("command.paste.createdMap", "map", args[0]));
         return true;
     }
 }

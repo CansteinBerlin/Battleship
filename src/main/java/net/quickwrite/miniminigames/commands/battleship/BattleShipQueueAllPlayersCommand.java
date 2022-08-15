@@ -1,6 +1,6 @@
 package net.quickwrite.miniminigames.commands.battleship;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.game.Game;
@@ -27,7 +27,7 @@ public class BattleShipQueueAllPlayersCommand extends SubCommand {
     public boolean performCommand(CommandSender sender, String[] args) {
 
         if(!(sender instanceof Player)){
-            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.noPlayer"));
+            sender.sendMessage(Battleship.PREFIX + Battleship.getLang("command.noPlayer"));
             return true;
         }
         Player playerSender = ((Player) sender);
@@ -37,12 +37,12 @@ public class BattleShipQueueAllPlayersCommand extends SubCommand {
             playingPlayers.remove(0);
         }
 
-        GameManager manager = MiniMinigames.getInstance().getGameManager();
+        GameManager manager = Battleship.getInstance().getGameManager();
 
         int mapAmount = playingPlayers.size() / 2;
-        ArrayList<String> maps = MiniMinigames.getInstance().getMapManager().getMaps();
+        ArrayList<String> maps = Battleship.getInstance().getMapManager().getMaps();
         if(maps.size() < mapAmount){
-            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.queueAllPlayers.noMaps", "amount", String.valueOf((mapAmount - maps.size()))));
+            sender.sendMessage(Battleship.PREFIX + Battleship.getLang("command.queueAllPlayers.noMaps", "amount", String.valueOf((mapAmount - maps.size()))));
             return true;
         }
 
@@ -52,15 +52,15 @@ public class BattleShipQueueAllPlayersCommand extends SubCommand {
 
         for(int i = 0; i < mapAmount; i++){
             Game g = manager.createGame(playingPlayers.get(i * 2), playingPlayers.get(i * 2 + 1));
-            g.setMap(MiniMinigames.getInstance().getMapManager().loadMap(maps.get(i)));
+            g.setMap(Battleship.getInstance().getMapManager().loadMap(maps.get(i)));
             g.initGame();
         }
-        sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.queueAllPlayers.started"));
+        sender.sendMessage(Battleship.PREFIX + Battleship.getLang("command.queueAllPlayers.started"));
 
-        int number = MiniMinigames.getInstance().getLanguageConfig().getConfig().getInt("messages.instructions.amount", -1);
+        int number = Battleship.getInstance().getLanguageConfig().getConfig().getInt("messages.instructions.amount", -1);
         List<String> texts = new ArrayList<>();
         for(int i = 0; i < number; i++){
-            texts.add(MiniMinigames.getLang("instructions.inst_" + i));
+            texts.add(Battleship.getLang("instructions.inst_" + i));
         }
         int[] amount = {0};
         new BukkitRunnable(){
@@ -80,7 +80,7 @@ public class BattleShipQueueAllPlayersCommand extends SubCommand {
                 amount[0] += 1;
 
             }
-        }.runTaskTimer(MiniMinigames.getInstance(), 0, 20*2);
+        }.runTaskTimer(Battleship.getInstance(), 0, 20*2);
 
         return true;
     }

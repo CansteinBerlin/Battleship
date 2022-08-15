@@ -1,10 +1,9 @@
 package net.quickwrite.miniminigames.ships;
 
 import com.google.common.collect.ImmutableMap;
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.blocks.BattleShipBlocks;
 import net.quickwrite.miniminigames.builder.items.ItemBuilder;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -12,14 +11,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 
 public class Ship implements ConfigurationSerializable, Comparable<Ship> {
 
-    public static NamespacedKey KEY = new NamespacedKey(MiniMinigames.getInstance(), "shipLevel");
+    public static NamespacedKey KEY = new NamespacedKey(Battleship.getInstance(), "shipLevel");
 
     private final int size;
     private final String placeBlock, hitBlock;

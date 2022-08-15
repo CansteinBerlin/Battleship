@@ -1,14 +1,12 @@
 package net.quickwrite.miniminigames.commands.debug;
 
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.packetwrapper.WrapperPlayServerEntityMetadata;
 import net.quickwrite.miniminigames.packetwrapper.WrapperPlayServerSpawnEntityLiving;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -23,7 +21,7 @@ public class DebugSpawnMarkerCommand extends SubCommand {
     public boolean performCommand(CommandSender sender, String[] args) {
 
         if(!(sender instanceof Player)){
-            sender.sendMessage(MiniMinigames.PREFIX + "§cYou have to be a player to use this command");
+            sender.sendMessage(Battleship.PREFIX + "§cYou have to be a player to use this command");
             return true;
         }
 

@@ -1,8 +1,7 @@
 package net.quickwrite.miniminigames.commands.debug;
 
 import com.google.common.collect.ImmutableMap;
-import net.quickwrite.miniminigames.MiniMinigames;
-import net.quickwrite.miniminigames.builder.items.ItemBuilder;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.display.HorizontalDisplay;
@@ -27,22 +26,22 @@ public class DebugCreateMapCommand extends SubCommand {
     @Override
     public boolean performCommand(CommandSender sender, String[] args) {
         if(args.length != 1) {
-            sender.sendMessage(MiniMinigames.PREFIX + "§cPlease use §6/" + getCommandHistory() + " <name>");
+            sender.sendMessage(Battleship.PREFIX + "§cPlease use §6/" + getCommandHistory() + " <name>");
             return true;
         }
         String name = args[0];
         if(attackerHorizontalDisplay == null || defenderHorizontalDisplay == null || attackerVerticalDisplay == null || defenderVerticalDisplay == null){
-            sender.sendMessage(MiniMinigames.PREFIX + "§cPlease define all 4 Displays");
+            sender.sendMessage(Battleship.PREFIX + "§cPlease define all 4 Displays");
             return true;
         }
 
         if(attackerSpawnLocation == null || defenderSpawnLocation == null){
-            sender.sendMessage(MiniMinigames.PREFIX + "§cPlease define both spawnLocations");
+            sender.sendMessage(Battleship.PREFIX + "§cPlease define both spawnLocations");
             return true;
         }
 
         if(!Map.isValid(attackerVerticalDisplay, defenderVerticalDisplay, attackerHorizontalDisplay, defenderHorizontalDisplay)){
-            sender.sendMessage(MiniMinigames.PREFIX + "§cInvalid display Sizes");
+            sender.sendMessage(Battleship.PREFIX + "§cInvalid display Sizes");
             return true;
         }
         Map map = new Map(attackerVerticalDisplay, defenderVerticalDisplay, attackerHorizontalDisplay, defenderHorizontalDisplay,
@@ -55,8 +54,8 @@ public class DebugCreateMapCommand extends SubCommand {
                         .build()
         );
 
-        if(!MiniMinigames.getInstance().getMapManager().addNewMap(name, map)){
-            sender.sendMessage(MiniMinigames.PREFIX + "§cThere is already a map with the specific name");
+        if(!Battleship.getInstance().getMapManager().addNewMap(name, map)){
+            sender.sendMessage(Battleship.PREFIX + "§cThere is already a map with the specific name");
             return true;
         }
 
@@ -67,7 +66,7 @@ public class DebugCreateMapCommand extends SubCommand {
         attackerSpawnLocation = null;
         defenderSpawnLocation = null;
 
-        sender.sendMessage(MiniMinigames.PREFIX + "§aCreated new Map");
+        sender.sendMessage(Battleship.PREFIX + "§aCreated new Map");
         return true;
     }
 

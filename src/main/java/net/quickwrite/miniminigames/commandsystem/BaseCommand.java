@@ -1,6 +1,6 @@
 package net.quickwrite.miniminigames.commandsystem;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class BaseCommand {
 
     protected String name, permission;
-    protected String noPermissionMessage = MiniMinigames.PREFIX + "§cYou don't have permission to use this command";
+    protected String noPermissionMessage = Battleship.PREFIX + "§cYou don't have permission to use this command";
     protected ArrayList<SubCommand> subCommands;
 
     public BaseCommand(String name, String permission) {
@@ -36,7 +36,7 @@ public abstract class BaseCommand {
                 }
             }
         }
-        sender.sendMessage(MiniMinigames.PREFIX + "§cPlease use /" + name + " <" + getValidCommands() + "> ");
+        sender.sendMessage(Battleship.PREFIX + "§cPlease use /" + name + " <" + getValidCommands() + "> ");
         return true;
     }
 

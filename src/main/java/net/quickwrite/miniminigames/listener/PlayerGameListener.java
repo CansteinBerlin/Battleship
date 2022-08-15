@@ -1,6 +1,6 @@
 package net.quickwrite.miniminigames.listener;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.commands.battleship.BattleShipSpectateAllGamesCommand;
 import net.quickwrite.miniminigames.game.Game;
 import org.bukkit.entity.Player;
@@ -18,15 +18,15 @@ public class PlayerGameListener implements Listener {
         BattleShipSpectateAllGamesCommand.SPECTATE_ALL_GAMES_PLAYERS.remove(event.getPlayer());
 
         Player p = event.getPlayer();
-        Game game = MiniMinigames.getInstance().getGameManager().getGame(p);
+        Game game = Battleship.getInstance().getGameManager().getGame(p);
         if(game == null) return;
-        MiniMinigames.getInstance().getGameManager().removeGameBecauseOfPlayerLeft(game, p);
+        Battleship.getInstance().getGameManager().removeGameBecauseOfPlayerLeft(game, p);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerBreakBlock(BlockBreakEvent event){
         Player p = event.getPlayer();
-        Game game = MiniMinigames.getInstance().getGameManager().getGame(p);
+        Game game = Battleship.getInstance().getGameManager().getGame(p);
         if(game == null) return;
 
         new BukkitRunnable(){
@@ -35,7 +35,7 @@ public class PlayerGameListener implements Listener {
             public void run() {
                 game.brokeBlock(event.getBlock().getLocation());
             }
-        }.runTaskLater(MiniMinigames.getInstance(), 1);
+        }.runTaskLater(Battleship.getInstance(), 1);
 
         event.setCancelled(true);
     }

@@ -1,10 +1,10 @@
 package net.quickwrite.miniminigames.config;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 
 public class ItemConfig extends CustomConfig{
 
     public ItemConfig() {
-        super(MiniMinigames.getInstance(), "items.yml");
+        super(Battleship.getInstance(), "items.yml");
     }
 }

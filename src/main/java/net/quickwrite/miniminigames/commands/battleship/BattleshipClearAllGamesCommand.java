@@ -1,6 +1,6 @@
 package net.quickwrite.miniminigames.commands.battleship;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.game.GameManager;
@@ -15,12 +15,12 @@ public class BattleshipClearAllGamesCommand extends SubCommand {
     @Override
     public boolean performCommand(CommandSender sender, String[] args) {
 
-        GameManager manager = MiniMinigames.getInstance().getGameManager();
+        GameManager manager = Battleship.getInstance().getGameManager();
         for(int i = manager.getGames().size() - 1; i >= 0; i--){
             manager.getGames().get(i).forceQuit();
         }
 
-        sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.clearGames.success"));
+        sender.sendMessage(Battleship.PREFIX + Battleship.getLang("command.clearGames.success"));
 
         return true;
     }

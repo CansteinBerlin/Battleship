@@ -1,6 +1,6 @@
 package net.quickwrite.miniminigames.commandsystem;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import org.bukkit.command.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -42,7 +42,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
                 }
             }
         }
-        sender.sendMessage(MiniMinigames.PREFIX + "§cUnknown Command");
+        sender.sendMessage(Battleship.PREFIX + "§cUnknown Command");
         return true;
     }
 

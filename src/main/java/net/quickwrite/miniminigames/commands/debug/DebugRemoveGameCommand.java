@@ -1,6 +1,6 @@
 package net.quickwrite.miniminigames.commands.debug;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import org.bukkit.command.CommandSender;
@@ -14,7 +14,7 @@ public class DebugRemoveGameCommand extends SubCommand {
 
     @Override
     public boolean performCommand(CommandSender sender, String[] args) {
-        sender.sendMessage(MiniMinigames.PREFIX + "§cThis command does not work anymore");
+        sender.sendMessage(Battleship.PREFIX + "§cThis command does not work anymore");
         return true;
 
         /*if(!(sender instanceof Player)) {

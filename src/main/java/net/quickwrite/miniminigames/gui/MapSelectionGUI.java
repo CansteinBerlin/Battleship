@@ -1,6 +1,6 @@
 package net.quickwrite.miniminigames.gui;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.game.Game;
 import net.quickwrite.miniminigames.map.Map;
 import org.bukkit.Bukkit;
@@ -35,22 +35,22 @@ public class MapSelectionGUI implements IGUI{
     }
 
     public void update(){
-        if(MiniMinigames.getInstance().getMapManager().getMaps().size() == 0){
+        if(Battleship.getInstance().getMapManager().getMaps().size() == 0){
             inv = Bukkit.createInventory(null, 9, TITLE);
         }else {
-            inv = Bukkit.createInventory(null, ((int) Math.ceil(MiniMinigames.getInstance().getMapManager().getMaps().size() / 9.0)) * 9, TITLE);
+            inv = Bukkit.createInventory(null, ((int) Math.ceil(Battleship.getInstance().getMapManager().getMaps().size() / 9.0)) * 9, TITLE);
         }
         int i = 0;
-        for(ItemStack display : MiniMinigames.getInstance().getMapManager().getDisplayItemStacks()){
+        for(ItemStack display : Battleship.getInstance().getMapManager().getDisplayItemStacks()){
             ItemMeta meta = display.getItemMeta();
             assert meta != null;
             List<String> lore = meta.getLore();
-            if(MiniMinigames.getInstance().getMapManager().isCurrentlyPlaying(MiniMinigames.getInstance().getMapManager().getMaps().get(i))){
+            if(Battleship.getInstance().getMapManager().isCurrentlyPlaying(Battleship.getInstance().getMapManager().getMaps().get(i))){
                 meta.setDisplayName("§c" + meta.getDisplayName());
-                lore.add("§r" + MiniMinigames.getLang("gui.mapInUse"));
+                lore.add("§r" + Battleship.getLang("gui.mapInUse"));
             }else{
                 meta.setDisplayName("§a" + meta.getDisplayName());
-                lore.add("§r" + MiniMinigames.getLang("gui.mapCanBePlayed"));
+                lore.add("§r" + Battleship.getLang("gui.mapCanBePlayed"));
             }
             meta.setLore(lore);
             display.setItemMeta(meta);
@@ -63,8 +63,8 @@ public class MapSelectionGUI implements IGUI{
     @Override
     public boolean onClose(Player p) {
         if(!clicked) {
-            MiniMinigames.getInstance().getGameManager().invalidMapSelection(game);
-            p.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.challenge.noMapSelected"));
+            Battleship.getInstance().getGameManager().invalidMapSelection(game);
+            p.sendMessage(Battleship.PREFIX + Battleship.getLang("command.challenge.noMapSelected"));
         }
         return true;
     }
@@ -78,10 +78,10 @@ public class MapSelectionGUI implements IGUI{
         if(inv.getItem(slot).getType().equals(Material.AIR) && slot >= 0) return;
 
 
-        Map map = MiniMinigames.getInstance().getMapManager().loadMap(MiniMinigames.getInstance().getMapManager().getMaps().get(slot));
+        Map map = Battleship.getInstance().getMapManager().loadMap(Battleship.getInstance().getMapManager().getMaps().get(slot));
         if(map == null) return;
-        if(MiniMinigames.getInstance().getMapManager().isCurrentlyPlaying(map)){
-            player.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("gui.noPlayOnMap"));
+        if(Battleship.getInstance().getMapManager().isCurrentlyPlaying(map)){
+            player.sendMessage(Battleship.PREFIX + Battleship.getLang("gui.noPlayOnMap"));
             return;
         }
 

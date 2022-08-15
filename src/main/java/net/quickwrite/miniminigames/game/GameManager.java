@@ -1,7 +1,6 @@
 package net.quickwrite.miniminigames.game;
 
-import net.quickwrite.miniminigames.MiniMinigames;
-import net.quickwrite.miniminigames.util.DebugMessage;
+import net.quickwrite.miniminigames.Battleship;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -38,7 +37,7 @@ public class GameManager {
 
     public void removeGameBecauseOfDeny(Game game, Player player){
         game.deny(player);
-        MiniMinigames.getInstance().getMapManager().markCurrentlyPlaying(game.getMap(), false);
+        Battleship.getInstance().getMapManager().markCurrentlyPlaying(game.getMap(), false);
         games.remove(game);
         stopCountdown(game);
     }
@@ -50,7 +49,7 @@ public class GameManager {
         }
         game.playerLeft(player);
         games.remove(game);
-        MiniMinigames.getInstance().getMapManager().markCurrentlyPlaying(game.getMap(), false);
+        Battleship.getInstance().getMapManager().markCurrentlyPlaying(game.getMap(), false);
     }
 
     public void spectateAllGames(Player p){
@@ -75,19 +74,19 @@ public class GameManager {
 
     public void finishGame(Game game) {
         games.remove(game);
-        MiniMinigames.getInstance().getMapManager().markCurrentlyPlaying(game.getMap(), false);
+        Battleship.getInstance().getMapManager().markCurrentlyPlaying(game.getMap(), false);
     }
 
     public void startCountdown(Game game, Player p) {
         BukkitTask task = new BukkitRunnable(){
             @Override
             public void run() {
-                game.getAttacker().sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.invite.inviteRemoved", "player", p.getDisplayName()));
-                game.getDefender().sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.invite.notResponded", "player", game.getAttacker().getDisplayName()));
+                game.getAttacker().sendMessage(Battleship.PREFIX + Battleship.getLang("display.invite.inviteRemoved", "player", p.getDisplayName()));
+                game.getDefender().sendMessage(Battleship.PREFIX + Battleship.getLang("display.invite.notResponded", "player", game.getAttacker().getDisplayName()));
                 finishGame(game);
                 tasks.remove(game);
             }
-        }.runTaskLater(MiniMinigames.getInstance(), 20*60);
+        }.runTaskLater(Battleship.getInstance(), 20*60);
         tasks.put(game, task);
     }
 

@@ -1,6 +1,6 @@
 package net.quickwrite.miniminigames.commands.debug;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import org.bukkit.command.CommandSender;
@@ -15,13 +15,13 @@ public class DebugAddSpawnLocationCommand extends SubCommand {
     @Override
     public boolean performCommand(CommandSender sender, String[] args) {
         if(!(sender instanceof Player)) {
-            sender.sendMessage(MiniMinigames.PREFIX + "§cYou have to be a player to use this command");
+            sender.sendMessage(Battleship.PREFIX + "§cYou have to be a player to use this command");
             return true;
         }
 
         Player p = (Player) sender;
         DebugCreateMapCommand.addSpawnLocation(p.getLocation());
-        p.sendMessage(MiniMinigames.PREFIX + "§aAdded new SpawnLocation");
+        p.sendMessage(Battleship.PREFIX + "§aAdded new SpawnLocation");
         return true;
     }
 }

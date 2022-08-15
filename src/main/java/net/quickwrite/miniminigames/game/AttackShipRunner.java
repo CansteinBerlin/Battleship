@@ -2,7 +2,7 @@ package net.quickwrite.miniminigames.game;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.display.Direction;
 import net.quickwrite.miniminigames.display.Display;
 import net.quickwrite.miniminigames.map.MapSide;
@@ -25,8 +25,8 @@ public class AttackShipRunner extends BukkitRunnable {
         this.p = p;
         this.displaySide = displaySide;
         running = true;
-        attackingString = MiniMinigames.getLang("display.attackShipRunner.attackingActionBar");
-        waitingString = MiniMinigames.getLang("display.attackShipRunner.waitingForOpponentAttack");
+        attackingString = Battleship.getLang("display.attackShipRunner.attackingActionBar");
+        waitingString = Battleship.getLang("display.attackShipRunner.waitingForOpponentAttack");
     }
 
     @Override

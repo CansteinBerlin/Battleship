@@ -1,6 +1,6 @@
 package net.quickwrite.miniminigames.game;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.commands.battleship.BattleShipSpectateAllGamesCommand;
 import net.quickwrite.miniminigames.display.Display;
 import net.quickwrite.miniminigames.game.gamestate.GameStateManager;
@@ -45,11 +45,11 @@ public class Game {
     }
 
     public void accept(Player p){
-        p.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.game.gameStarted"));
+        p.sendMessage(Battleship.PREFIX + Battleship.getLang("display.game.gameStarted"));
         if(p.equals(defender)){
-            attacker.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.game.gameAccepted", "player", p.getDisplayName()));
+            attacker.sendMessage(Battleship.PREFIX + Battleship.getLang("display.game.gameAccepted", "player", p.getDisplayName()));
         }else{
-            defender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.game.gameAccepted", "player", p.getDisplayName()));
+            defender.sendMessage(Battleship.PREFIX + Battleship.getLang("display.game.gameAccepted", "player", p.getDisplayName()));
         }
         initGame();
     }
@@ -101,8 +101,8 @@ public class Game {
 
         attackerShipPlacementRunner = new ShipPlacementRunner(attacker, new HashMap<>(map.getShips()), map.getAttacker());
         defenderShipPlacementRunner = new ShipPlacementRunner(defender, new HashMap<>(map.getShips()), map.getDefender());
-        attackerShipPlacementRunner.runTaskTimer(MiniMinigames.getInstance(), 0, 1);
-        defenderShipPlacementRunner.runTaskTimer(MiniMinigames.getInstance(), 0, 1);
+        attackerShipPlacementRunner.runTaskTimer(Battleship.getInstance(), 0, 1);
+        defenderShipPlacementRunner.runTaskTimer(Battleship.getInstance(), 0, 1);
     }
 
     public void startAttacking(){
@@ -112,16 +112,16 @@ public class Game {
         defenderShipPlacementRunner = null;
         attackerShipRunner = new AttackShipRunner(attacker, map.getAttacker());
         defenderShipRunner = new AttackShipRunner(defender, map.getDefender());
-        attackerShipRunner.runTaskTimer(MiniMinigames.getInstance(), 0, 1);
-        defenderShipRunner.runTaskTimer(MiniMinigames.getInstance(), 0, 1);
+        attackerShipRunner.runTaskTimer(Battleship.getInstance(), 0, 1);
+        defenderShipRunner.runTaskTimer(Battleship.getInstance(), 0, 1);
         defenderShipRunner.setRunning(false);
         attackerAttacking = true;
-        attacker.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.game.canAttack"));
+        attacker.sendMessage(Battleship.PREFIX + Battleship.getLang("display.game.canAttack"));
     }
 
     public void forceQuit(){
-        attacker.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.game.forcefullyStopped"));
-        defender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.game.forcefullyStopped"));
+        attacker.sendMessage(Battleship.PREFIX + Battleship.getLang("display.game.forcefullyStopped"));
+        defender.sendMessage(Battleship.PREFIX + Battleship.getLang("display.game.forcefullyStopped"));
 
         map.getAttacker().getThisPlayerDisplay().removeSpawnedMarkers();
         map.getAttacker().getOtherPlayerDisplay().removeSpawnedMarkers();
@@ -138,7 +138,7 @@ public class Game {
 
         attackerSafe.setToPlayer();
         defenderSafe.setToPlayer();
-        MiniMinigames.getInstance().getGameManager().finishGame(this);
+        Battleship.getInstance().getGameManager().finishGame(this);
     }
 
     public void finishGame(){
@@ -148,8 +148,8 @@ public class Game {
         Player lost = attackerShips.isEmpty() ? attacker : defender;
         Player finished = attackerShips.isEmpty() ? defender : attacker;
 
-        lost.sendTitle(MiniMinigames.getLang("display.game.lost"), "", 0, 70, 0);
-        finished.sendTitle(MiniMinigames.getLang("display.game.won"), "", 0, 70, 0);
+        lost.sendTitle(Battleship.getLang("display.game.lost"), "", 0, 70, 0);
+        finished.sendTitle(Battleship.getLang("display.game.won"), "", 0, 70, 0);
 
         //Rockets
         Random random = new Random();
@@ -172,7 +172,7 @@ public class Game {
                     firework.setFireworkMeta(meta);
                 }
             }
-        }.runTaskTimer(MiniMinigames.getInstance(), 0, 20*2);
+        }.runTaskTimer(Battleship.getInstance(), 0, 20*2);
 
         Game game = this;
 
@@ -183,10 +183,10 @@ public class Game {
                 map.getDefender().removeAll();
                 attackerSafe.setToPlayer();
                 defenderSafe.setToPlayer();
-                MiniMinigames.getInstance().getGameManager().finishGame(game);
+                Battleship.getInstance().getGameManager().finishGame(game);
                 rocketTask.cancel();
             }
-        }.runTaskLater(MiniMinigames.getInstance(), 20*10);
+        }.runTaskLater(Battleship.getInstance(), 20*10);
     }
 
     private void displayToOpponent(ArrayList<ShipContainer> ships, MapSide displaySide) {
@@ -209,11 +209,11 @@ public class Game {
                 sc.hitLocation(displayLoc);
                 if(sc.isSunk()){
                     defenderShips.remove(sc);
-                    attacker.sendTitle(MiniMinigames.getLang("display.game.sunk"), "", 0, 20 * 3, 0);
+                    attacker.sendTitle(Battleship.getLang("display.game.sunk"), "", 0, 20 * 3, 0);
                     sc.markSunk(map.getDefender().getThisPlayerDisplay());
                     sc.markSunk(map.getAttacker().getOtherPlayerDisplay());
                 }else {
-                    attacker.sendTitle(MiniMinigames.getLang("display.game.hit"), "", 0, 20 * 3, 0);
+                    attacker.sendTitle(Battleship.getLang("display.game.hit"), "", 0, 20 * 3, 0);
                 }
                 attacker.playSound(attacker.getLocation(), HIT_SOUND, SoundCategory.MASTER, 1, 0);
             }else{
@@ -221,7 +221,7 @@ public class Game {
                 attacker.playSound(attacker.getLocation(), MISS_SOUND, SoundCategory.MASTER, 1, 0);
                 map.getAttacker().getOtherPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
                 map.getDefender().getThisPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
-                attacker.sendTitle(MiniMinigames.getLang("display.game.miss"), "", 0, 20*3, 0);
+                attacker.sendTitle(Battleship.getLang("display.game.miss"), "", 0, 20*3, 0);
             }
             map.getAttacker().getOtherPlayerDisplay().removeSpawnedMarkers();
             attackerShipRunner.setRunning(false);
@@ -237,11 +237,11 @@ public class Game {
                 sc.hitLocation(displayLoc);
                 if(sc.isSunk()){
                     attackerShips.remove(sc);
-                    defender.sendTitle(MiniMinigames.getLang("display.game.sunk"), "", 0, 20 * 3, 0);
+                    defender.sendTitle(Battleship.getLang("display.game.sunk"), "", 0, 20 * 3, 0);
                     sc.markSunk(map.getAttacker().getThisPlayerDisplay());
                     sc.markSunk(map.getDefender().getOtherPlayerDisplay());
                 }else {
-                    defender.sendTitle(MiniMinigames.getLang("display.game.hit"), "", 0, 20 * 3, 0);
+                    defender.sendTitle(Battleship.getLang("display.game.hit"), "", 0, 20 * 3, 0);
                 }
                 defender.playSound(defender.getLocation(), HIT_SOUND, SoundCategory.MASTER, 1, 0);
             }else{
@@ -249,7 +249,7 @@ public class Game {
                 defender.playSound(defender.getLocation(), MISS_SOUND, SoundCategory.MASTER, 1, 0);
                 map.getDefender().getOtherPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
                 map.getAttacker().getThisPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
-                defender.sendTitle(MiniMinigames.getLang("display.game.miss"), "", 0, 20*3, 0);
+                defender.sendTitle(Battleship.getLang("display.game.miss"), "", 0, 20*3, 0);
             }
             map.getDefender().getOtherPlayerDisplay().removeSpawnedMarkers();
             defenderShipRunner.setRunning(false);
@@ -295,9 +295,9 @@ public class Game {
                 attackerShipPlacementRunner = null;
             }
 
-            p.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.game.finishedPlacing"));
+            p.sendMessage(Battleship.PREFIX + Battleship.getLang("display.game.finishedPlacing"));
             if(attackerShips == null || defenderShips == null){
-                p.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.game.waitingForOpponent"));
+                p.sendMessage(Battleship.PREFIX + Battleship.getLang("display.game.waitingForOpponent"));
             }else{
                 startAttacking();
             }
@@ -312,9 +312,9 @@ public class Game {
 
     public void deny(Player p){
         if(p.equals(defender)){
-            attacker.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.opponentDenied", "player", defender.getDisplayName()));
+            attacker.sendMessage(Battleship.PREFIX + Battleship.getLang("display.opponentDenied", "player", defender.getDisplayName()));
         }else{
-            defender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("display.opponentDenied", "player", attacker.getDisplayName()));
+            defender.sendMessage(Battleship.PREFIX + Battleship.getLang("display.opponentDenied", "player", attacker.getDisplayName()));
         }
     }
 
@@ -332,7 +332,7 @@ public class Game {
 
     public void setMap(Map map){
         this.map = map;
-        MiniMinigames.getInstance().getMapManager().markCurrentlyPlaying(map, true);
+        Battleship.getInstance().getMapManager().markCurrentlyPlaying(map, true);
     }
 
     public boolean isStarted() {
@@ -346,9 +346,9 @@ public class Game {
         map.getDefender().removeAll();
         map.getAttacker().removeAll();
         if(attacker == p){
-            defender.sendTitle(MiniMinigames.getLang("display.game.won"), MiniMinigames.getLang("display.game.leftGame"));
+            defender.sendTitle(Battleship.getLang("display.game.won"), Battleship.getLang("display.game.leftGame"));
         }else{
-            attacker.sendTitle(MiniMinigames.getLang("display.game.won"), MiniMinigames.getLang("display.game.leftGame"));
+            attacker.sendTitle(Battleship.getLang("display.game.won"), Battleship.getLang("display.game.leftGame"));
         }
         if(attackerShipPlacementRunner != null){
             attackerShipPlacementRunner.cancel();

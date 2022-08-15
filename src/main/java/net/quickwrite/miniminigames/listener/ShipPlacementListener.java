@@ -1,11 +1,9 @@
 package net.quickwrite.miniminigames.listener;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.game.Game;
 import net.quickwrite.miniminigames.game.gamestate.GameStateManager;
 import net.quickwrite.miniminigames.ships.Ship;
-import net.quickwrite.miniminigames.util.DebugMessage;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,7 +27,7 @@ public class ShipPlacementListener implements Listener {
         if(!event.isSneaking() || event.getPlayer().isFlying()) return;
         Player p = event.getPlayer();
 
-        Game game = MiniMinigames.getInstance().getGameManager().getGame(p);
+        Game game = Battleship.getInstance().getGameManager().getGame(p);
         if(game == null) return;
         if(!game.getCurrentGameState().equals(GameStateManager.GameState.PLACING_SHIPS)) return;
         game.toggleShipDirection(p);
@@ -38,7 +36,7 @@ public class ShipPlacementListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDrop(PlayerDropItemEvent event){
         Player p = event.getPlayer();
-        Game game = MiniMinigames.getInstance().getGameManager().getGame(p);
+        Game game = Battleship.getInstance().getGameManager().getGame(p);
         if(game == null) return;
         if(!game.getCurrentGameState().equals(GameStateManager.GameState.PLACING_SHIPS)) return;
         game.toggleShipDirection(p);
@@ -51,7 +49,7 @@ public class ShipPlacementListener implements Listener {
             public void run() {
                 droppedOnTick.remove(p);
             }
-        }.runTaskLater(MiniMinigames.getInstance(), 2L);
+        }.runTaskLater(Battleship.getInstance(), 2L);
     }
 
     @EventHandler
@@ -67,7 +65,7 @@ public class ShipPlacementListener implements Listener {
     }
 
     public void placeShip(Player player){
-        Game game = MiniMinigames.getInstance().getGameManager().getGame(player);
+        Game game = Battleship.getInstance().getGameManager().getGame(player);
         if(game == null) return;
         if(!game.getCurrentGameState().equals(GameStateManager.GameState.PLACING_SHIPS)) return;
         game.placeShip(player);

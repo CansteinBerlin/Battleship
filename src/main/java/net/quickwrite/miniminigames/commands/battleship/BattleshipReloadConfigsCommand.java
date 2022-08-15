@@ -1,6 +1,6 @@
 package net.quickwrite.miniminigames.commands.battleship;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.blocks.BattleShipBlocks;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
@@ -23,38 +23,38 @@ public class BattleshipReloadConfigsCommand extends SubCommand {
     public boolean performCommand(CommandSender sender, String[] args) {
 
         if(args.length == 0){
-            sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.reloadConfigs.invalidCommand", "command", getCommandHistory()));
+            sender.sendMessage(Battleship.PREFIX + Battleship.getLang("command.reloadConfigs.invalidCommand", "command", getCommandHistory()));
             return true;
         }
 
         switch (args[0].toLowerCase(Locale.ROOT)){
 
             case "messages":
-                MiniMinigames.getInstance().getLanguageConfig().reloadConfig();
+                Battleship.getInstance().getLanguageConfig().reloadConfig();
                 break;
             case "blocks":
-                BattleShipBlocks.load(MiniMinigames.getInstance().getBlockConfig().getConfig());
+                BattleShipBlocks.load(Battleship.getInstance().getBlockConfig().getConfig());
                 break;
             case "items":
-                BattleshipItems.load(MiniMinigames.getInstance().getItemConfig().getConfig());
+                BattleshipItems.load(Battleship.getInstance().getItemConfig().getConfig());
                 break;
             case "maps":
-                if(MiniMinigames.getInstance().getMapsConfig().getConfig().contains("maps"))
-                    MiniMinigames.getInstance().getMapManager().loadMaps(MiniMinigames.getInstance().getMapsConfig().getConfig().getStringList("maps"));
+                if(Battleship.getInstance().getMapsConfig().getConfig().contains("maps"))
+                    Battleship.getInstance().getMapManager().loadMaps(Battleship.getInstance().getMapsConfig().getConfig().getStringList("maps"));
                 break;
             case "ships":
-                MiniMinigames.getInstance().loadShipConfig();
+                Battleship.getInstance().loadShipConfig();
                 break;
             case "config":
-                MiniMinigames.getInstance().loadDefaultConfig();
+                Battleship.getInstance().loadDefaultConfig();
                 break;
 
             default:
-                sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.reloadConfigs.invalidCommand", "command", getCommandHistory()));
+                sender.sendMessage(Battleship.PREFIX + Battleship.getLang("command.reloadConfigs.invalidCommand", "command", getCommandHistory()));
                 return true;
 
         }
-        sender.sendMessage(MiniMinigames.PREFIX + MiniMinigames.getLang("command.reloadConfigs.success", "config", args[0].toLowerCase(Locale.ROOT)));
+        sender.sendMessage(Battleship.PREFIX + Battleship.getLang("command.reloadConfigs.success", "config", args[0].toLowerCase(Locale.ROOT)));
 
         return true;
     }

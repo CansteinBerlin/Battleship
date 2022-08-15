@@ -1,6 +1,6 @@
 package net.quickwrite.miniminigames.commands.debug;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.display.Display;
@@ -16,16 +16,16 @@ public class DebugClearDisplayCommand extends SubCommand {
     @Override
     public boolean performCommand(CommandSender sender, String[] args) {
         if(!(sender instanceof Player)){
-            sender.sendMessage(MiniMinigames.PREFIX + "§cYou have to be a player");
+            sender.sendMessage(Battleship.PREFIX + "§cYou have to be a player");
             return true;
         }
         if(Display.currentTestDisplay == null){
-            sender.sendMessage(MiniMinigames.PREFIX + "§cNo Display Available");
+            sender.sendMessage(Battleship.PREFIX + "§cNo Display Available");
             return true;
         }
         Player p = (Player) sender;
         Display.currentTestDisplay.clearDisplay();
-        p.sendMessage(MiniMinigames.PREFIX + "§aCleared Display");
+        p.sendMessage(Battleship.PREFIX + "§aCleared Display");
         return true;
     }
 }

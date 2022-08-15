@@ -1,6 +1,6 @@
 package net.quickwrite.miniminigames.listener;
 
-import net.quickwrite.miniminigames.MiniMinigames;
+import net.quickwrite.miniminigames.Battleship;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,8 +11,8 @@ public class GuiListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event){
-        if(MiniMinigames.getInstance().getGuiManager().isCustomGui((Player) event.getWhoClicked())){
-            if(MiniMinigames.getInstance().getGuiManager().onClick((Player) event.getWhoClicked(), event.getSlot(), event.getAction())){
+        if(Battleship.getInstance().getGuiManager().isCustomGui((Player) event.getWhoClicked())){
+            if(Battleship.getInstance().getGuiManager().onClick((Player) event.getWhoClicked(), event.getSlot(), event.getAction())){
                 event.setCancelled(true);
             }
         }
@@ -20,8 +20,8 @@ public class GuiListener implements Listener {
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event){
-        if(MiniMinigames.getInstance().getGuiManager().isCustomGui((Player) event.getPlayer())){
-            MiniMinigames.getInstance().getGuiManager().onClose((Player) event.getPlayer());
+        if(Battleship.getInstance().getGuiManager().isCustomGui((Player) event.getPlayer())){
+            Battleship.getInstance().getGuiManager().onClose((Player) event.getPlayer());
         }
     }
 

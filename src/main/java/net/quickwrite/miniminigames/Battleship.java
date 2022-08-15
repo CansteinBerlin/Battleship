@@ -3,18 +3,13 @@ package net.quickwrite.miniminigames;
 import net.quickwrite.miniminigames.blocks.BattleShipBlocks;
 import net.quickwrite.miniminigames.commands.BattleShipCommand;
 import net.quickwrite.miniminigames.commands.DebugCommand;
-import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.CommandManager;
-import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.config.*;
 import net.quickwrite.miniminigames.display.HorizontalDisplay;
 import net.quickwrite.miniminigames.display.VerticalDisplay;
 import net.quickwrite.miniminigames.game.GameManager;
-import net.quickwrite.miniminigames.game.gamestate.GameStateManager;
 import net.quickwrite.miniminigames.gui.GuiManager;
 import net.quickwrite.miniminigames.items.BattleshipItems;
-import net.quickwrite.miniminigames.listener.GuiListener;
-import net.quickwrite.miniminigames.listener.SelectionListener;
 import net.quickwrite.miniminigames.map.Map;
 import net.quickwrite.miniminigames.map.MapManager;
 import net.quickwrite.miniminigames.map.MapSide;
@@ -31,14 +26,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
-public final class MiniMinigames extends JavaPlugin {
+public final class Battleship extends JavaPlugin {
 
     public static String PREFIX = "§3[§bMiniMinigames§3]§r ";
     public static int ATTACK_DELAY = 10;
 
-    private static MiniMinigames instance;
+    private static Battleship instance;
     public static Logger LOGGER;
 
     private CommandManager commandManager;
@@ -78,7 +72,7 @@ public final class MiniMinigames extends JavaPlugin {
             try {
                 Bukkit.getPluginManager().registerEvents(listener.getConstructor().newInstance(), this);
             }catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
-                MiniMinigames.LOGGER.severe("§cCould not register Listener with name " + listener);
+                Battleship.LOGGER.severe("§cCould not register Listener with name " + listener);
             }
         }
     }
@@ -93,21 +87,21 @@ public final class MiniMinigames extends JavaPlugin {
     }
 
     public static String getLang(String key, String... args) {
-        String lang = MiniMinigames.getInstance().languageConfig.getConfig().getString("messages." + key, "&cUnknown or empty language key please check the config &6" + key);
+        String lang = Battleship.getInstance().languageConfig.getConfig().getString("messages." + key, "&cUnknown or empty language key please check the config &6" + key);
         for (int i = 0; i + 1 < args.length; i += 2) {
             lang = lang.replace("%" + args[i] + "%", args[i + 1]);
         }
 
-        if(!MiniMinigames.getInstance().languageConfig.getConfig().contains("messages." + key)){
-            MiniMinigames.getInstance().languageConfig.getConfig().set("messages." + key, "MISSING LANGUAGE KEY");
-            MiniMinigames.getInstance().languageConfig.saveConfig();
+        if(!Battleship.getInstance().languageConfig.getConfig().contains("messages." + key)){
+            Battleship.getInstance().languageConfig.getConfig().set("messages." + key, "MISSING LANGUAGE KEY");
+            Battleship.getInstance().languageConfig.saveConfig();
         }
 
         return ChatColor.translateAlternateColorCodes('&', lang).replace("\\n", "\n");
     }
 
     public static net.md_5.bungee.api.ChatColor getChatColor(String key){
-        String color = MiniMinigames.getInstance().languageConfig.getConfig().getString("messages." + key, "MAGIC");
+        String color = Battleship.getInstance().languageConfig.getConfig().getString("messages." + key, "MAGIC");
         return net.md_5.bungee.api.ChatColor.of(color);
     }
 
@@ -157,7 +151,7 @@ public final class MiniMinigames extends JavaPlugin {
         // Plugin shutdown logic
     }
 
-    public static MiniMinigames getInstance() {
+    public static Battleship getInstance() {
         return instance;
     }
 

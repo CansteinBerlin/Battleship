@@ -1,7 +1,6 @@
 package net.quickwrite.miniminigames.commands.debug;
 
-import net.quickwrite.miniminigames.MiniMinigames;
-import net.quickwrite.miniminigames.builder.items.ItemBuilder;
+import net.quickwrite.miniminigames.Battleship;
 import net.quickwrite.miniminigames.commandsystem.BaseCommand;
 import net.quickwrite.miniminigames.commandsystem.SubCommand;
 import net.quickwrite.miniminigames.ships.Ship;
@@ -20,13 +19,13 @@ public class DebugAddShipCommand extends SubCommand {
             try {
                 int size = Integer.parseInt(args[0]);
                 new Ship(size, Material.GREEN_DYE, "default.ship.place", "default.ship.hit", "CustomShip:" + size, "size_" + args[0]);
-                sender.sendMessage(MiniMinigames.PREFIX + "§aAdded Ship with size " + size);
+                sender.sendMessage(Battleship.PREFIX + "§aAdded Ship with size " + size);
                 return true;
             }catch (NumberFormatException e){
                 sender.sendMessage(e.toString());
             }
         }
-        sender.sendMessage(MiniMinigames.PREFIX + "§cCould not add Ship");
+        sender.sendMessage(Battleship.PREFIX + "§cCould not add Ship");
         return true;
     }
 }
