@@ -95,7 +95,7 @@ public final class Battleship extends JavaPlugin {
         }
 
         if(!Battleship.getInstance().languageConfig.getConfig().contains("messages." + key)){
-            Battleship.getInstance().languageConfig.getConfig().set("messages." + key, "MISSING LANGUAGE KEY");
+            Battleship.getInstance().languageConfig.getConfig().set("messages." + key, lang);
             Battleship.getInstance().languageConfig.saveConfig();
         }
 

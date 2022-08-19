@@ -7,6 +7,7 @@ messages:
     accept:
       noGame: "&cThere is no game to accept"
       noAcceptOwnGame: "&cYou can't accept you own game"
+      alreadyStarted: "&cThe game has already started"
     deny:
       noGame: "&cThere is no game to deny"
       isStarted: "&cThe game has already been started"
