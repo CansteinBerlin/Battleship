@@ -13,28 +13,12 @@ import java.util.ArrayList;
 
 public class AttackListener implements Listener {
 
-    private final ArrayList<Player> delays = new ArrayList<>();
-
     @EventHandler
     public void onInteract(PlayerInteractEvent event){
         Game game = Battleship.getInstance().getGameManager().getGame(event.getPlayer());
         if(game == null) return;
         if(!game.getCurrentGameState().equals(GameStateManager.GameState.ATTACKING)) return;
         if(!game.isAttacking(event.getPlayer())) return;
-
-        if(delays.contains(event.getPlayer())){
-            event.getPlayer().sendMessage(Battleship.PREFIX + Battleship.getLang("display.game.underDelay"));
-            return;
-        }
-
-        delays.add(event.getPlayer());
-        //Bukkit.broadcastMessage("delay");
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                delays.remove(event.getPlayer());
-            }
-        }.runTaskLater(Battleship.getInstance(), Battleship.ATTACK_DELAY);
 
         game.attack();
     }

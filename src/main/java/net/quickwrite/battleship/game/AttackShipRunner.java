@@ -76,5 +76,8 @@ public class AttackShipRunner extends BukkitRunnable {
 
     public void setRunning(boolean running) {
         this.running = running;
+        if(!running){
+            lastLocation = null;
+        }
     }
 }

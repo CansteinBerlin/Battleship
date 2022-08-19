@@ -57,7 +57,6 @@ public class MapSide implements ConfigurationSerializable{
         thisPlayerDisplay.addPlayer(player);
     }
     private void removeFromDisplay(Player player){
-        otherPlayerDisplay.removePlayer(player);
         thisPlayerDisplay.removePlayer(player);
     }
 
@@ -112,6 +111,7 @@ public class MapSide implements ConfigurationSerializable{
                 removeFromDisplay(p);
             }
         }
+        otherPlayerDisplay.clearDisplay();
     }
 
     public Location getSpawnLocation() {

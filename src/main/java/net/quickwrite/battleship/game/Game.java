@@ -3,6 +3,8 @@ package net.quickwrite.battleship.game;
 import net.quickwrite.battleship.Battleship;
 import net.quickwrite.battleship.commands.battleship.BattleShipSpectateAllGamesCommand;
 import net.quickwrite.battleship.display.Display;
+import net.quickwrite.battleship.display.HorizontalDisplay;
+import net.quickwrite.battleship.display.VerticalDisplay;
 import net.quickwrite.battleship.game.gamestate.GameStateManager;
 import net.quickwrite.battleship.map.Map;
 import net.quickwrite.battleship.map.MapSide;
@@ -199,70 +201,58 @@ public class Game {
         }
     }
 
+    public void attack(Location loc, Player player, ArrayList<ShipContainer> containers, HorizontalDisplay thisPlayerDisplay, VerticalDisplay otherPlayerDisplay){
+        Location displayLoc = otherPlayerDisplay.convertWorldToLocalCoordinate(loc);
+        ShipContainer sc = shipAtPosition(displayLoc, containers);
+
+        thisPlayerDisplay.setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), sc != null ? sc.getHitBlock() : Material.BLUE_CONCRETE);
+        otherPlayerDisplay.setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), sc != null ? sc.getHitBlock() : Material.BLUE_CONCRETE);
+
+        if(sc != null){
+            //Hit Ship
+            sc.hitLocation(displayLoc);
+
+            if(sc.isSunk()){
+                //Sunk
+                containers.remove(sc);
+                player.sendTitle(Battleship.getLang("display.game.sunk"), "", 0, 20*3, 0);
+                sc.markSunk(thisPlayerDisplay);
+                sc.markSunk(otherPlayerDisplay);
+            }else{
+                player.sendTitle(Battleship.getLang("display.game.hit"), "", 0, 20*3, 0);
+            }
+            player.playSound(player.getLocation(), HIT_SOUND, SoundCategory.MASTER, 1, 0);
+        }else{
+            //Not hit ship
+            player.playSound(player.getLocation(), MISS_SOUND, SoundCategory.MASTER, 1, 0);
+            player.sendTitle(Battleship.getLang("display.game.miss"), "", 0, 20*3, 0);
+        }
+    }
+
     public void attack(){
         if(attackerAttacking){
             if(attackerShipRunner.getLastLocation() == null) return;
-            Location displayLoc = map.getAttacker().getOtherPlayerDisplay().convertWorldToLocalCoordinate(attackerShipRunner.getLastLocation());
-            ShipContainer sc = shipAtPosition(displayLoc, defenderShips);
-            if(sc != null){
-                //Hit Ship
-                map.getAttacker().getOtherPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), sc.getHitBlock());
-                map.getDefender().getThisPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), sc.getHitBlock());
-                sc.hitLocation(displayLoc);
-                if(sc.isSunk()){
-                    defenderShips.remove(sc);
-                    attacker.sendTitle(Battleship.getLang("display.game.sunk"), "", 0, 20 * 3, 0);
-                    sc.markSunk(map.getDefender().getThisPlayerDisplay());
-                    sc.markSunk(map.getAttacker().getOtherPlayerDisplay());
-                }else {
-                    attacker.sendTitle(Battleship.getLang("display.game.hit"), "", 0, 20 * 3, 0);
-                }
-                attacker.playSound(attacker.getLocation(), HIT_SOUND, SoundCategory.MASTER, 1, 0);
-            }else{
-                //Not hit ship
-                attacker.playSound(attacker.getLocation(), MISS_SOUND, SoundCategory.MASTER, 1, 0);
-                map.getAttacker().getOtherPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
-                map.getDefender().getThisPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
-                attacker.sendTitle(Battleship.getLang("display.game.miss"), "", 0, 20*3, 0);
-            }
+            attack(attackerShipRunner.getLastLocation(), attacker, defenderShips, map.getDefender().getThisPlayerDisplay(), map.getAttacker().getOtherPlayerDisplay());
+
             map.getAttacker().getOtherPlayerDisplay().removeSpawnedMarkers();
             attackerShipRunner.setRunning(false);
             defenderShipRunner.setRunning(true);
         }else{
             if(defenderShipRunner.getLastLocation() == null) return;
-            Location displayLoc = map.getDefender().getOtherPlayerDisplay().convertWorldToLocalCoordinate(defenderShipRunner.getLastLocation());
-            ShipContainer sc = shipAtPosition(displayLoc, attackerShips);
-            if(sc != null){
-                //Hit Ship
-                map.getDefender().getOtherPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), sc.getHitBlock());
-                map.getAttacker().getThisPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), sc.getHitBlock());
-                sc.hitLocation(displayLoc);
-                if(sc.isSunk()){
-                    attackerShips.remove(sc);
-                    defender.sendTitle(Battleship.getLang("display.game.sunk"), "", 0, 20 * 3, 0);
-                    sc.markSunk(map.getAttacker().getThisPlayerDisplay());
-                    sc.markSunk(map.getDefender().getOtherPlayerDisplay());
-                }else {
-                    defender.sendTitle(Battleship.getLang("display.game.hit"), "", 0, 20 * 3, 0);
-                }
-                defender.playSound(defender.getLocation(), HIT_SOUND, SoundCategory.MASTER, 1, 0);
-            }else{
-                //Not Hit Ship
-                defender.playSound(defender.getLocation(), MISS_SOUND, SoundCategory.MASTER, 1, 0);
-                map.getDefender().getOtherPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
-                map.getAttacker().getThisPlayerDisplay().setBlock(displayLoc.getBlockX(), displayLoc.getBlockZ(), Material.BLUE_CONCRETE);
-                defender.sendTitle(Battleship.getLang("display.game.miss"), "", 0, 20*3, 0);
-            }
+            attack(defenderShipRunner.getLastLocation(), defender, attackerShips, map.getAttacker().getThisPlayerDisplay(), map.getDefender().getOtherPlayerDisplay());
+
             map.getDefender().getOtherPlayerDisplay().removeSpawnedMarkers();
             defenderShipRunner.setRunning(false);
             attackerShipRunner.setRunning(true);
         }
+
         attackerAttacking = !attackerAttacking;
 
         if(defenderShips.isEmpty() || attackerShips.isEmpty()){
             finishGame();
         }
     }
+
 
     private ShipContainer shipAtPosition(Location displayLoc, ArrayList<ShipContainer> container) {
         for(ShipContainer sc : container){
