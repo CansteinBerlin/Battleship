@@ -18,7 +18,7 @@
 - [ ] Bote plazieren spam protection
 - [ ] Fix game not stopping if player leaves
 - [ ] Fix Game not finish
-- [ ] Permissions.yml aufsetzten und in spieler usw unterteilen
+- [X] Permissions.yml aufsetzten und in spieler usw unterteilen
 - [ ] Fix invalid hitdetection (img0.png/img1.png)
 - [ ] Spamming on Accept or Deny causes issues
 - [ ] Tp punkt nach spiel festlegen (Command)

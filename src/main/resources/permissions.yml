@@ -1,0 +1,7 @@
+battleship.player:
+  description: Default permissions a player needs to play this game
+  children:
+    battleship.accept: true
+    battleship.deny: true
+    battleship.challenge: true
+    battleship.command.battleship: true
