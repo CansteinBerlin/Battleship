@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
@@ -71,5 +72,52 @@ public class ShipPlacementListener implements Listener {
         game.placeShip(player);
     }
 
+    @EventHandler
+    public void onCreativeCheat(InventoryCreativeEvent event){
+        //Cancel item cheating
+        Game game = Battleship.getInstance().getGameManager().getGame((Player) event.getWhoClicked());
+        if(game == null) return;
+        if(!game.getCurrentGameState().equals(GameStateManager.GameState.PLACING_SHIPS)) return;
+        event.setCancelled(true);
+        new BukkitRunnable(){
+
+            @Override
+            public void run() {
+                ((Player) event.getWhoClicked()).updateInventory();
+            }
+        }.runTaskLater(Battleship.getInstance(), 1);
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent event){
+        //Disable taking the itemstack
+        Game game = Battleship.getInstance().getGameManager().getGame((Player) event.getWhoClicked());
+        if(game == null) return;
+        if(!game.getCurrentGameState().equals(GameStateManager.GameState.PLACING_SHIPS)) return;
+        event.setCancelled(true);
+        new BukkitRunnable(){
+
+            @Override
+            public void run() {
+                ((Player) event.getWhoClicked()).updateInventory();
+            }
+        }.runTaskLater(Battleship.getInstance(), 1);
+    }
+
+    @EventHandler
+    public void onInventoryDragItem(InventoryDragEvent event){
+        //disable dragging
+        Game game = Battleship.getInstance().getGameManager().getGame((Player) event.getWhoClicked());
+        if(game == null) return;
+        if(!game.getCurrentGameState().equals(GameStateManager.GameState.PLACING_SHIPS)) return;
+        event.setCancelled(true);
+        new BukkitRunnable(){
+
+            @Override
+            public void run() {
+                ((Player) event.getWhoClicked()).updateInventory();
+            }
+        }.runTaskLater(Battleship.getInstance(), 1);
+    }
 
 }

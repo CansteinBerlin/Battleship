@@ -27,7 +27,7 @@ public class BattleShipAcceptCommand extends SubCommand {
                 return true;
             }
             if(game.isStarted()){
-                p.sendMessage(Battleship.PREFIX + Battleship.getLang("command.accept.alreadyStarted"));
+                p.sendMessage(Battleship.PREFIX + Battleship.getLang("command.accept.isStarted"));
                 return true;
             }
             Battleship.getInstance().getGameManager().stopCountdown(game);

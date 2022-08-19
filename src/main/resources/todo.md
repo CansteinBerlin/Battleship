@@ -23,8 +23,8 @@
 - [X] Fix invalid hitdetection (img0.png/img1.png)
 - [X] Spamming on Accept or Deny causes issues
 - [ ] Tp punkt nach spiel festlegen (Command)
-- [ ] Stop items can be thrown out of inv (cancel invClick event) 
-- [ ] Disable clear items button
+- [X] Stop items can be thrown out of inv (cancel invClick event) 
+- [X] Disable clear items button
 - [ ] Break block below and on side prevention
 - [ ] If resend block resend multiple blocks
 - [ ] Cancel ALL TASK when something happens
