@@ -8,6 +8,7 @@ import net.quickwrite.battleship.commandsystem.CommandManager;
 import net.quickwrite.battleship.config.*;
 import net.quickwrite.battleship.display.HorizontalDisplay;
 import net.quickwrite.battleship.display.VerticalDisplay;
+import net.quickwrite.battleship.game.Game;
 import net.quickwrite.battleship.game.GameManager;
 import net.quickwrite.battleship.gui.GuiManager;
 import net.quickwrite.battleship.items.BattleshipItems;
@@ -146,6 +147,7 @@ public final class Battleship extends JavaPlugin {
         FileConfiguration conf = config.getConfig();
         PREFIX = conf.getString("prefix", PREFIX);
         ATTACK_DELAY = conf.getInt("delay", 10);
+        Game.SPAWN_POINT = conf.getLocation("spawnpoint", null);
     }
 
     @Override

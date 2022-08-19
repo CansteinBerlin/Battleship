@@ -17,14 +17,14 @@
 - [x] Fix error when using /battleship spectateGames if game is about to finish
 - [X] Fix multiple boats being placed in the same location 
 - [X] Fix game can be started if it has been started already
-- [ ] Fix game not stopping if player leaves
-- [ ] Fix Game not finish
+- [O] Fix game not stopping if player leaves
+  - [O] Could not reproduce!!!!!!!!!!!!!!!!!!!!!!!!!! Probably fixed because of the removal of multiple games
+  - [O] Fix Game not finish
 - [X] Permissions.yml aufsetzten und in spieler usw unterteilen
 - [X] Fix invalid hitdetection (img0.png/img1.png)
 - [X] Spamming on Accept or Deny causes issues
 - [ ] Tp punkt nach spiel festlegen (Command)
 - [X] Stop items can be thrown out of inv (cancel invClick event) 
 - [X] Disable clear items button
-- [ ] Break block below and on side prevention
-- [ ] If resend block resend multiple blocks
-- [ ] Cancel ALL TASK when something happens
+- [X] Break block below and on side prevention
+- [X] If resend block resend multiple blocks

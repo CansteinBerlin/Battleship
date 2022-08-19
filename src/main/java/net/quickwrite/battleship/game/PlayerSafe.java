@@ -25,7 +25,8 @@ public class PlayerSafe {
 
     public void setToPlayer(){
         p.getInventory().setContents(items);
-        p.teleport(loc);
         p.setGameMode(gameMode);
+        if(Game.SPAWN_POINT == null) p.teleport(loc);
+        else p.teleport(Game.SPAWN_POINT);
     }
 }

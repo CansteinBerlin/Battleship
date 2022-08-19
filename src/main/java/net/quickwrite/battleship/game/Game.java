@@ -29,6 +29,8 @@ public class Game {
     public static final Sound HIT_SOUND = Sound.BLOCK_ANVIL_PLACE,
                               MISS_SOUND = Sound.ENTITY_BOAT_PADDLE_WATER;
 
+    public static Location SPAWN_POINT = null;
+
     private final Player defender, attacker;
     private final GameStateManager manager;
     private Map map;
@@ -346,10 +348,9 @@ public class Game {
             attackerShipPlacementRunner.cancel();
             defenderShipPlacementRunner.cancel();
         }
-        if(attackerShipRunner != null){
-            attackerShipRunner.cancel();
-            defenderShipRunner.cancel();
-        }
+        if(attackerShipRunner != null) attackerShipRunner.cancel();
+        if(defenderShipRunner != null) defenderShipRunner.cancel();
+
     }
 
     public Player getDefender() {
@@ -375,9 +376,25 @@ public class Game {
 
     public void brokeBlock(Location location) {
         location = Display.unifyLocation(location);
-        location.subtract(0, 1, 0);
-        map.getAttacker().checkAndResendBlock(location);
-        map.getDefender().checkAndResendBlock(location);
+        Location loc;
+        loc = location.clone().add(0, 1, 0);
+        map.getAttacker().checkAndResendBlock(loc);
+        map.getDefender().checkAndResendBlock(loc);
+        loc = location.clone().subtract(0, 1, 0);
+        map.getAttacker().checkAndResendBlock(loc);
+        map.getDefender().checkAndResendBlock(loc);
+        loc = location.clone().add(1, 0, 0);
+        map.getAttacker().checkAndResendBlock(loc);
+        map.getDefender().checkAndResendBlock(loc);
+        loc = location.clone().subtract(1, 0, 0);
+        map.getAttacker().checkAndResendBlock(loc);
+        map.getDefender().checkAndResendBlock(loc);
+        loc = location.clone().add(0, 0, 1);
+        map.getAttacker().checkAndResendBlock(loc);
+        map.getDefender().checkAndResendBlock(loc);
+        loc = location.clone().subtract(0, 0, 1);
+        map.getAttacker().checkAndResendBlock(loc);
+        map.getDefender().checkAndResendBlock(loc);
 
     }
 

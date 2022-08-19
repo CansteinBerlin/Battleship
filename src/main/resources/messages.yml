@@ -43,6 +43,10 @@ messages:
       success: "&aSuccessfully reloaded config: &6%config%"
     clearGames:
       success: "&aSuccessfully stopped all games"
+    setGlobalRespawnPoint:
+      invalidCommand: "&cPlease use &6/%command% (reset)"
+      setSpawnPoint: "&aSuccessfully set the global spawn Point"
+      resetSpawnPoint: "&aSuccessfully reset the global spawn Point"
 
   ship:
     small: "Small Ship"
