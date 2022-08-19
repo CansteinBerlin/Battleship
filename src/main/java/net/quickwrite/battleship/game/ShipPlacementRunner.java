@@ -34,6 +34,7 @@ public class ShipPlacementRunner extends BukkitRunnable {
     private boolean lastDirection;
     private int lastShipSize;
     private final ArrayList<Location> locations;
+    private boolean recentlyPlaced;
 
     public ShipPlacementRunner(Player p, Map<Ship, Integer> shipsToPlace, MapSide displaySide) {
         this.p = p;
@@ -53,6 +54,7 @@ public class ShipPlacementRunner extends BukkitRunnable {
         locations = new ArrayList<>();
 
         rotateShipMessage = Battleship.getLang("display.shipPlacementRunner.rotateShip");
+        recentlyPlaced = false;
     }
 
     @Override
@@ -75,7 +77,10 @@ public class ShipPlacementRunner extends BukkitRunnable {
         int shipSize = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(Ship.KEY, PersistentDataType.INTEGER);
 
         //Save Resources
-        if(lastDirection == horizontal && loc.equals(lastLocation) && lastShipSize == shipSize) return;
+        if(lastDirection == horizontal && loc.equals(lastLocation) && lastShipSize == shipSize && !recentlyPlaced) return;
+
+        //Remove markers after placing
+        recentlyPlaced = false;
 
         //Check Bounds
         if(loc.getBlockX() < minX || loc.getBlockX() > maxX || loc.getBlockZ() < minZ || loc.getBlockZ() > maxZ) {
@@ -120,7 +125,7 @@ public class ShipPlacementRunner extends BukkitRunnable {
     }
 
     public boolean placeShip(){
-        int shipSize = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(Ship.KEY, PersistentDataType.INTEGER);
+        int shipSize = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().getOrDefault(Ship.KEY, PersistentDataType.INTEGER, -1);
         if(locations.size() != shipSize) return false;
         Ship ship = null;
         for(Ship s : shipsToPlace.keySet()){
@@ -139,6 +144,11 @@ public class ShipPlacementRunner extends BukkitRunnable {
         shipsToPlace.replace(ship, shipsToPlace.get(ship) - 1);
         if(shipsToPlace.get(ship) == 0) shipsToPlace.remove(ship);
         p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount() - 1);
+
+        //To prevent multiple ships being placed in the same tick at the same location
+        locations.clear();
+        recentlyPlaced = true;
+        displaySide.getThisPlayerDisplay().removeSpawnedMarkers();
 
         if(shipsToPlace.isEmpty()){
             displaySide.getThisPlayerDisplay().removeSpawnedMarkers();

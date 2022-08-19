@@ -15,7 +15,7 @@
 - [X] Fix Displays clearing when calling /battlship spectateGames
 - [X] Fix Error when using /battleship spectateGames if map selection inventory is open
 - [x] Fix error when using /battleship spectateGames if game is about to finish
-- [ ] Bote plazieren spam protection
+- [X] Fix multiple boats being placed in the same location 
 - [ ] Fix game not stopping if player leaves
 - [ ] Fix Game not finish
 - [X] Permissions.yml aufsetzten und in spieler usw unterteilen
