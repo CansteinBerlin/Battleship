@@ -67,8 +67,6 @@ public abstract class BaseCommand {
                 }
             }
         }
-        //Bingo.LOGGER.info(args.length);
-        //TODO: Add Logic
         return out;
     }
 

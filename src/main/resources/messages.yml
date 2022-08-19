@@ -29,6 +29,7 @@ messages:
     queueAllPlayers:
       noMaps: "&cNot enough maps. Missing &6%amount%"
       started: "&aSuccessfully started all games"
+      invalidMap: "&cThere was an error loading a map"
     spectateAllGames:
       stop: "&aYou are now longer spectating &6ALL &agames"
       start: "&aYou are now spectating &6ALL&agames"

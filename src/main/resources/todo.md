@@ -1,4 +1,4 @@
-#Todo
+# Todo
 
 - [X] Sounds when hit and not hit (Sound.BLOCK_ANVIL_PLACE, Sound.ENTITY_BOAT_PADDLE_WATER)
 - [X] Change Rotation with Drop
@@ -9,6 +9,17 @@
 - [X] Fix Invite not getting removed when either canceled or accepted
 - [X] Remove Corner placement for displays
 - [X] Default Ships 1x5 2x4 3x3 4x2 (Amount x Shipsize)
-- [ ] Translate to german
+- [X] Translate to german
 - [X] Command to queue all players
 - [X] Easier system to set up maps (Copy / Paste)
+- [X] Fix Displays clearing when calling /battlship spectateGames
+- [X] Fix Error when using /battleship spectateGames if map selection inventory is open
+- [x] Fix error when using /battleship spectateGames if game is about to finish
+- [ ] Bote plazieren spam protection
+- [ ] Fix game not stopping if player leaves
+- [ ] Fix Game not finish
+- [ ] Permissions.yml aufsetzten und in spieler usw unterteilen
+- [ ] Fix invalid hitdetection (img0.png/img1.png)
+- [ ] Spamming on Accept or Deny causes issues
+- [ ] Tp punkt nach spiel festlegen (Command)
+- 

@@ -46,7 +46,7 @@ public class MapSide implements ConfigurationSerializable{
 
     public void removePlayer(Player player){
         if(this.player.getUniqueId().equals(player.getUniqueId())){
-            player = null;
+            this.player = null;
             surrendered = true;
         }
         removeFromDisplay(player);

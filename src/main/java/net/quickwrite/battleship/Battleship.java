@@ -3,6 +3,7 @@ package net.quickwrite.battleship;
 import net.quickwrite.battleship.blocks.BattleShipBlocks;
 import net.quickwrite.battleship.commands.BattleShipCommand;
 import net.quickwrite.battleship.commands.DebugCommand;
+import net.quickwrite.battleship.commands.DebugGameCommand;
 import net.quickwrite.battleship.commandsystem.CommandManager;
 import net.quickwrite.battleship.config.*;
 import net.quickwrite.battleship.display.HorizontalDisplay;
@@ -63,6 +64,7 @@ public final class Battleship extends JavaPlugin {
         commandManager = new CommandManager(this);
         commandManager.addCommand(new DebugCommand());
         commandManager.addCommand(new BattleShipCommand());
+        commandManager.addCommand(new DebugGameCommand());
 
         gameManager = new GameManager();
 

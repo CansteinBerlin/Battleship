@@ -62,10 +62,14 @@ public class VerticalDisplay extends Display implements ConfigurationSerializabl
     }
 
     @Override
-    public void clearForPlayer(Player p) {
+    public void clearDisplay() {
         for(Location loc : changedBlocks.keySet()){
             loc.getBlock().setType(Material.AIR);
         }
+    }
+
+    @Override
+    public void clearForPlayer(Player p){
     }
 
     @Override

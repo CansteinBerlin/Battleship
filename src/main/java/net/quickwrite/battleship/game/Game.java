@@ -87,11 +87,13 @@ public class Game {
     }
 
     public void addSpectator(Player p){
+        if(map == null) return;
         map.getAttacker().addPlayerToDisplays(p);
         map.getDefender().addPlayerToDisplays(p);
     }
 
     public void removeSpectator(Player p){
+        if(map == null) return;
         map.getAttacker().removePlayer(p);
         map.getDefender().removePlayer(p);
     }
@@ -387,5 +389,45 @@ public class Game {
         map.getAttacker().checkAndResendBlock(location);
         map.getDefender().checkAndResendBlock(location);
 
+    }
+
+    public GameStateManager getManager() {
+        return manager;
+    }
+
+    public PlayerSafe getAttackerSafe() {
+        return attackerSafe;
+    }
+
+    public PlayerSafe getDefenderSafe() {
+        return defenderSafe;
+    }
+
+    public ShipPlacementRunner getAttackerShipPlacementRunner() {
+        return attackerShipPlacementRunner;
+    }
+
+    public ShipPlacementRunner getDefenderShipPlacementRunner() {
+        return defenderShipPlacementRunner;
+    }
+
+    public AttackShipRunner getAttackerShipRunner() {
+        return attackerShipRunner;
+    }
+
+    public AttackShipRunner getDefenderShipRunner() {
+        return defenderShipRunner;
+    }
+
+    public ArrayList<ShipContainer> getAttackerShips() {
+        return attackerShips;
+    }
+
+    public ArrayList<ShipContainer> getDefenderShips() {
+        return defenderShips;
+    }
+
+    public boolean isAttackerAttacking() {
+        return attackerAttacking;
     }
 }

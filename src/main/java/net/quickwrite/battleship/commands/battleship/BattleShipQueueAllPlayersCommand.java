@@ -5,6 +5,7 @@ import net.quickwrite.battleship.commandsystem.BaseCommand;
 import net.quickwrite.battleship.commandsystem.SubCommand;
 import net.quickwrite.battleship.game.Game;
 import net.quickwrite.battleship.game.GameManager;
+import net.quickwrite.battleship.map.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -25,13 +26,16 @@ public class BattleShipQueueAllPlayersCommand extends SubCommand {
 
     @Override
     public boolean performCommand(CommandSender sender, String[] args) {
-
         if(!(sender instanceof Player)){
             sender.sendMessage(Battleship.PREFIX + Battleship.getLang("command.noPlayer"));
             return true;
         }
         Player playerSender = ((Player) sender);
-        List<Player> playingPlayers = Bukkit.getOnlinePlayers().stream().filter(p -> !p.getGameMode().equals(GameMode.SPECTATOR)).filter(p -> p.getWorld().equals(playerSender.getWorld())).collect(Collectors.toList());
+        List<Player> playingPlayers = Bukkit.getOnlinePlayers().stream()
+                .filter(p -> !p.getGameMode().equals(GameMode.SPECTATOR))
+                .filter(p -> p.getWorld().equals(playerSender.getWorld()))
+                .collect(Collectors.toList());
+
         Collections.shuffle(playingPlayers);
         if(playingPlayers.size() % 2 != 0){
             playingPlayers.remove(0);
@@ -52,6 +56,12 @@ public class BattleShipQueueAllPlayersCommand extends SubCommand {
 
         for(int i = 0; i < mapAmount; i++){
             Game g = manager.createGame(playingPlayers.get(i * 2), playingPlayers.get(i * 2 + 1));
+            Map map = Battleship.getInstance().getMapManager().loadMap(maps.get(i));
+            if(map == null){
+                sender.sendMessage(Battleship.PREFIX + Battleship.getLang("command.queueAllPlayers.invalidMap"));
+                g.forceQuit();
+                continue;
+            }
             g.setMap(Battleship.getInstance().getMapManager().loadMap(maps.get(i)));
             g.initGame();
         }
