@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.TreeMap;
+import java.util.function.Consumer;
 
 public class Game {
 
@@ -40,6 +41,8 @@ public class Game {
     private AttackShipRunner attackerShipRunner, defenderShipRunner;
     private ArrayList<ShipContainer> attackerShips, defenderShips;
     private boolean attackerAttacking;
+    private Consumer<Game> onGameFinishCallback;
+
 
     public Game(Player defender, Player attacker) {
         this.defender = defender;
@@ -129,22 +132,26 @@ public class Game {
         attacker.sendMessage(Battleship.PREFIX + Battleship.getLang("display.game.forcefullyStopped"));
         defender.sendMessage(Battleship.PREFIX + Battleship.getLang("display.game.forcefullyStopped"));
 
+        reset();
+    }
+
+    private void reset(){
+        if(attackerShipRunner != null) attackerShipRunner.cancel();
+        if(defenderShipRunner != null) defenderShipRunner.cancel();
+        if(attackerShipPlacementRunner != null) attackerShipPlacementRunner.cancel();
+        if(defenderShipPlacementRunner != null) defenderShipPlacementRunner.cancel();
         map.getAttacker().getThisPlayerDisplay().removeSpawnedMarkers();
         map.getAttacker().getOtherPlayerDisplay().removeSpawnedMarkers();
         map.getDefender().getThisPlayerDisplay().removeSpawnedMarkers();
         map.getDefender().getOtherPlayerDisplay().removeSpawnedMarkers();
-
         map.getAttacker().removeAll();
         map.getDefender().removeAll();
-
-        if(attackerShipPlacementRunner != null) attackerShipPlacementRunner.cancel();
-        if(defenderShipPlacementRunner != null) defenderShipPlacementRunner.cancel();
-        if(attackerShipRunner != null) attackerShipRunner.cancel();
-        if(defenderShipRunner != null) defenderShipRunner.cancel();
-
         attackerSafe.setToPlayer();
         defenderSafe.setToPlayer();
+
+        if(onGameFinishCallback != null) onGameFinishCallback.accept(this);
         Battleship.getInstance().getGameManager().finishGame(this);
+
     }
 
     public void finishGame(){
@@ -180,17 +187,11 @@ public class Game {
             }
         }.runTaskTimer(Battleship.getInstance(), 0, 20*2);
 
-        Game game = this;
-
         new BukkitRunnable() {
             @Override
             public void run() {
-                map.getAttacker().removeAll();
-                map.getDefender().removeAll();
-                attackerSafe.setToPlayer();
-                defenderSafe.setToPlayer();
-                Battleship.getInstance().getGameManager().finishGame(game);
                 rocketTask.cancel();
+                reset();
             }
         }.runTaskLater(Battleship.getInstance(), 20*10);
     }
@@ -398,40 +399,12 @@ public class Game {
 
     }
 
-    public GameStateManager getManager() {
-        return manager;
+    public Consumer<Game> getOnGameFinishCallback() {
+        return onGameFinishCallback;
     }
 
-    public PlayerSafe getAttackerSafe() {
-        return attackerSafe;
-    }
-
-    public PlayerSafe getDefenderSafe() {
-        return defenderSafe;
-    }
-
-    public ShipPlacementRunner getAttackerShipPlacementRunner() {
-        return attackerShipPlacementRunner;
-    }
-
-    public ShipPlacementRunner getDefenderShipPlacementRunner() {
-        return defenderShipPlacementRunner;
-    }
-
-    public AttackShipRunner getAttackerShipRunner() {
-        return attackerShipRunner;
-    }
-
-    public AttackShipRunner getDefenderShipRunner() {
-        return defenderShipRunner;
-    }
-
-    public ArrayList<ShipContainer> getAttackerShips() {
-        return attackerShips;
-    }
-
-    public ArrayList<ShipContainer> getDefenderShips() {
-        return defenderShips;
+    public void setOnGameFinishCallback(Consumer<Game> onGameFinishCallback) {
+        this.onGameFinishCallback = onGameFinishCallback;
     }
 
     public boolean isAttackerAttacking() {
