@@ -1,9 +1,9 @@
-name: MiniMinigames
+name: Battleship
 version: '${project.version}'
 main: net.quickwrite.battleship.Battleship
 api-version: 1.17
 authors: [ QuickWrite, Hasenzahn1 ]
-description: A plugin for mini minigames that players can play.
+description: Battleship for minecraft
 
 depend: [ProtocolLib]
 
