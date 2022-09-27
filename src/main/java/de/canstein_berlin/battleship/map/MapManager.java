@@ -1,7 +1,7 @@
-package main.java.de.canstein_berlin.battleship.map;
+package de.canstein_berlin.battleship.map;
 
-import main.java.de.canstein_berlin.battleship.Battleship;
-import main.java.de.canstein_berlin.battleship.config.MapConfig;
+import de.canstein_berlin.battleship.Battleship;
+import de.canstein_berlin.battleship.config.MapConfig;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 

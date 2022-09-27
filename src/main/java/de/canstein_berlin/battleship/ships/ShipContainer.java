@@ -1,6 +1,6 @@
-package main.java.de.canstein_berlin.battleship.ships;
+package de.canstein_berlin.battleship.ships;
 
-import main.java.de.canstein_berlin.battleship.display.Display;
+import de.canstein_berlin.battleship.display.Display;
 import org.bukkit.Location;
 import org.bukkit.Material;
 

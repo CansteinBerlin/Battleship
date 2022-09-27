@@ -1,11 +1,11 @@
-package main.java.de.canstein_berlin.battleship.game;
+package de.canstein_berlin.battleship.game;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import main.java.de.canstein_berlin.battleship.Battleship;
-import main.java.de.canstein_berlin.battleship.display.Direction;
-import main.java.de.canstein_berlin.battleship.display.Display;
-import main.java.de.canstein_berlin.battleship.map.MapSide;
+import de.canstein_berlin.battleship.Battleship;
+import de.canstein_berlin.battleship.display.Direction;
+import de.canstein_berlin.battleship.display.Display;
+import de.canstein_berlin.battleship.map.MapSide;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;

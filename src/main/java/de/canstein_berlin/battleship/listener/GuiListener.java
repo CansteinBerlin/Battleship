@@ -1,6 +1,6 @@
-package main.java.de.canstein_berlin.battleship.listener;
+package de.canstein_berlin.battleship.listener;
 
-import main.java.de.canstein_berlin.battleship.Battleship;
+import de.canstein_berlin.battleship.Battleship;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

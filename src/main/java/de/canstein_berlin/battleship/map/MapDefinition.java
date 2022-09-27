@@ -1,6 +1,6 @@
-package main.java.de.canstein_berlin.battleship.map;
+package de.canstein_berlin.battleship.map;
 
-import main.java.de.canstein_berlin.battleship.ships.Ship;
+import de.canstein_berlin.battleship.ships.Ship;
 import org.bukkit.Location;
 
 import java.util.Map;

@@ -1,9 +1,9 @@
-package main.java.de.canstein_berlin.battleship.commands.debug;
+package de.canstein_berlin.battleship.commands.debug;
 
-import main.java.de.canstein_berlin.battleship.Battleship;
-import main.java.de.canstein_berlin.battleship.commandsystem.BaseCommand;
-import main.java.de.canstein_berlin.battleship.commandsystem.SubCommand;
-import main.java.de.canstein_berlin.battleship.game.Game;
+import de.canstein_berlin.battleship.Battleship;
+import de.canstein_berlin.battleship.commandsystem.BaseCommand;
+import de.canstein_berlin.battleship.commandsystem.SubCommand;
+import de.canstein_berlin.battleship.game.Game;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

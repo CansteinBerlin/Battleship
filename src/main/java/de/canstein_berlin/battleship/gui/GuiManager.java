@@ -1,7 +1,7 @@
-package main.java.de.canstein_berlin.battleship.gui;
+package de.canstein_berlin.battleship.gui;
 
-import main.java.de.canstein_berlin.battleship.game.Game;
-import main.java.de.canstein_berlin.battleship.map.Map;
+import de.canstein_berlin.battleship.game.Game;
+import de.canstein_berlin.battleship.map.Map;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryAction;
 

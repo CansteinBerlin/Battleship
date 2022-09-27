@@ -1,6 +1,6 @@
-package main.java.de.canstein_berlin.battleship.ships;
+package de.canstein_berlin.battleship.ships;
 
-import main.java.de.canstein_berlin.battleship.config.ShipConfig;
+import de.canstein_berlin.battleship.config.ShipConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 

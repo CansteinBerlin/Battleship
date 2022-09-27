@@ -1,4 +1,4 @@
-package main.java.de.canstein_berlin.battleship.gui;
+package de.canstein_berlin.battleship.gui;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryAction;

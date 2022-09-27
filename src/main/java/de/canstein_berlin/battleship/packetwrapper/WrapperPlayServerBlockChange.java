@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package main.java.de.canstein_berlin.battleship.packetwrapper;
+package de.canstein_berlin.battleship.packetwrapper;
 
 // Lets give some credit to dmulloy2
 // https://github.com/dmulloy2/PacketWrapper

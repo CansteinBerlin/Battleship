@@ -1,6 +1,6 @@
-package main.java.de.canstein_berlin.battleship.game;
+package de.canstein_berlin.battleship.game;
 
-import main.java.de.canstein_berlin.battleship.Battleship;
+import de.canstein_berlin.battleship.Battleship;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;

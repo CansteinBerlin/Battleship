@@ -1,4 +1,4 @@
-package main.java.de.canstein_berlin.battleship.builder.items;
+package de.canstein_berlin.battleship.builder.items;
 
 import org.bukkit.Color;
 import org.bukkit.Material;

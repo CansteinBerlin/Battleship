@@ -1,4 +1,4 @@
-package main.java.de.canstein_berlin.battleship.game;
+package de.canstein_berlin.battleship.game;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;

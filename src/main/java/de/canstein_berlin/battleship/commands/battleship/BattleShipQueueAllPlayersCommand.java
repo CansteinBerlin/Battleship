@@ -1,11 +1,11 @@
-package main.java.de.canstein_berlin.battleship.commands.battleship;
+package de.canstein_berlin.battleship.commands.battleship;
 
-import main.java.de.canstein_berlin.battleship.Battleship;
-import main.java.de.canstein_berlin.battleship.commandsystem.BaseCommand;
-import main.java.de.canstein_berlin.battleship.commandsystem.SubCommand;
-import main.java.de.canstein_berlin.battleship.game.Game;
-import main.java.de.canstein_berlin.battleship.game.GameManager;
-import main.java.de.canstein_berlin.battleship.map.Map;
+import de.canstein_berlin.battleship.Battleship;
+import de.canstein_berlin.battleship.commandsystem.BaseCommand;
+import de.canstein_berlin.battleship.commandsystem.SubCommand;
+import de.canstein_berlin.battleship.game.Game;
+import de.canstein_berlin.battleship.game.GameManager;
+import de.canstein_berlin.battleship.map.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;

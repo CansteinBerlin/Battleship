@@ -1,8 +1,8 @@
-package main.java.de.canstein_berlin.battleship.map;
+package de.canstein_berlin.battleship.map;
 
 import com.google.common.collect.ImmutableMap;
-import main.java.de.canstein_berlin.battleship.display.HorizontalDisplay;
-import main.java.de.canstein_berlin.battleship.display.VerticalDisplay;
+import de.canstein_berlin.battleship.display.HorizontalDisplay;
+import de.canstein_berlin.battleship.display.VerticalDisplay;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;

@@ -1,4 +1,4 @@
-package main.java.de.canstein_berlin.battleship.map;
+package de.canstein_berlin.battleship.map;
 
 import org.bukkit.Location;
 

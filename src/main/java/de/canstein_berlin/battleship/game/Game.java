@@ -1,15 +1,15 @@
-package main.java.de.canstein_berlin.battleship.game;
+package de.canstein_berlin.battleship.game;
 
-import main.java.de.canstein_berlin.battleship.Battleship;
-import main.java.de.canstein_berlin.battleship.commands.battleship.BattleShipSpectateAllGamesCommand;
-import main.java.de.canstein_berlin.battleship.display.Display;
-import main.java.de.canstein_berlin.battleship.display.HorizontalDisplay;
-import main.java.de.canstein_berlin.battleship.display.VerticalDisplay;
-import main.java.de.canstein_berlin.battleship.game.gamestate.GameStateManager;
-import main.java.de.canstein_berlin.battleship.map.Map;
-import main.java.de.canstein_berlin.battleship.map.MapSide;
-import main.java.de.canstein_berlin.battleship.ships.Ship;
-import main.java.de.canstein_berlin.battleship.ships.ShipContainer;
+import de.canstein_berlin.battleship.Battleship;
+import de.canstein_berlin.battleship.commands.battleship.BattleShipSpectateAllGamesCommand;
+import de.canstein_berlin.battleship.display.Display;
+import de.canstein_berlin.battleship.display.HorizontalDisplay;
+import de.canstein_berlin.battleship.display.VerticalDisplay;
+import de.canstein_berlin.battleship.game.gamestate.GameStateManager;
+import de.canstein_berlin.battleship.map.Map;
+import de.canstein_berlin.battleship.map.MapSide;
+import de.canstein_berlin.battleship.ships.Ship;
+import de.canstein_berlin.battleship.ships.ShipContainer;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;

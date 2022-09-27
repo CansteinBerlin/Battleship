@@ -1,4 +1,4 @@
-package main.java.de.canstein_berlin.battleship.config;
+package de.canstein_berlin.battleship.config;
 
 import com.google.common.base.Charsets;
 import org.bukkit.configuration.file.FileConfiguration;

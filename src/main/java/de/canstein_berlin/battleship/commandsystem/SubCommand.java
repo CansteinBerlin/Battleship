@@ -1,6 +1,6 @@
-package main.java.de.canstein_berlin.battleship.commandsystem;
+package de.canstein_berlin.battleship.commandsystem;
 
-import main.java.de.canstein_berlin.battleship.Battleship;
+import de.canstein_berlin.battleship.Battleship;
 import org.bukkit.command.CommandSender;
 
 import java.util.Arrays;

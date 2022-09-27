@@ -1,7 +1,7 @@
-package main.java.de.canstein_berlin.battleship.blocks;
+package de.canstein_berlin.battleship.blocks;
 
-import main.java.de.canstein_berlin.battleship.Battleship;
-import main.java.de.canstein_berlin.battleship.config.BlockConfig;
+import de.canstein_berlin.battleship.Battleship;
+import de.canstein_berlin.battleship.config.BlockConfig;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 

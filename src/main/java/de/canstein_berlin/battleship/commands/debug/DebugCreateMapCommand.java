@@ -1,14 +1,14 @@
-package main.java.de.canstein_berlin.battleship.commands.debug;
+package de.canstein_berlin.battleship.commands.debug;
 
 import com.google.common.collect.ImmutableMap;
-import main.java.de.canstein_berlin.battleship.Battleship;
-import main.java.de.canstein_berlin.battleship.commandsystem.BaseCommand;
-import main.java.de.canstein_berlin.battleship.commandsystem.SubCommand;
-import main.java.de.canstein_berlin.battleship.display.HorizontalDisplay;
-import main.java.de.canstein_berlin.battleship.display.VerticalDisplay;
-import main.java.de.canstein_berlin.battleship.map.Map;
-import main.java.de.canstein_berlin.battleship.ships.Ship;
-import main.java.de.canstein_berlin.battleship.ships.ShipManager;
+import de.canstein_berlin.battleship.Battleship;
+import de.canstein_berlin.battleship.commandsystem.BaseCommand;
+import de.canstein_berlin.battleship.commandsystem.SubCommand;
+import de.canstein_berlin.battleship.display.HorizontalDisplay;
+import de.canstein_berlin.battleship.display.VerticalDisplay;
+import de.canstein_berlin.battleship.map.Map;
+import de.canstein_berlin.battleship.ships.Ship;
+import de.canstein_berlin.battleship.ships.ShipManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;

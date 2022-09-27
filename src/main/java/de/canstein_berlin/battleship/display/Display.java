@@ -1,9 +1,9 @@
-package main.java.de.canstein_berlin.battleship.display;
+package de.canstein_berlin.battleship.display;
 
 import com.comphenix.protocol.wrappers.BlockPosition;
 import com.comphenix.protocol.wrappers.WrappedBlockData;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
-import net.quickwrite.battleship.packetwrapper.*;
+import de.canstein_berlin.battleship.packetwrapper.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

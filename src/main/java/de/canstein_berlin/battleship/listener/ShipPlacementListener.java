@@ -1,9 +1,9 @@
-package main.java.de.canstein_berlin.battleship.listener;
+package de.canstein_berlin.battleship.listener;
 
-import main.java.de.canstein_berlin.battleship.Battleship;
-import main.java.de.canstein_berlin.battleship.game.Game;
-import main.java.de.canstein_berlin.battleship.game.gamestate.GameStateManager;
-import main.java.de.canstein_berlin.battleship.ships.Ship;
+import de.canstein_berlin.battleship.Battleship;
+import de.canstein_berlin.battleship.game.Game;
+import de.canstein_berlin.battleship.game.gamestate.GameStateManager;
+import de.canstein_berlin.battleship.ships.Ship;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

@@ -15,7 +15,7 @@
  *  02111-1307 USA
  */
 
-package main.java.de.canstein_berlin.battleship.packetwrapper;
+package de.canstein_berlin.battleship.packetwrapper;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;

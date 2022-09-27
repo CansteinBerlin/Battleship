@@ -1,4 +1,4 @@
-package main.java.de.canstein_berlin.battleship.display;
+package de.canstein_berlin.battleship.display;
 
 public enum Direction {
 

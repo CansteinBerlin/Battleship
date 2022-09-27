@@ -1,7 +1,7 @@
-package main.java.de.canstein_berlin.battleship.items;
+package de.canstein_berlin.battleship.items;
 
-import main.java.de.canstein_berlin.battleship.builder.items.ItemBuilder;
-import main.java.de.canstein_berlin.battleship.config.ItemConfig;
+import de.canstein_berlin.battleship.builder.items.ItemBuilder;
+import de.canstein_berlin.battleship.config.ItemConfig;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;

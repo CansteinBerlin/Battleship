@@ -1,9 +1,9 @@
-package main.java.de.canstein_berlin.battleship.ships;
+package de.canstein_berlin.battleship.ships;
 
 import com.google.common.collect.ImmutableMap;
-import main.java.de.canstein_berlin.battleship.Battleship;
-import main.java.de.canstein_berlin.battleship.blocks.BattleShipBlocks;
-import main.java.de.canstein_berlin.battleship.builder.items.ItemBuilder;
+import de.canstein_berlin.battleship.Battleship;
+import de.canstein_berlin.battleship.blocks.BattleShipBlocks;
+import de.canstein_berlin.battleship.builder.items.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;

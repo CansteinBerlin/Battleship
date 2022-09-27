@@ -1,6 +1,6 @@
-package main.java.de.canstein_berlin.battleship.game.gamestate;
+package de.canstein_berlin.battleship.game.gamestate;
 
-import main.java.de.canstein_berlin.battleship.game.Game;
+import de.canstein_berlin.battleship.game.Game;
 
 public class GameStateManager {
 

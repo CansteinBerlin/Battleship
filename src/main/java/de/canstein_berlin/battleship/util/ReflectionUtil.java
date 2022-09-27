@@ -1,4 +1,4 @@
-package main.java.de.canstein_berlin.battleship.util;
+package de.canstein_berlin.battleship.util;
 
 import org.reflections.Reflections;
 

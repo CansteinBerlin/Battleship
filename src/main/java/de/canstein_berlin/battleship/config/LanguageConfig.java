@@ -1,4 +1,4 @@
-package main.java.de.canstein_berlin.battleship.config;
+package de.canstein_berlin.battleship.config;
 
 import org.bukkit.plugin.java.JavaPlugin;
 

@@ -1,11 +1,11 @@
-package main.java.de.canstein_berlin.battleship.commands.debug;
+package de.canstein_berlin.battleship.commands.debug;
 
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
-import main.java.de.canstein_berlin.battleship.Battleship;
-import main.java.de.canstein_berlin.battleship.commandsystem.BaseCommand;
-import main.java.de.canstein_berlin.battleship.commandsystem.SubCommand;
-import main.java.de.canstein_berlin.battleship.packetwrapper.WrapperPlayServerEntityMetadata;
-import main.java.de.canstein_berlin.battleship.packetwrapper.WrapperPlayServerSpawnEntityLiving;
+import de.canstein_berlin.battleship.Battleship;
+import de.canstein_berlin.battleship.commandsystem.BaseCommand;
+import de.canstein_berlin.battleship.commandsystem.SubCommand;
+import de.canstein_berlin.battleship.packetwrapper.WrapperPlayServerEntityMetadata;
+import de.canstein_berlin.battleship.packetwrapper.WrapperPlayServerSpawnEntityLiving;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
