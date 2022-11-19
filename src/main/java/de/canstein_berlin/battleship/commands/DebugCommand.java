@@ -12,7 +12,7 @@ public class DebugCommand extends BaseCommand {
     public DebugCommand() {
         super("mdebug", "battleship.debug");
 
-        for(Class<? extends SubCommand> command : ReflectionUtil.getAllClasses("net.quickwrite.battleship.commands.debug", SubCommand.class)){
+        for(Class<? extends SubCommand> command : ReflectionUtil.getAllClasses("de.canstein_berlin.battleship.commands.debug", SubCommand.class)){
             try {
                 addSubCommand(command.getConstructor(BaseCommand.class).newInstance(this));
             }catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){

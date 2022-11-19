@@ -13,7 +13,7 @@ public class BattleShipCommand extends BaseCommand {
     public BattleShipCommand() {
         super("battleship", "battleship.command.battleship");
 
-        for(Class<? extends SubCommand> command : ReflectionUtil.getAllClasses("net.quickwrite.battleship.commands.battleship", SubCommand.class)){
+        for(Class<? extends SubCommand> command : ReflectionUtil.getAllClasses("de.canstein_berlin.battleship.commands.battleship", SubCommand.class)){
             try {
                 addSubCommand(command.getConstructor(BaseCommand.class).newInstance(this));
             }catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){

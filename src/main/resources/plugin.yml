@@ -1,6 +1,6 @@
 name: Battleship
 version: '${project.version}'
-main: Battleship
+main: de.canstein_berlin.battleship.Battleship
 api-version: 1.17
 authors: [ QuickWrite, Hasenzahn1 ]
 description: Battleship for minecraft

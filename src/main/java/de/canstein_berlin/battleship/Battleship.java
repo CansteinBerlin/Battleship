@@ -71,7 +71,8 @@ public final class Battleship extends JavaPlugin {
 
         guiManager = new GuiManager();
 
-        for(Class<? extends Listener > listener : ReflectionUtil.getAllClasses("net.quickwrite.battleship.listener", Listener.class)){
+        for(Class<? extends Listener > listener : ReflectionUtil.getAllClasses("de.canstein_berlin.battleship.listener" +
+                "", Listener.class)){
             try {
                 Bukkit.getPluginManager().registerEvents(listener.getConstructor().newInstance(), this);
             }catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){

@@ -32,7 +32,7 @@ import java.util.UUID;
 
 public class WrapperPlayServerSpawnEntityLiving extends AbstractPacket {
     public static final PacketType TYPE =
-            PacketType.Play.Server.SPAWN_ENTITY_LIVING;
+            PacketType.Play.Server.SPAWN_ENTITY;
 
     private static PacketConstructor entityConstructor;
 
@@ -125,11 +125,11 @@ public class WrapperPlayServerSpawnEntityLiving extends AbstractPacket {
      */
     @SuppressWarnings("deprecation")
     public void setType(EntityType value) {
-        handle.getIntegers().write(1, (int) value.getTypeId());
+        handle.getEntityTypeModifier().write(0, value);
     }
 
     public void setType(int value) {
-        handle.getIntegers().write(1, value);
+        //handle.getEntityTypeModifier().write(0);
     }
 
     /**

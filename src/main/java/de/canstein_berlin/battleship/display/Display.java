@@ -8,6 +8,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -88,7 +90,7 @@ public abstract class Display {
         spawnEntityPacket.setX(loc.getBlockX() + 0.5);
         spawnEntityPacket.setY(loc.getBlockY());
         spawnEntityPacket.setZ(loc.getBlockZ() + 0.5);
-        spawnEntityPacket.setType(WrapperPlayServerSpawnEntityLiving.ENTITY_TYPE.MAGMA_CUBE);
+        spawnEntityPacket.setType(EntityType.MAGMA_CUBE);
         spawnEntityPacket.setEntityID(entityId);
         return spawnEntityPacket;
     }
@@ -196,7 +198,7 @@ public abstract class Display {
         for(int x = minX; x <= maxX; x++){
             for(int y = minY; y <= maxY; y++){
                 for(int z = minZ; z <= maxZ; z++){
-                    pos1.getWorld().spawnParticle(Particle.BARRIER, new Location(pos1.getWorld(), x + 0.5, y + 0.5, z + 0.5), 1);
+                    pos1.getWorld().spawnParticle(Particle.BLOCK_MARKER, new Location(pos1.getWorld(), x + 0.5, y + 0.5, z + 0.5), 1, Material.BARRIER.createBlockData());
                 }
             }
         }
